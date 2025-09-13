@@ -1,62 +1,66 @@
 package presentation.panels;
 
-import presentation.frames.LogInFrame;
+import presentation.frames.MainFrame;
 import presentation.styles.Button;
 import presentation.styles.FontUtil;
 import presentation.styles.Style;
-import presentation.styles.textfields.PsswrdFieldPh;
-import presentation.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class LogInPanel extends JPanel {
-    LogInFrame owner;
+public class MainMenuPanel extends JPanel {
+    private MainFrame owner;
     private JPanel mainPanel;
     private JPanel componentsPanel;
-    private TxtFieldPh txtUser;
-    private PsswrdFieldPh txtPassword;
-    private Button btnLogIn;
+    private Button asignacionBtn;
+    private Button refugiosBtn;
+    private Button voluntariosBtn;
+    private Button animalesBtn;
+    private Button masBtn;
 
-    public LogInPanel(LogInFrame owner) {
+    public MainMenuPanel(MainFrame owner) {
         setOpaque(false);
-        setPreferredSize(new Dimension(340, 450));
+        setPreferredSize(new Dimension(366, 600));
         this.owner = owner;
 
-        //Components
         this.mainPanel = new JPanel();
         this.mainPanel.setOpaque(false);
         this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
         this.componentsPanel = new JPanel();
-        this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
-        this.componentsPanel.setBorder(new EmptyBorder(35, 0, 0, 0));
         this.componentsPanel.setOpaque(false);
-        this.componentsPanel.setPreferredSize(new Dimension(340, 260));
-        this.txtUser = new TxtFieldPh("Usuario", 257, 44, 24, 25);
-        this.txtPassword = new PsswrdFieldPh("Contraseña", 257, 44, 24, 25);
-        this.btnLogIn = new Button("Ingresar", 180, 45, 20, 30, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
+        this.componentsPanel.setPreferredSize(new Dimension(366, 450));
+        this.componentsPanel.setBorder(new EmptyBorder(35, 0, 0, 0));
+        this.asignacionBtn = new Button("Asignaciones", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.refugiosBtn = new Button("Refugios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.voluntariosBtn = new Button("Voluntarios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.animalesBtn = new Button("Animales", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.masBtn = new Button("Más", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
 
         //Add components
-        this.mainPanel.add(Box.createVerticalStrut(120));
-        componentsPanel.add(this.txtUser);
-        componentsPanel.add(this.txtPassword);
-        componentsPanel.add(this.btnLogIn);
-        this.mainPanel.add(componentsPanel);
+        this.componentsPanel.add(asignacionBtn);
+        this.componentsPanel.add(refugiosBtn);
+        this.componentsPanel.add(voluntariosBtn);
+        this.componentsPanel.add(animalesBtn);
+        this.componentsPanel.add(masBtn);
 
+        //Primera prueba
+        this.mainPanel.add(Box.createVerticalStrut(110));
+        this.mainPanel.add(componentsPanel);
         add(this.mainPanel);
 
     }
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Figure 1
         g2d.setColor(Style.COLOR_BACKGROUND);
-        g2d.fillRoundRect(0, mainPanel.getY()+10, getWidth(), 60, 15, 15);
+        g2d.fillRoundRect(0, mainPanel.getY() + 10, getWidth(), 60, 15, 15);
 
         //Figure 2
         g2d.fillRoundRect(0, componentsPanel.getY(), getWidth(), componentsPanel.getHeight(), 15, 15);
@@ -74,13 +78,12 @@ public class LogInPanel extends JPanel {
 
         //sub title positioning
         Font subTittleFont = FontUtil.loadFont(20, "Inter_Light");
-        String subTittleText = "Inicio de sesión";
+        String subTittleText = "Menú Principal";
         FontMetrics metricsSubTittle = g2d.getFontMetrics(subTittleFont);
         int xSubTittle = (getWidth() - metricsSubTittle.stringWidth(subTittleText)) / 2;
 
         g2d.setFont(subTittleFont);
-        g2d.drawString(subTittleText, xSubTittle, componentsPanel.getY()+35);
-
+        g2d.drawString(subTittleText, xSubTittle, componentsPanel.getY() + 35);
 
     }
 }
