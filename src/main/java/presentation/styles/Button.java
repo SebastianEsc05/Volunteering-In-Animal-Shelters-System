@@ -1,6 +1,7 @@
 package presentation.styles;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 
 public class Button extends JButton {
@@ -22,7 +23,7 @@ public class Button extends JButton {
         this.colorHover = colorHover;
 
         setFont(FontUtil.loadFont(fontSize, "Inter_Medium"));
-        setForeground(Color.black);
+        setForeground(this.colorText);
         setFocusPainted(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
@@ -43,5 +44,27 @@ public class Button extends JButton {
             }
         });
 
+    }
+
+    @Override
+    protected void paintComponent(Graphics g){
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(hovered ? colorHover : colorBtn);
+        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        g2d.setStroke(new BasicStroke(2));
+        super.paintComponent(g);
+        g2d.dispose();
+
+    }
+
+    @Override
+    public void updateUI() {
+        setUI(new BasicButtonUI());
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(width, height);
     }
 }
