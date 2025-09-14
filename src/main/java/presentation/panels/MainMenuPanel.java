@@ -75,10 +75,10 @@ public class MainMenuPanel extends JPanel {
 
         //Figure 1
         g2d.setColor(Style.COLOR_BACKGROUND);
-        g2d.fillRoundRect(0, mainPanel.getY() + 10, getWidth(), 60, 15, 15);
+        g2d.fillRoundRect(0, mainPanel.getY() + 10, getWidth(), 60, 20, 20);
 
         //Figure 2
-        g2d.fillRoundRect(0, componentsPanel.getY(), getWidth(), componentsPanel.getHeight(), 15, 15);
+        g2d.fillRoundRect(0, componentsPanel.getY(), getWidth(), componentsPanel.getHeight(), 20, 20);
 
         g2d.setColor(Color.black);
 

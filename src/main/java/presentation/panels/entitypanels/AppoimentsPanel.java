@@ -1,6 +1,7 @@
 package presentation.panels.entitypanels;
 
 import presentation.frames.MainFrame;
+import presentation.panels.addentitypanels.AddAppoimentPanel;
 import presentation.styles.*;
 import presentation.styles.Button;
 import presentation.styles.textfields.TxtFieldPh;
@@ -9,14 +10,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AppoimentsPanel extends EntityPanel {
+    private AddAppoimentPanel addAppoimentPanel;
     private Button newAppoimentBtn;
     private ComboBoxCustom statusComboBox;
     private TxtFieldPh searchField;
 
     public AppoimentsPanel(MainFrame owner) {
         super(owner);
+        this.addAppoimentPanel = new AddAppoimentPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         addComponents();
+
+        //ActionListeners
+        newAppoimentBtn.addActionListener(e -> {
+            owner.showNewPanel(this.addAppoimentPanel);
+        });
 
     }
 
