@@ -43,7 +43,6 @@ public class LogInPanel extends JPanel {
         componentsPanel.add(this.txtPassword);
         componentsPanel.add(this.btnLogIn);
         this.mainPanel.add(componentsPanel);
-
         add(this.mainPanel);
 
     }
@@ -60,7 +59,6 @@ public class LogInPanel extends JPanel {
 
         //Figure 2
         g2d.fillRoundRect(0, componentsPanel.getY(), getWidth(), componentsPanel.getHeight(), 15, 15);
-
         g2d.setColor(Color.black);
 
         //title positioning
@@ -80,7 +78,5 @@ public class LogInPanel extends JPanel {
 
         g2d.setFont(subTittleFont);
         g2d.drawString(subTittleText, xSubTittle, componentsPanel.getY()+35);
-
-
     }
 }

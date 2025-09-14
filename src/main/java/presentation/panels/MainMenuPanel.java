@@ -13,17 +13,17 @@ public class MainMenuPanel extends JPanel {
     private MainFrame owner;
     private JPanel mainPanel;
     private JPanel componentsPanel;
-    private Button asignacionBtn;
-    private Button refugiosBtn;
-    private Button voluntariosBtn;
+    private Button appoimentsBtn;
+    private Button sheltersBtn;
+    private Button volunteerBtn;
     private Button animalesBtn;
-    private Button masBtn;
+    private Button moreBtn;
 
     public MainMenuPanel(MainFrame owner) {
         setOpaque(false);
         setPreferredSize(new Dimension(366, 600));
-        this.owner = owner;
 
+        this.owner = owner;
         this.mainPanel = new JPanel();
         this.mainPanel.setOpaque(false);
         this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
@@ -32,20 +32,35 @@ public class MainMenuPanel extends JPanel {
         this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
         this.componentsPanel.setPreferredSize(new Dimension(366, 450));
         this.componentsPanel.setBorder(new EmptyBorder(35, 0, 0, 0));
-        this.asignacionBtn = new Button("Asignaciones", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
-        this.refugiosBtn = new Button("Refugios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
-        this.voluntariosBtn = new Button("Voluntarios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.appoimentsBtn = new Button("Asignaciones", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.sheltersBtn = new Button("Refugios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.volunteerBtn = new Button("Voluntarios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.animalesBtn = new Button("Animales", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
-        this.masBtn = new Button("Más", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.moreBtn = new Button("Más", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+
+        //ActionListeners
+        appoimentsBtn.addActionListener(e -> {
+            owner.showNewPanel(owner.getAppoimentPanel());
+        });
+
+        sheltersBtn.addActionListener(e -> {
+            owner.showNewPanel(owner.getSheltersPanel());
+        });
+
+        volunteerBtn.addActionListener(e -> {
+            owner.showNewPanel(owner.getVolunteersPanel());
+        });
+
+        animalesBtn.addActionListener(e -> {
+            owner.showNewPanel(owner.getAnimalsPanel());
+        });
 
         //Add components
-        this.componentsPanel.add(asignacionBtn);
-        this.componentsPanel.add(refugiosBtn);
-        this.componentsPanel.add(voluntariosBtn);
+        this.componentsPanel.add(appoimentsBtn);
+        this.componentsPanel.add(sheltersBtn);
+        this.componentsPanel.add(volunteerBtn);
         this.componentsPanel.add(animalesBtn);
-        this.componentsPanel.add(masBtn);
-
-        //Primera prueba
+        this.componentsPanel.add(moreBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(componentsPanel);
         add(this.mainPanel);
@@ -84,6 +99,9 @@ public class MainMenuPanel extends JPanel {
 
         g2d.setFont(subTittleFont);
         g2d.drawString(subTittleText, xSubTittle, componentsPanel.getY() + 35);
+
+        //Lines
+
 
     }
 }
