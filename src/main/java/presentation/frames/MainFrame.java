@@ -63,6 +63,8 @@ public class MainFrame extends JFrame {
     public AnimalsPanel getAnimalsPanel() {
         return animalsPanel;
     }
+
+
 }
 
 
