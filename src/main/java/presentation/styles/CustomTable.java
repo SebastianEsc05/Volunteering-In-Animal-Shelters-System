@@ -1,4 +1,6 @@
 package presentation.styles;
 
-public class CustomTable {
+import javax.swing.*;
+
+public class CustomTable extends JTable {
 }
