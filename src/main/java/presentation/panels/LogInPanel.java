@@ -39,12 +39,10 @@ public class LogInPanel extends JPanel {
 
         //Add components
         this.mainPanel.add(Box.createVerticalStrut(120));
-
         componentsPanel.add(this.txtUser);
         componentsPanel.add(this.txtPassword);
         componentsPanel.add(this.btnLogIn);
         this.mainPanel.add(componentsPanel);
-
         add(this.mainPanel);
 
     }
@@ -55,16 +53,15 @@ public class LogInPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        //Figura 1
+        //Figure 1
         g2d.setColor(Style.COLOR_BACKGROUND);
         g2d.fillRoundRect(0, mainPanel.getY()+10, getWidth(), 60, 15, 15);
 
-        //Figura 2
+        //Figure 2
         g2d.fillRoundRect(0, componentsPanel.getY(), getWidth(), componentsPanel.getHeight(), 15, 15);
-
         g2d.setColor(Color.black);
 
-        //Posicionamiento del titulo
+        //title positioning
         Font tittleFont = FontUtil.loadFont(24, "Inter_Light");
         String tittleText = "Control de Refugios";
         FontMetrics metricsTittle = g2d.getFontMetrics(tittleFont);
@@ -73,19 +70,13 @@ public class LogInPanel extends JPanel {
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittle, 55);
 
-        //Posicionamiento del sub titulo
+        //sub title positioning
         Font subTittleFont = FontUtil.loadFont(20, "Inter_Light");
-        String subTittleText = "Incio de sesión";
+        String subTittleText = "Inicio de sesión";
         FontMetrics metricsSubTittle = g2d.getFontMetrics(subTittleFont);
         int xSubTittle = (getWidth() - metricsSubTittle.stringWidth(subTittleText)) / 2;
 
         g2d.setFont(subTittleFont);
         g2d.drawString(subTittleText, xSubTittle, componentsPanel.getY()+35);
-
-
-
-
-
-
     }
 }
