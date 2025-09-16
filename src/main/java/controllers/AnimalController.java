@@ -49,6 +49,7 @@ public class AnimalController {
             return false;
         }
         AnimalEntity animalEntity = new AnimalEntity(name, age, date_entry, health_situation, specie, id_shelter);
+        animalEntity.setId(id);
         return this.animalDAO.update(animalEntity);
     }
 

@@ -51,6 +51,7 @@ public class ShelterController {
         if(responible == null) responible = "";
         if(location == null)location = "";
         ShelterEntity shelterEntity = new ShelterEntity(name,responible,capaciy,location);
+        shelterEntity.setId_shelter(id);
         return this.shelterDAO.update(shelterEntity);
     }
 

@@ -2,6 +2,7 @@ package controllers;
 
 import dao.AppoimentDAO;
 import interfaces.IAppoimentDAO;
+import interfaces.IShelterDAO;
 import models.AppoimentEntity;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class AppoimentController {
             return false;
         }
         AppoimentEntity appoimentEntity = new AppoimentEntity(comments, status, date_booked, date_event, id_animal, id_volunteer, activity);
+        appoimentEntity.setId(id);
         return this.appoimentDAO.update(appoimentEntity);
     }
 

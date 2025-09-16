@@ -51,6 +51,7 @@ public class VolunteerController {
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
         VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
+        volunteerEntity.setId_volunteer(id);
         return this.volunteerDAO.update(volunteerEntity);
 
     }
