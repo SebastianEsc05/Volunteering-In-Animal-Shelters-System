@@ -60,7 +60,7 @@ public class AppoimentDAO implements IAppoimentDAO {
                     AppoimentEntity appoimentEntity = new AppoimentEntity();
                     appoimentEntity.setId(rs.getInt("id"));
                     appoimentEntity.setComments(rs.getString("observaciones"));
-                    appoimentEntity.setStatus(rs.getString("estatus"));
+                    appoimentEntity.setStatus(rs.getString("estado"));
                     appoimentEntity.setDate_booked(rs.getString("fecha_de_agenda"));
                     appoimentEntity.setDate_event(rs.getString("fecha_realizacion"));
                     appoimentEntity.setId_animal(rs.getInt("id_animal"));
@@ -101,10 +101,10 @@ public class AppoimentDAO implements IAppoimentDAO {
             ps.setInt(6, appoimentEntity.getId_volunteer());
             ps.setString(7, appoimentEntity.getActivity());
             ps.setInt(8, appoimentEntity.getId());
-            System.out.println("Voluntario actualizado con exito");
+            System.out.println("Asignacion actualizado con exito");
             return ps.executeUpdate() > 0;
         } catch (SQLException exception) {
-            System.out.println("No se ha podido actualizar el voluntario");
+            System.out.println("No se ha podido actualizar la asignacion");
             exception.printStackTrace();
             return false;
         }

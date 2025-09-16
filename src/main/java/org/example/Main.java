@@ -12,14 +12,14 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        System.out.println("-");
+       System.out.println("-");
         VolunteerController volunteerController = new VolunteerController();
-       volunteerController.addVolunteer("pepe", "6681118936", "Sebastianescram01@gmail.com", "2005-06-26", "Doctor");
-        volunteerController.addVolunteer("juanito", "6681118936", "Sebastianescram01@gmail.com", "2005-06-26", "Doctor");
-        volunteerController.addVolunteer("pancho", "6681118936", "Sebastianescram01@gmail.com", "2005-06-26", "Doctor");
-        volunteerController.readVolunteer(2);
+        volunteerController.addVolunteer("pepe", "6681118936", "Sebastianescram01@gmail.com", "2005-06-26", "Doctor");
+        volunteerController.addVolunteer("juanito", "6681119232", "sebaassss@gmail.com", "2005-06-26", "Doctor");
+        volunteerController.addVolunteer("pancho", "6681138222", "sdasdas@gmail.com", "2005-06-26", "Doctor");
+        volunteerController.readVolunteer(3);
       //  volunteerController.deleteVolunteer(1);
-        volunteerController.updateVolunteer(2, "jose", "123456789", "Sebastianescram01@gmail.com", "2005-06-26", "Doctor");
+        volunteerController.updateVolunteer(3, "alfredo", "123123123", "mariano@gmail.com", "2005-06-26", "Doctor");
         System.out.println("Lista de voluntarios: ");
         volunteerController.readAllVolunteers();
         System.out.println("-");
@@ -30,7 +30,7 @@ public class Main {
         shelterController.addShelter("Juanita", "Roberto L", 1000, "Mochis");
         shelterController.addShelter("Pricila", "Juan Manuel", 1000, "Guasave");
         shelterController.readShelter(1);
-      //  shelterController.deleteShelter(2);
+     //   shelterController.deleteShelter(2);
         shelterController.updateShelter(3, "Antonio", "Luis Miguel", 1500, "Guasave");
         System.out.println("Lista de Refugios");
         shelterController.readAllShelters();
@@ -50,10 +50,11 @@ public class Main {
         animalController.addAnimal("luna",12,"2025-06-26","Grave","Perro",1);
         animalController.readAnimal(1);
         animalController.updateAnimal(1,"juanita",11,"2025-06-26","Recuperada","Perro",1);
-     //   animalController.deleteAnimal(2);
-        animalController.readAllAnimals();
+        animalController.deleteAnimal(2);
+    //    animalController.readAllAnimals();
         System.out.println("-");
         System.out.println("-");
+
     }
 
 
