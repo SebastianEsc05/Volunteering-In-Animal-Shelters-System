@@ -5,9 +5,9 @@ import models.AnimalEntity;
 import java.util.List;
 
 public interface IAnimalDAO {
-    void create(AnimalEntity animalEntity);
+    boolean create(AnimalEntity animalEntity);
     AnimalEntity read(int id);
-    void update(AnimalEntity animalEntity);
-    void delete(int id);
+    boolean update(AnimalEntity animalEntity);
+    boolean delete(int id);
     List<AnimalEntity> readAll();
 }

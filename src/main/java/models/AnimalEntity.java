@@ -1,40 +1,40 @@
 package models;
 
 public class AnimalEntity {
-    private int id_animal;
-    private String name_animal;
+    private int id;
+    private String name;
     private int age;
-    private String health_situation;
     private String date_entry;
+    private String health_situation;
+    private String specie;
     private int id_shelter;
-    private int id_specie;
 
     public AnimalEntity() {}
 
-    public AnimalEntity(int id_animal, String name_animal, int age, String health_situation, String date_entry, int id_shelter, int id_specie) {
-        this.id_animal = id_animal;
-        this.name_animal = name_animal;
+    public AnimalEntity(String name, int age, String date_entry, String health_situation,String specie, int id_shelter) {
+        this.name = name;
         this.age = age;
-        this.health_situation = health_situation;
         this.date_entry = date_entry;
+        this.health_situation = health_situation;
+        this.specie = specie;
         this.id_shelter = id_shelter;
-        this.id_specie = id_specie;
+
     }
 
-    public int getId_animal() {
-        return id_animal;
+    public int getId() {
+        return id;
     }
 
-    public void setId_animal(int id_animal) {
-        this.id_animal = id_animal;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getName_animal() {
-        return name_animal;
+    public String getName() {
+        return name;
     }
 
-    public void setName_animal(String name_animal) {
-        this.name_animal = name_animal;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getAge() {
@@ -45,6 +45,14 @@ public class AnimalEntity {
         this.age = age;
     }
 
+    public String getDate_entry() {
+        return date_entry;
+    }
+
+    public void setDate_entry(String date_entry) {
+        this.date_entry = date_entry;
+    }
+
     public String getHealth_situation() {
         return health_situation;
     }
@@ -53,12 +61,12 @@ public class AnimalEntity {
         this.health_situation = health_situation;
     }
 
-    public String getDate_entry() {
-        return date_entry;
+    public String getSpecie() {
+        return specie;
     }
 
-    public void setDate_entry(String date_entry) {
-        this.date_entry = date_entry;
+    public void setSpecie(String specie) {
+        this.specie = specie;
     }
 
     public int getId_shelter() {
@@ -69,24 +77,16 @@ public class AnimalEntity {
         this.id_shelter = id_shelter;
     }
 
-    public int getId_specie() {
-        return id_specie;
-    }
-
-    public void setId_specie(int id_specie) {
-        this.id_specie = id_specie;
-    }
-
     @Override
     public String toString() {
         return "AnimalEntity{" +
-                "id_animal=" + id_animal +
-                ", name_animal='" + name_animal + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", age=" + age +
-                ", health_situation='" + health_situation + '\'' +
                 ", date_entry='" + date_entry + '\'' +
+                ", health_situation='" + health_situation + '\'' +
+                ", specie='" + specie + '\'' +
                 ", id_shelter=" + id_shelter +
-                ", id_specie=" + id_specie +
                 '}';
     }
 }

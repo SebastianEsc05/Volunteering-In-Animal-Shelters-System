@@ -1,8 +1,10 @@
 package org.example;
 
+import controllers.AnimalController;
 import controllers.AppoimentController;
 import controllers.ShelterController;
 import controllers.VolunteerController;
+import models.AnimalEntity;
 import models.AppoimentEntity;
 
 import java.sql.SQLException;
@@ -40,9 +42,12 @@ public class Main {
 //        appoimentController.deleteAppoiment(5);
 //        appoimentController.readAllAppoiments();
 //
-
-
-
+//        AnimalController animalController = new AnimalController();
+//        animalController.addAnimal("luna",12,"2025-06-26","Grave","Perro",1);
+//        animalController.readAnimal(1);
+//        animalController.updateAnimal(1,"juanita",11,"2025-06-26","Recuperada","Perro",1);
+//        animalController.deleteAnimal(2);
+//        animalController.readAllAnimals();
     }
 
 
