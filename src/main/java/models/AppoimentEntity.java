@@ -13,6 +13,16 @@ public class AppoimentEntity {
 
     public AppoimentEntity(){}
 
+    public AppoimentEntity(int id, String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity) {
+        this.comments = comments;
+        this.status = status;
+        this.date_booked = date_booked;
+        this.date_event = date_event;
+        this.id_animal = id_animal;
+        this.id_volunteer = id_volunteer;
+        this.activity = activity;
+    }
+
     public AppoimentEntity(String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity) {
         this.comments = comments;
         this.status = status;

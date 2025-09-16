@@ -11,6 +11,16 @@ public class VolunteerEntity {
     public VolunteerEntity() {
     }
 
+    public VolunteerEntity(int id_volunteer, String name_volunteer, String phone_number, String email, String date_birth, String specialty) {
+        this.id_volunteer = id_volunteer;
+        this.name_volunteer = name_volunteer;
+        this.phone_number = phone_number;
+        this.email = email;
+        this.date_birth = date_birth;
+        this.specialty = specialty;
+
+    }
+
     public VolunteerEntity(String name_volunteer, String phone_number, String email, String date_birth, String specialty) {
         this.name_volunteer = name_volunteer;
         this.phone_number = phone_number;

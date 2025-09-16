@@ -9,12 +9,21 @@ public class ShelterEntity {
 
     public ShelterEntity(){}
 
+    public ShelterEntity(int id_shelter,String name_shelter, String responsible, int capacity, String location) {
+        this.id_shelter = id_shelter;
+        this.name_shelter = name_shelter;
+        this.responsible = responsible;
+        this.capacity = capacity;
+        this.location = location;
+    }
+
     public ShelterEntity(String name_shelter, String responsible, int capacity, String location) {
         this.name_shelter = name_shelter;
         this.responsible = responsible;
         this.capacity = capacity;
         this.location = location;
     }
+
 
     public int getId_shelter() {
         return id_shelter;

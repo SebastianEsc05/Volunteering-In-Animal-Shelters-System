@@ -11,6 +11,18 @@ public class AnimalEntity {
 
     public AnimalEntity() {}
 
+    public AnimalEntity(int id, String name, int age, String date_entry, String health_situation,String specie, int id_shelter) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.date_entry = date_entry;
+        this.health_situation = health_situation;
+        this.specie = specie;
+        this.id_shelter = id_shelter;
+
+    }
+
+
     public AnimalEntity(String name, int age, String date_entry, String health_situation,String specie, int id_shelter) {
         this.name = name;
         this.age = age;
