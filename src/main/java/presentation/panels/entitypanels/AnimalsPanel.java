@@ -1,6 +1,8 @@
 package presentation.panels.entitypanels;
 
 import presentation.frames.MainFrame;
+import presentation.panels.addentitypanels.AddAnimalPanel;
+import presentation.panels.addentitypanels.AddAppoimentPanel;
 import presentation.styles.Button;
 import presentation.styles.FontUtil;
 import presentation.styles.Style;
@@ -9,12 +11,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AnimalsPanel extends EntityPanel{
+    private AddAnimalPanel addAnimalPanel;
     private Button newAnimalBtn;
 
     public AnimalsPanel(MainFrame owner) {
         super(owner);
+        this.addAnimalPanel = new AddAnimalPanel(owner);
         this.newAnimalBtn = new Button("Nuevo Animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         addComponents();
+
+        //ActionListeners
+        newAnimalBtn.addActionListener(e -> {
+            owner.showNewPanel(this.addAnimalPanel);
+        });
 
     }
 

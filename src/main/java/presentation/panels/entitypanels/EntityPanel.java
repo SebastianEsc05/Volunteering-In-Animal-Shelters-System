@@ -20,7 +20,6 @@ public class EntityPanel extends JPanel {
     public EntityPanel(MainFrame owner) {
         setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
         this.owner = owner;
         this.mainPanel = new JPanel();
         this.mainPanel.setOpaque(false);
@@ -29,7 +28,7 @@ public class EntityPanel extends JPanel {
         this.tablePanel = new JPanel();
         this.tablePanel.setOpaque(false);
         this.tablePanel.setPreferredSize(new Dimension(690, 600));
-        this.backBtn = new Button("Volver", 90, 30, 14, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
+        this.backBtn = new Button("←", 50, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //ActionListeners
         backBtn.addActionListener(e -> {
