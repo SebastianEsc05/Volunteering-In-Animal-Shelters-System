@@ -1,33 +1,34 @@
 package models;
 
 public class AppoimentEntity {
-    public enum Status {Completado, Pendiente, Cancelada}
-    private int id_appoiment;
+
+    private int id;
     private String comments;
-    private Status status;
+    private String status;
     private String date_booked;
     private String date_event;
-    private int id_animal;
+    private Integer id_animal;
     private int id_volunteer;
-    private int id_activity;
+    private String activity;
 
-    public AppoimentEntity(int id_appoiment, String comments, Status status, String date_booked, String date_event, int id_animal, int id_volunteer, int id_activity) {
-        this.id_appoiment = id_appoiment;
+    public AppoimentEntity(){}
+
+    public AppoimentEntity(String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity) {
         this.comments = comments;
         this.status = status;
         this.date_booked = date_booked;
         this.date_event = date_event;
         this.id_animal = id_animal;
         this.id_volunteer = id_volunteer;
-        this.id_activity = id_activity;
+        this.activity = activity;
     }
 
-    public int getId_appoiment() {
-        return id_appoiment;
+    public int getId() {
+        return id;
     }
 
-    public void setId_appoiment(int id_appoiment) {
-        this.id_appoiment = id_appoiment;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getComments() {
@@ -38,11 +39,11 @@ public class AppoimentEntity {
         this.comments = comments;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -62,11 +63,11 @@ public class AppoimentEntity {
         this.date_event = date_event;
     }
 
-    public int getId_animal() {
+    public Integer getId_animal() {
         return id_animal;
     }
 
-    public void setId_animal(int id_animal) {
+    public void setId_animal(Integer id_animal) {
         this.id_animal = id_animal;
     }
 
@@ -78,25 +79,25 @@ public class AppoimentEntity {
         this.id_volunteer = id_volunteer;
     }
 
-    public int getId_activity() {
-        return id_activity;
+    public String getActivity() {
+        return activity;
     }
 
-    public void setId_activity(int id_activity) {
-        this.id_activity = id_activity;
+    public void set_activity(String activity) {
+        this.activity = activity;
     }
 
     @Override
     public String toString() {
         return "AppoimentEntity{" +
-                "id_appoiment=" + id_appoiment +
+                "id_appoiment=" + id +
                 ", comments='" + comments + '\'' +
                 ", status=" + status +
                 ", date_booked='" + date_booked + '\'' +
                 ", date_event='" + date_event + '\'' +
                 ", id_animal=" + id_animal +
                 ", id_volunteer=" + id_volunteer +
-                ", id_activity=" + id_activity +
+                ", activity=" + activity +
                 '}';
     }
 }
