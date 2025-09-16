@@ -5,12 +5,17 @@ import presentation.styles.RoundBorder;
 import presentation.styles.Style;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class TxtFieldPh extends JTextField {
     private String txtPlaceholder;
+    private int limit;
     private int width;
     private int height;
     private int fontSize;
@@ -27,6 +32,44 @@ public class TxtFieldPh extends JTextField {
         setPreferredSize(new Dimension(width, height));
         setBorder(new RoundBorder(this.cornerRadius, Color.white));
         setOpaque(false);
+    }
+
+    public TxtFieldPh(String txtPlaceholder, int limit, int width, int height, int fontSize, int cornerRadius) {
+        this.txtPlaceholder = txtPlaceholder;
+        this.limit = limit;
+        this.width = width;
+        this.height = height;
+        this.fontSize = fontSize;
+        this.cornerRadius = cornerRadius;
+
+        setFont(FontUtil.loadFont(fontSize, "Inter_Regular"));
+        setPreferredSize(new Dimension(width, height));
+        setBorder(new RoundBorder(this.cornerRadius, Color.white));
+        setOpaque(false);
+        if (limit > 0) {
+            setDocument(new LimitDocument());
+        }
+    }
+
+    @Override
+    protected Document createDefaultModel() {
+        if (limit > 0) {
+            return new LimitDocument();
+        } else {
+            return super.createDefaultModel();
+        }
+    }
+
+    private class LimitDocument extends PlainDocument {
+        @Override
+        public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+            if (str == null) return;
+
+            if ((getLength() + str.length()) <= limit) {
+                super.insertString(offset, str, attr);
+            }
+        }
+
     }
 
     public void verifyFocus() {

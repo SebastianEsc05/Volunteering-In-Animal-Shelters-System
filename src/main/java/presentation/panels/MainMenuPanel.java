@@ -79,7 +79,6 @@ public class MainMenuPanel extends JPanel {
 
         //Figure 2
         g2d.fillRoundRect(0, componentsPanel.getY(), getWidth(), componentsPanel.getHeight(), 20, 20);
-
         g2d.setColor(Color.black);
 
         //title positioning
@@ -87,7 +86,6 @@ public class MainMenuPanel extends JPanel {
         String tittleText = "Control de Refugios";
         FontMetrics metricsTittle = g2d.getFontMetrics(tittleFont);
         int xTittle = (getWidth() - metricsTittle.stringWidth(tittleText)) / 2;
-
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittle, 55);
 
@@ -96,12 +94,8 @@ public class MainMenuPanel extends JPanel {
         String subTittleText = "Menú Principal";
         FontMetrics metricsSubTittle = g2d.getFontMetrics(subTittleFont);
         int xSubTittle = (getWidth() - metricsSubTittle.stringWidth(subTittleText)) / 2;
-
         g2d.setFont(subTittleFont);
         g2d.drawString(subTittleText, xSubTittle, componentsPanel.getY() + 35);
-
-        //Lines
-
 
     }
 }
