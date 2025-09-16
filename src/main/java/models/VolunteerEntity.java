@@ -6,16 +6,18 @@ public class VolunteerEntity {
     private String phone_number;
     private String email;
     private String date_birth;
+    private String specialty;
 
     public VolunteerEntity() {
     }
 
-    public VolunteerEntity(int id_volunteer, String name_volunteer, String phone_number, String email, String date_birth) {
-        this.id_volunteer = id_volunteer;
+    public VolunteerEntity(String name_volunteer, String phone_number, String email, String date_birth, String specialty) {
         this.name_volunteer = name_volunteer;
         this.phone_number = phone_number;
         this.email = email;
         this.date_birth = date_birth;
+        this.specialty = specialty;
+
     }
 
     public int getId_volunteer() {
@@ -56,6 +58,14 @@ public class VolunteerEntity {
 
     public void setDate_birth(String date_birth) {
         this.date_birth = date_birth;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
     @Override
