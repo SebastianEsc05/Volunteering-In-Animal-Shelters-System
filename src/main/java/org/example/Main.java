@@ -38,7 +38,7 @@ public class Main {
         System.out.println("-");
 
         AppoimentController appoimentController = new AppoimentController();
-        appoimentController.addAppoiment("el voluntario pasea por el parque al animal", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
+        appoimentController.addAppoiment("el voluntario pasea por el parque al animal", "Cancelado", "2025-07-11", "2025-07-12", null, 1, "pasear por el parque");
         appoimentController.readAppoiment(1);
         appoimentController.updateAppoiment(1, "el voluntario limpia el area", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
         appoimentController.deleteAppoiment(2);
