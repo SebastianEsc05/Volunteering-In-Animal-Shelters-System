@@ -1,12 +1,17 @@
 package controllers;
 
+import config.ConexionDB;
 import dao.VolunteerDAO;
 import interfaces.IVolunteerDAO;
 import models.VolunteerEntity;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VolunteerController {
 
@@ -17,11 +22,26 @@ public class VolunteerController {
     }
 
     public boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty) throws SQLException {
-        if(name == null || name.trim().isEmpty()){
+        if(phone_number == null || !validate_phone_number(phone_number)){
+            System.out.println("Voluntario no agregado Telefono invalido");
             return false;
         }
-        if(phone_number == null)phone_number = "";
-        if(email == null) email = "";
+        if(email == null || !validateEmail(email)){
+            System.out.println("Voluntario no agregado email invalido");
+            return  false;
+        }
+        if(phoneExists(phone_number)){
+            System.out.println("Voluntario no agregado, El telefono de este voluntario ya se encuentra registrado");
+            return false;
+        }
+        if(emailExists(email)){
+            System.out.println("Voluntario no agregado, El email de este voluntario ya se encuentra registrado");
+            return false;
+        }
+        if(name == null || name.trim().isEmpty()){
+            System.out.println("Voluntario no agregado, nombre invalido");
+            return false;
+        }
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
 
@@ -66,19 +86,18 @@ public class VolunteerController {
         return this.volunteerDAO.readAll();
     }
 
-    boolean verificarTelefono(String telefono){
-        // Expresion regular de telefono
+    boolean validate_phone_number(String phone){
         String RegexTelefono = "^\\d{10}$";
         Pattern patternTelefonoPattern = Pattern.compile(RegexTelefono);
 
-        Matcher matcherTelefono =  patternTelefonoPattern.matcher(telefono);
+        Matcher matcherTelefono =  patternTelefonoPattern.matcher(phone);
 
         return matcherTelefono.matches();
     }
 
-    boolean verificarEmail(String email){
+    boolean validateEmail(String email){
         // Expresion regular de Email
-        String RegexEmail = "^\\w+@+\\w+.+\\w";
+        String RegexEmail = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern  patternEmail = Pattern.compile(RegexEmail);
 
         // Verificacion de los datos con las expresiones regulares
@@ -86,5 +105,39 @@ public class VolunteerController {
         Matcher matcherEmail = patternEmail.matcher(email);
 
         return  matcherEmail.matches();
+    }
+
+    public boolean phoneExists(String phone){
+        String sql = "SELECT COUNT(*) FROM voluntarios WHERE telefono = ?";
+        try(
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+            ps.setString(1,phone);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean emailExists(String email){
+        String sql = "SELECT COUNT(*) FROM voluntarios WHERE email = ?";
+        try(
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

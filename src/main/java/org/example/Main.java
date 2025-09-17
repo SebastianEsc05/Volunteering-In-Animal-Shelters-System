@@ -18,7 +18,7 @@ public class Main {
         volunteerController.addVolunteer("juanito", "6681119232", "sebaassss@gmail.com", "2005-06-26", "Doctor");
         volunteerController.addVolunteer("pancho", "6681138222", "sdasdas@gmail.com", "2005-06-26", "Doctor");
         volunteerController.readVolunteer(3);
-      //  volunteerController.deleteVolunteer(1);
+        volunteerController.deleteVolunteer(2);
         volunteerController.updateVolunteer(3, "alfredo", "123123123", "mariano@gmail.com", "2005-06-26", "Doctor");
         System.out.println("Lista de voluntarios: ");
         volunteerController.readAllVolunteers();
@@ -30,7 +30,7 @@ public class Main {
         shelterController.addShelter("Juanita", "Roberto L", 1000, "Mochis");
         shelterController.addShelter("Pricila", "Juan Manuel", 1000, "Guasave");
         shelterController.readShelter(1);
-     //   shelterController.deleteShelter(2);
+        shelterController.deleteShelter(2);
         shelterController.updateShelter(3, "Antonio", "Luis Miguel", 1500, "Guasave");
         System.out.println("Lista de Refugios");
         shelterController.readAllShelters();
@@ -41,7 +41,7 @@ public class Main {
         appoimentController.addAppoiment("el voluntario pasea por el parque al animal", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
         appoimentController.readAppoiment(1);
         appoimentController.updateAppoiment(1, "el voluntario limpia el area", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
-     //   appoimentController.deleteAppoiment(5);
+        appoimentController.deleteAppoiment(2);
         appoimentController.readAllAppoiments();
         System.out.println("-");
         System.out.println("-");
@@ -51,7 +51,7 @@ public class Main {
         animalController.readAnimal(1);
         animalController.updateAnimal(1,"juanita",11,"2025-06-26","Recuperada","Perro",1);
         animalController.deleteAnimal(2);
-    //    animalController.readAllAnimals();
+        animalController.readAllAnimals();
         System.out.println("-");
         System.out.println("-");
 

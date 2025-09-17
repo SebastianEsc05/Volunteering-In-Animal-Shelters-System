@@ -18,8 +18,8 @@ public class AnimalController {
     }
 
     public boolean addAnimal(String name, int age, String date_entry, String health_situation, String specie, int id_shelter){
-        if(verificarEstado(health_situation)){
-            health_situation=null;
+        if(checkStatus(health_situation)){
+            health_situation = null;
         }
         if(name == null || name.trim().isEmpty() || date_entry == null || health_situation == null || specie == null){
             return false;
@@ -62,10 +62,11 @@ public class AnimalController {
         return this.animalDAO.readAll();
     }
 
-    boolean verificarEstado(String valor){
-
-        Pattern p = Pattern.compile("^(?:cancelado|pendiente|completado)$", Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(valor);
+    boolean checkStatus(String value){
+        Pattern p = Pattern.compile("^(?:saludable|grave|critico)$", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(value);
         return m.matches();
     }
+
+
 }
