@@ -3,7 +3,8 @@ package controllers;
 import dao.VolunteerDAO;
 import interfaces.IVolunteerDAO;
 import models.VolunteerEntity;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,8 +24,15 @@ public class VolunteerController {
         if(email == null) email = "";
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
-        VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
-        return this.volunteerDAO.create(volunteerEntity);
+
+
+        if(verificarEmail(email)&&verificarTelefono(phone_number)){
+            VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
+            return this.volunteerDAO.create(volunteerEntity);
+        }else{
+            return false;
+        }
+
     }
 
     public VolunteerEntity readVolunteer(int id) throws SQLException {
@@ -50,13 +58,33 @@ public class VolunteerController {
         if(email == null) email = "";
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
-        VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
-        volunteerEntity.setId_volunteer(id);
-        return this.volunteerDAO.update(volunteerEntity);
+
 
     }
 
     public List<VolunteerEntity> readAllVolunteers(){
         return this.volunteerDAO.readAll();
+    }
+
+    boolean verificarTelefono(String telefono){
+        // Expresion regular de telefono
+        String RegexTelefono = "^\\d{10}$";
+        Pattern patternTelefonoPattern = Pattern.compile(RegexTelefono);
+
+        Matcher matcherTelefono =  patternTelefonoPattern.matcher(telefono);
+
+        return matcherTelefono.matches();
+    }
+
+    boolean verificarEmail(String email){
+        // Expresion regular de Email
+        String RegexEmail = "^\\w+@+\\w+.+\\w";
+        Pattern  patternEmail = Pattern.compile(RegexEmail);
+
+        // Verificacion de los datos con las expresiones regulares
+
+        Matcher matcherEmail = patternEmail.matcher(email);
+
+        return  matcherEmail.matches();
     }
 }
