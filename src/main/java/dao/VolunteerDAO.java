@@ -18,14 +18,7 @@ public class VolunteerDAO implements IVolunteerDAO {
 
     @Override
     public boolean create(VolunteerEntity volunteerEntity) throws SQLException {
-        if(phoneExists(volunteerEntity.getPhone_number())){
-            System.out.println("Voluntario no agregado, El telefono de este voluntario ya se encuentra registrado");
-            return false;
-        }
-        if(emailExists(volunteerEntity.getEmail())){
-            System.out.println("Voluntario no agregado, El email de este voluntario ya se encuentra registrado");
-            return false;
-        }
+
         String sql = "INSERT INTO voluntarios (nombre, telefono, email, fecha_nacimiento, especialidad) VALUES (?,?,?,?,?)";
             try(
                     Connection con = ConexionDB.getConnection();
@@ -144,37 +137,5 @@ public class VolunteerDAO implements IVolunteerDAO {
         return volunteers;
     }
 
-    public boolean phoneExists(String phone){
-        String sql = "SELECT COUNT(*) FROM voluntarios WHERE telefono = ?";
-        try(
-                Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)
-                ) {
-            ps.setString(1,phone);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
-    public boolean emailExists(String email){
-        String sql = "SELECT COUNT(*) FROM voluntarios WHERE email = ?";
-        try(
-                Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)
-        ) {
-            ps.setString(1,email);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
