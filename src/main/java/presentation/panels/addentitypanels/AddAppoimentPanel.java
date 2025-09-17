@@ -28,6 +28,36 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.observationsTextArea = new TextAreaCustom(4, 20);
 
         //Panels
+        this.componentsPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setColor(Style.COLOR_BACKGROUND);
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2d.setColor(Color.black);
+
+                //Labels
+                Font SubTittleFont = FontUtil.loadFont(16, "Inter_Light");
+                g2d.setFont(SubTittleFont);
+                g2d.drawString("Fecha", 50, 45);
+                g2d.drawString("Animal", 170, 45);
+                g2d.drawString("Voluntario", 270, 45);
+
+                String activityText = "Actividad";
+                FontMetrics metricsActivity = g2d.getFontMetrics(SubTittleFont);
+                int xActivityText = (getWidth() - metricsActivity.stringWidth(activityText)) / 2;
+                g2d.drawString(activityText, xActivityText, 135);
+
+                String detailsText = "Observaciones";
+                FontMetrics metricsDetails = g2d.getFontMetrics(SubTittleFont);
+                int xDetailsText = (getWidth() - metricsDetails.stringWidth(detailsText)) / 2;
+                g2d.drawString(detailsText, xDetailsText, 225);
+
+                g2d.dispose();
+            }
+        };
         this.componentsPanel.setOpaque(false);
         this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 60));
         this.componentsPanel.setPreferredSize(new Dimension(366, 400));
@@ -57,11 +87,13 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.mainPanel.add(Box.createVerticalStrut(10));
         this.mainPanel.add(this.buttonsPanel);
         add(this.mainPanel);
+        System.out.println(this.dateField.getY() + " " + this.animalTextField.getY() + " " + this.volunteerTextField.getY());
+        System.out.println(this.activityTextField.getX());
 
     }
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -79,10 +111,6 @@ public class AddAppoimentPanel extends AddEntityPanel {
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittle, 60);
 
-        //Labels
-        Font SubTittleFont = FontUtil.loadFont(14, "Inter_Light");
-        g2d.setFont(SubTittleFont);
-        g2d.drawString("Fecha", this.dateField.getX(), 200);
 
     }
 }
