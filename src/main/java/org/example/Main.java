@@ -39,6 +39,8 @@ public class Main {
 
         AppoimentController appoimentController = new AppoimentController();
         appoimentController.addAppoiment("el voluntario pasea por el parque al animal", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
+        appoimentController.addAppoiment("el animal come", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
+        appoimentController.addAppoiment("el voluntario come", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
         appoimentController.readAppoiment(1);
         appoimentController.updateAppoiment(1, "el voluntario limpia el area", "pendiente", "2025-07-11", null, null, 1, "pasear por el parque");
         appoimentController.deleteAppoiment(2);
@@ -47,14 +49,15 @@ public class Main {
         System.out.println("-");
 
         AnimalController animalController = new AnimalController();
-        animalController.addAnimal("luna",12,"2025-06-26","Grave","Perro",1);
+        animalController.addAnimal("luna",12,"2025-06-26","grave","Perro",1);
+        animalController.addAnimal("maria",5,"2025-06-26","saludable","gato",1);
+        animalController.addAnimal("diego",2,"2025-06-26","critico","Perro",1);
         animalController.readAnimal(1);
         animalController.updateAnimal(1,"juanita",11,"2025-06-26","Recuperada","Perro",1);
         animalController.deleteAnimal(2);
         animalController.readAllAnimals();
         System.out.println("-");
         System.out.println("-");
-
     }
 
 
