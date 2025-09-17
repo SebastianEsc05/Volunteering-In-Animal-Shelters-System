@@ -38,7 +38,7 @@ public class VolunteerController {
             System.out.println("Voluntario no agregado, El email de este voluntario ya se encuentra registrado");
             return false;
         }
-        if(name == null || name.trim().isEmpty()){
+        if(name == null ){
             System.out.println("Voluntario no agregado, nombre invalido");
             return false;
         }

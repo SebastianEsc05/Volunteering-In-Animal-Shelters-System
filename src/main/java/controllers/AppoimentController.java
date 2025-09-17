@@ -31,11 +31,11 @@ public class AppoimentController {
             System.out.println("no se encontró registro del voluntario");
             return false;
         }
-        if(status == null || status.trim().isEmpty()){
+        if(status == null){
             System.out.println("asegurese de proporcionar un estado correcto");
             return false;
         }
-        if(activity == null || activity.trim().isEmpty()){
+        if(activity == null ){
             System.out.println("asegurese de proporcionar una actividad");
             return false;
         }

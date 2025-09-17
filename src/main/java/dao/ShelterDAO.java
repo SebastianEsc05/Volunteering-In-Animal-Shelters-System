@@ -3,7 +3,6 @@ package dao;
 import config.ConexionDB;
 import interfaces.IShelterDAO;
 import models.ShelterEntity;
-import models.VolunteerEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
