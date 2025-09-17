@@ -15,7 +15,7 @@ public class ShelterController {
     }
 
     public boolean addShelter(String name, String responsible, int capacity, String location){
-        if(name == null || name.trim().isEmpty()){
+        if(name == null ){
             return false;
         }
         if(responsible == null)responsible = "";
