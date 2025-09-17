@@ -44,8 +44,15 @@ public class VolunteerController {
         }
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
-        VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
-        return this.volunteerDAO.create(volunteerEntity);
+
+
+        if(validateEmail(email)&&validate_phone_number(phone_number)){
+            VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
+            return this.volunteerDAO.create(volunteerEntity);
+        }else{
+            return false;
+        }
+
     }
 
     public VolunteerEntity readVolunteer(int id) throws SQLException {
@@ -71,10 +78,10 @@ public class VolunteerController {
         if(email == null) email = "";
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
-        VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
+
+        VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email,date_birth,specialty);
         volunteerEntity.setId_volunteer(id);
         return this.volunteerDAO.update(volunteerEntity);
-
     }
 
     public List<VolunteerEntity> readAllVolunteers(){

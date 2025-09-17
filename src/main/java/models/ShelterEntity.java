@@ -67,12 +67,15 @@ public class ShelterEntity {
 
     @Override
     public String toString() {
-        return "ShelterEntity{" +
-                "id_shelter=" + id_shelter +
-                ", name_shelter='" + name_shelter + '\'' +
-                ", responsible='" + responsible + '\'' +
-                ", capacity=" + capacity +
-                ", location='" + location + '\'' +
-                '}';
+
+        String formato = "| %-5d | %-15s | %-15s | %-5d | %-15s |";
+        return String.format(formato,getId_shelter(),getName_shelter(),getResponsible(),getCapacity(),getLocation());
+        /**return "ShelterEntity{" +
+                "id_shelter=" + id_shelter + //1
+                ", name_shelter='" + name_shelter + '\'' + //2
+                ", responsible='" + responsible + '\'' + //3
+                ", capacity=" + capacity + //4
+                ", location='" + location + '\'' + //5
+                '}';**/
     }
 }

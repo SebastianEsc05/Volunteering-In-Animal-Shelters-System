@@ -127,6 +127,7 @@ public class AnimalDAO implements IAnimalDAO{
                 animalEntity.setAge(rs.getInt("edad"));
                 animalEntity.setDate_entry(rs.getString("fecha_ingreso"));
                 animalEntity.setHealth_situation(rs.getString("estado_salud"));
+                animalEntity.setSpecie(rs.getString("especie"));
                 animalEntity.setId_shelter(rs.getInt("id_refugio"));
 
                 animals.add(animalEntity);
@@ -134,6 +135,7 @@ public class AnimalDAO implements IAnimalDAO{
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+
         for(AnimalEntity animalEntity : animals){
             System.out.println(animalEntity.toString());
         }
