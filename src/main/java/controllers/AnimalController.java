@@ -18,7 +18,7 @@ public class AnimalController {
     }
 
     public boolean addAnimal(String name, int age, String date_entry, String health_situation, String specie, int id_shelter){
-        if(checkStatus(health_situation)){
+        if(!checkStatus(health_situation)){
             health_situation = null;
         }
         if(name == null || name.trim().isEmpty() || date_entry == null || health_situation == null || specie == null){
