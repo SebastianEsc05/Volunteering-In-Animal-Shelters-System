@@ -91,7 +91,11 @@ public class AnimalEntity {
 
     @Override
     public String toString() {
-        return "AnimalEntity{" +
+        String formato = "| %-5d | %-15s | %-5d | %-15s | %-15s | %-15s | %-5d |";
+        return String.format(formato,getId(),getName(),getAge(),getDate_entry(),getHealth_situation(),getSpecie(),getId_shelter());
+
+
+        /**return "AnimalEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
@@ -99,6 +103,6 @@ public class AnimalEntity {
                 ", health_situation='" + health_situation + '\'' +
                 ", specie='" + specie + '\'' +
                 ", id_shelter=" + id_shelter +
-                '}';
+                '}';**/
     }
 }

@@ -99,15 +99,19 @@ public class AppoimentEntity {
 
     @Override
     public String toString() {
-        return "AppoimentEntity{" +
-                "id_appoiment=" + id +
-                ", comments='" + comments + '\'' +
-                ", status=" + status +
-                ", date_booked='" + date_booked + '\'' +
-                ", date_event='" + date_event + '\'' +
-                ", id_animal=" + id_animal +
-                ", id_volunteer=" + id_volunteer +
-                ", activity=" + activity +
-                '}';
+
+        String formato = "| %-5d | %-15s | %-15s | %-15s | %-15s | %-5d | %-5d | %-15s |";
+        return String.format(formato,getId(),getComments(),getStatus(),getDate_booked(),getDate_event(),getId_animal(),getId_volunteer(),getActivity());
+
+        /**return "AppoimentEntity{" +
+                "id_appoiment=" + id + //1
+                ", comments='" + comments + '\'' + //2
+                ", status=" + status + //3
+                ", date_booked='" + date_booked + '\'' + //4
+                ", date_event='" + date_event + '\'' + //5
+                ", id_animal=" + id_animal + //6
+                ", id_volunteer=" + id_volunteer + //7
+                ", activity=" + activity + //8
+                '}';**/
     }
 }

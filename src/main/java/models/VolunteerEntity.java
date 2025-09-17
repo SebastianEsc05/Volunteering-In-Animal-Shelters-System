@@ -80,12 +80,16 @@ public class VolunteerEntity {
 
     @Override
     public String toString() {
-        return "VolunteerEntity{" +
-                "id_volunteer=" + id_volunteer +
-                ", name_volunteer='" + name_volunteer + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", email='" + email + '\'' +
-                ", date_birth='" + date_birth + '\'' +
-                '}';
+
+        String formato = "| %-5d | %-15s | %-15s | %-30s | %-15s | %-15s |";
+
+        return  String.format(formato,getId_volunteer(),getName_volunteer(),getPhone_number(),getEmail(),getDate_birth(),getSpecialty());
+        /**return "VolunteerEntity{" +
+                "id_volunteer=" + id_volunteer + //1
+                ", name_volunteer='" + name_volunteer + '\'' + //2
+                ", phone_number='" + phone_number + '\'' + //3
+                ", email='" + email + '\'' + //4
+                ", date_birth='" + date_birth + '\'' + //5
+                '}';**/
     }
 }

@@ -46,7 +46,7 @@ public class VolunteerController {
         if(specialty == null)specialty = "";
 
 
-        if(verificarEmail(email)&&verificarTelefono(phone_number)){
+        if(validateEmail(email)&&validate_phone_number(phone_number)){
             VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
             return this.volunteerDAO.create(volunteerEntity);
         }else{
@@ -79,7 +79,9 @@ public class VolunteerController {
         if(date_birth == null) date_birth = "";
         if(specialty == null)specialty = "";
 
-
+        VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email,date_birth,specialty);
+        volunteerEntity.setId_volunteer(id);
+        return this.volunteerDAO.update(volunteerEntity);
     }
 
     public List<VolunteerEntity> readAllVolunteers(){
