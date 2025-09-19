@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IShelterDAO {
 
-    void createTableShelters() throws PersistenceException;
-
     void insertShelters() throws PersistenceException;
 
     boolean create(ShelterEntity shelterEntity) throws PersistenceException;
@@ -22,4 +20,6 @@ public interface IShelterDAO {
     List<ShelterEntity> readAll() throws PersistenceException;
 
     void clieanUpTable() throws PersistenceException;
+
+    boolean isNotEmpty() throws PersistenceException;
 }

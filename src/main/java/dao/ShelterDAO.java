@@ -12,35 +12,18 @@ import java.util.List;
 public class ShelterDAO implements IShelterDAO {
 
     @Override
-    public void createTableShelters() throws PersistenceException {
-        String sql = "CREATE TABLE refugios (" +
-                "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
-                "nombre VARCHAR(100) NOT NULL, " +
-                "responsable VARCHAR(50) NOT NULL, " +
-                "capacidad INT NOT NULL, " +
-                "ubicacion VARCHAR(100)" +
-                ");";
-
-        try (Connection conn = ConexionDB.getConnection();
-             Statement st = conn.createStatement()) {
-            st.execute(sql);
-            System.out.println("Tabla 'Refugios' creada.");
-
-        }catch (SQLException e) {
-            System.out.println("Error al crear la tabla refugios: " + e.getMessage());
+    public void insertShelters() throws PersistenceException {
+        if (isNotEmpty()) {
+            System.out.println("Error: La tabla 'refugios' ya tiene datos. No se insertarán datos de ejemplo.\n");
+            return;
 
         }
-    }
-
-    @Override
-    public void insertShelters() throws PersistenceException {
         int contInserts = 0;
         String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Shelter 1
             System.out.println("Insertando refugio 1...");
             pstmt.setString(1, "Refugio California");
             pstmt.setString(2, "Lucia Gómez");
@@ -49,7 +32,6 @@ public class ShelterDAO implements IShelterDAO {
             pstmt.executeUpdate();
             contInserts++;
 
-            // Producto 2
             System.out.println("Insertando refugio 2...");
             pstmt.setString(1, "Casa Ramirez");
             pstmt.setString(2, "Gustavo Cerati");
@@ -58,7 +40,6 @@ public class ShelterDAO implements IShelterDAO {
             pstmt.executeUpdate();
             contInserts++;
 
-            // Producto 3
             System.out.println("Insertando refugio 3...");
             pstmt.setString(1, "Refugio La Paz");
             pstmt.setString(2, "Rocio Guadalupe Diaz");
@@ -68,10 +49,10 @@ public class ShelterDAO implements IShelterDAO {
             contInserts++;
 
         } catch (SQLException e) {
-            System.out.println("Error al insertar productos: " + e.getMessage());
+            System.out.println("Error al insertar refugios: " + e.getMessage());
         }
 
-        System.out.printf("Se insertaron %d Refugios.%n", contInserts);
+        System.out.printf("Se insertaron %d refugios.%n\n", contInserts);
     }
 
     @Override
@@ -203,6 +184,21 @@ public class ShelterDAO implements IShelterDAO {
         } catch (SQLException e) {
             System.out.println("Error al limpiar la tabla refugios: " + e.getMessage());
 
+        }
+    }
+
+    @Override
+    public boolean isNotEmpty() {
+        String sql = "SELECT 1 FROM refugios LIMIT 1";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar registros de la tabla refugios", e);
         }
     }
 

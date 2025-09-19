@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IAnimalDAO {
 
-    void createTableAnimals() throws PersistenceException;
-
     void insertAnimals() throws PersistenceException;
 
     boolean create(AnimalEntity animalEntity) throws PersistenceException;
@@ -22,4 +20,6 @@ public interface IAnimalDAO {
     boolean deleteById(int id) throws PersistenceException;
 
     List<AnimalEntity> readAll() throws PersistenceException;
+
+    boolean isNotEmpty();
 }

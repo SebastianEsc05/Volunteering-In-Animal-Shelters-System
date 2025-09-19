@@ -5,22 +5,24 @@ import dao.exceptions.PersistenceException;
 import interfaces.dao.IAppoimentDAO;
 import models.AppoimentEntity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppoimentDAO implements IAppoimentDAO {
 
     @Override
+    public void insertAppointments() throws PersistenceException {
+
+    }
+
+    @Override
     public boolean create(AppoimentEntity appoimentEntity) throws PersistenceException {
         String sql = "INSERT INTO asignaciones (observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad) VALUES (?,?,?,?,?,?,?)";
-        try(
+        try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
-        ){
+        ) {
             ps.setString(1, appoimentEntity.getComments());
             ps.setObject(2, appoimentEntity.getStatus());
             ps.setString(3, appoimentEntity.getDate_booked());
@@ -37,11 +39,11 @@ public class AppoimentDAO implements IAppoimentDAO {
                 ps.setNull(5, java.sql.Types.INTEGER);
             }
 
-            ps.setInt(6, appoimentEntity.getId_volunteer()) ;
+            ps.setInt(6, appoimentEntity.getId_volunteer());
             ps.setString(7, appoimentEntity.getActivity());
             System.out.println("La asignación se ha agregado exitosamente");
             return ps.executeUpdate() > 0;
-        }catch (SQLException exception){
+        } catch (SQLException exception) {
             System.out.println("No se ha podido agregar la asignación");
             exception.printStackTrace();
             return false;
@@ -51,12 +53,12 @@ public class AppoimentDAO implements IAppoimentDAO {
     @Override
     public AppoimentEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM asignaciones where id = ?";
-        try(
+        try (
                 Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1,id);
-            try(ResultSet rs = ps.executeQuery()){
-                if(rs.next()){
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     AppoimentEntity appoimentEntity = new AppoimentEntity();
                     appoimentEntity.setId(rs.getInt("id"));
                     appoimentEntity.setComments(rs.getString("observaciones"));
@@ -70,7 +72,7 @@ public class AppoimentDAO implements IAppoimentDAO {
                     return appoimentEntity;
                 }
             }
-        }catch (SQLException exception) {
+        } catch (SQLException exception) {
             System.out.println("No se ha encontrado la asignacion");
             exception.printStackTrace();
             return null;
@@ -116,13 +118,13 @@ public class AppoimentDAO implements IAppoimentDAO {
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1,id);
+            ps.setInt(1, id);
 
             int deletedRows = ps.executeUpdate();
-            if(deletedRows > 0){
+            if (deletedRows > 0) {
                 System.out.println("La asignacion se ha eliminado con exito");
                 return true;
-            }else{
+            } else {
                 System.out.println("No se ha podido eliminar la asignacion");
                 return false;
             }
@@ -156,10 +158,24 @@ public class AppoimentDAO implements IAppoimentDAO {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        for(AppoimentEntity appoimentEntity : appoiments){
+        for (AppoimentEntity appoimentEntity : appoiments) {
             System.out.println(appoimentEntity.toString());
         }
         return appoiments;
     }
 
+    @Override
+    public boolean isNotEmpty() {
+        String sql = "SELECT 1 FROM asignaciones LIMIT 1";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar registros de la tabla asignaciones", e);
+        }
+    }
 }
