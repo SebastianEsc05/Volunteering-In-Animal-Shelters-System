@@ -2,7 +2,8 @@ package controllers;
 
 import config.ConexionDB;
 import dao.VolunteerDAO;
-import interfaces.IVolunteerDAO;
+import interfaces.controller.IVolunteerController;
+import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class VolunteerController {
+public class VolunteerController implements IVolunteerController{
 
     private IVolunteerDAO volunteerDAO;
 
@@ -21,7 +22,7 @@ public class VolunteerController {
         this.volunteerDAO = new VolunteerDAO();
     }
 
-    public boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty) throws SQLException {
+    public boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty) {
         if(phone_number == null || !validate_phone_number(phone_number)){
             System.out.println("Voluntario no agregado Telefono invalido");
             return false;
@@ -55,19 +56,12 @@ public class VolunteerController {
 
     }
 
-    public VolunteerEntity readVolunteer(int id) throws SQLException {
+    public VolunteerEntity readVolunteer(int id){
         if(id <= 0){
             return null;
         }
         return this.volunteerDAO.read(id);
 
-    }
-
-    public boolean deleteVolunteer(int id) throws SQLException {
-        if(id <= 0 ){
-            return false;
-        }
-        return this.volunteerDAO.delete(id);
     }
 
     public boolean updateVolunteer(int id, String name, String phone_number, String email, String date_birth, String specialty){
@@ -84,8 +78,20 @@ public class VolunteerController {
         return this.volunteerDAO.update(volunteerEntity);
     }
 
+    public boolean deleteVolunteer(int id) {
+        if(id <= 0 ){
+            return false;
+        }
+        return this.volunteerDAO.delete(id);
+    }
+
     public List<VolunteerEntity> readAllVolunteers(){
+        System.out.println("----------------------------------------------------------------------------------------------------------------------");
+        String formato = "| %-5s | %-15s | %-15s | %-30s | %-19s | %-15s |";
+        System.out.println(String.format(formato, "ID", "NOMBRE", "TELEFONO", "EMAIL", "FECHA DE NACIMIENTO", "ESPECIALIDAD"));
+        System.out.println("----------------------------------------------------------------------------------------------------------------------");
         return this.volunteerDAO.readAll();
+
     }
 
     boolean validate_phone_number(String phone){

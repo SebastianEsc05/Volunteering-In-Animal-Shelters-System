@@ -1,7 +1,8 @@
 package dao;
 
 import config.ConexionDB;
-import interfaces.IShelterDAO;
+import dao.exceptions.PersistenceException;
+import interfaces.dao.IShelterDAO;
 import models.ShelterEntity;
 
 import java.sql.*;
@@ -11,7 +12,7 @@ import java.util.List;
 public class ShelterDAO implements IShelterDAO {
 
     @Override
-    public boolean create(ShelterEntity shelterEntity) {
+    public boolean create(ShelterEntity shelterEntity) throws PersistenceException {
         String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?,?,?,?);";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -33,7 +34,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public ShelterEntity read(int id) {
+    public ShelterEntity read(int id) throws PersistenceException {
         String sql = "SELECT * FROM refugios where id = ?";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -60,7 +61,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public boolean update(ShelterEntity shelterEntity) {
+    public boolean update(ShelterEntity shelterEntity) throws PersistenceException {
         String sql = "UPDATE refugios SET nombre = ?, responsable = ?, capacidad = ?, ubicacion = ? where id = ?";
         try (
             Connection con = ConexionDB.getConnection();
@@ -80,7 +81,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws PersistenceException {
         String sql = "DELETE FROM refugios WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -103,7 +104,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public List<ShelterEntity> readAll() {
+    public List<ShelterEntity> readAll() throws PersistenceException {
         String sql = "SELECT * FROM refugios";
         List<ShelterEntity> shelters = new ArrayList<>();
         try (

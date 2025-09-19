@@ -1,12 +1,13 @@
 package controllers;
 
 import dao.ShelterDAO;
-import interfaces.IShelterDAO;
+import interfaces.controller.IShelterController;
+import interfaces.dao.IShelterDAO;
 import models.ShelterEntity;
 
 import java.util.List;
 
-public class ShelterController {
+public class ShelterController implements IShelterController {
 
     private IShelterDAO shelterDAO;
 
@@ -34,13 +35,6 @@ public class ShelterController {
         return this.shelterDAO.read(id);
     }
 
-    public boolean deleteShelter(int id){
-        if(id < 0){
-            return false;
-        }
-        return this.shelterDAO.delete(id);
-    }
-
     public boolean updateShelter(int id, String name, String responible, int capaciy, String location){
         if(id < 0 || capaciy < 0){
             return false;
@@ -53,6 +47,13 @@ public class ShelterController {
         ShelterEntity shelterEntity = new ShelterEntity(name,responible,capaciy,location);
         shelterEntity.setId_shelter(id);
         return this.shelterDAO.update(shelterEntity);
+    }
+
+    public boolean deleteShelter(int id){
+        if(id < 0){
+            return false;
+        }
+        return this.shelterDAO.delete(id);
     }
 
     public List<ShelterEntity> readAllShelters(){

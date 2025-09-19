@@ -1,9 +1,9 @@
 package dao;
 
 import config.ConexionDB;
-import interfaces.IAnimalDAO;
+import dao.exceptions.PersistenceException;
+import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
-import models.AppoimentEntity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,15 +12,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimalDAO implements IAnimalDAO{
+public class AnimalDAO implements IAnimalDAO {
 
     @Override
-    public boolean create(AnimalEntity animalEntity) {
+    public boolean create(AnimalEntity animalEntity) throws PersistenceException {
         String sql = "INSERT INTO animales (nombre, edad, fecha_ingreso, estado_salud, especie, id_refugio) VALUES (?,?,?,?,?,?)";
-        try(
+        try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
-        ){
+        ) {
             ps.setString(1, animalEntity.getName());
             ps.setInt(2, animalEntity.getAge());
             ps.setString(3, animalEntity.getDate_entry());
@@ -30,7 +30,7 @@ public class AnimalDAO implements IAnimalDAO{
 
             System.out.println("El Animal se ha agregado exitosamente");
             return ps.executeUpdate() > 0;
-        }catch (SQLException exception){
+        } catch (SQLException exception) {
             System.out.println("No se ha podido insertar el animal");
             exception.printStackTrace();
             return false;
@@ -38,14 +38,14 @@ public class AnimalDAO implements IAnimalDAO{
     }
 
     @Override
-    public AnimalEntity read(int id) {
+    public AnimalEntity read(int id) throws PersistenceException {
         String sql = "SELECT * FROM animales where id = ?";
-        try(
+        try (
                 Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setInt(1,id);
-            try(ResultSet rs = ps.executeQuery()){
-                if(rs.next()){
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     AnimalEntity animalEntity = new AnimalEntity();
                     animalEntity.setId(rs.getInt("id"));
                     animalEntity.setName(rs.getString("nombre"));
@@ -53,13 +53,14 @@ public class AnimalDAO implements IAnimalDAO{
                     animalEntity.setDate_entry(rs.getString("fecha_ingreso"));
                     animalEntity.setHealth_situation(rs.getString("estado_salud"));
                     animalEntity.setSpecie(rs.getString("especie"));
-                    animalEntity.setId_shelter(rs.getInt("id_refugio"));;
+                    animalEntity.setId_shelter(rs.getInt("id_refugio"));
+                    ;
 
                     System.out.println("Animal encotrado: " + animalEntity.toString());
                     return animalEntity;
                 }
             }
-        }catch (SQLException exception) {
+        } catch (SQLException exception) {
             System.out.println("No se ha encontrado el animal");
             exception.printStackTrace();
             return null;
@@ -68,13 +69,13 @@ public class AnimalDAO implements IAnimalDAO{
     }
 
     @Override
-    public boolean update(AnimalEntity animalEntity) {
+    public boolean update(AnimalEntity animalEntity) throws PersistenceException {
         String sql = "UPDATE animales SET nombre = ?, edad = ?, fecha_ingreso = ?, estado_salud = ?, especie = ?, id_refugio = ? where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, animalEntity.getName());
-            ps.setInt(2,animalEntity.getAge());
+            ps.setInt(2, animalEntity.getAge());
             ps.setString(3, animalEntity.getDate_entry());
             ps.setString(4, animalEntity.getHealth_situation());
             ps.setString(5, animalEntity.getSpecie());
@@ -90,18 +91,18 @@ public class AnimalDAO implements IAnimalDAO{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws PersistenceException {
         String sql = "DELETE FROM animales WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1,id);
+            ps.setInt(1, id);
 
             int deletedRows = ps.executeUpdate();
-            if(deletedRows > 0){
+            if (deletedRows > 0) {
                 System.out.println("El animal se ha eliminado con exito");
                 return true;
-            }else{
+            } else {
                 System.out.println("No se ha podido eliminar al animal");
                 return false;
             }
@@ -113,7 +114,7 @@ public class AnimalDAO implements IAnimalDAO{
     }
 
     @Override
-    public List<AnimalEntity> readAll() {
+    public List<AnimalEntity> readAll() throws PersistenceException {
         String sql = "SELECT * FROM animales";
         List<AnimalEntity> animals = new ArrayList<>();
         try (
@@ -136,7 +137,7 @@ public class AnimalDAO implements IAnimalDAO{
             exception.printStackTrace();
         }
 
-        for(AnimalEntity animalEntity : animals){
+        for (AnimalEntity animalEntity : animals) {
             System.out.println(animalEntity.toString());
         }
         return animals;

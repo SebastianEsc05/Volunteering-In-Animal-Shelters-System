@@ -2,9 +2,9 @@ package controllers;
 
 import config.ConexionDB;
 import dao.AnimalDAO;
-import interfaces.IAnimalDAO;
+import interfaces.controller.IAnimalController;
+import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
-import models.VolunteerEntity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AnimalController {
+public class AnimalController implements IAnimalController {
 
     public IAnimalDAO animalDAO;
 
@@ -56,13 +56,6 @@ public class AnimalController {
 
     }
 
-    public boolean deleteAnimal(int id){
-        if(id <= 0){
-            return false;
-        }
-        return this.animalDAO.delete(id);
-    }
-
     public boolean updateAnimal(int id, String name, int age, String date_entry, String health_situation, String specie, int id_shelter){
         if(name == null || name.trim().isEmpty() || date_entry == null || health_situation == null || specie == null){
             return false;
@@ -73,6 +66,13 @@ public class AnimalController {
         AnimalEntity animalEntity = new AnimalEntity(name, age, date_entry, health_situation, specie, id_shelter);
         animalEntity.setId(id);
         return this.animalDAO.update(animalEntity);
+    }
+
+    public boolean deleteAnimal(int id){
+        if(id <= 0){
+            return false;
+        }
+        return this.animalDAO.delete(id);
     }
 
     public List<AnimalEntity> readAllAnimals(){
