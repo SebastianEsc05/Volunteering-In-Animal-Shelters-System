@@ -6,21 +6,18 @@ import controllers.ShelterController;
 import controllers.VolunteerController;
 import models.AnimalEntity;
 import models.AppoimentEntity;
+import structure.DatabaseInitializer;
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 
 public class Main {
 
     public static void main(String[] args) throws SQLException {
+
+        System.out.println("\nCreando la base de datos y tablas correspondientes...");
+        DatabaseInitializer databaseInitializer = new DatabaseInitializer();
         ShelterController shelterController = new ShelterController();
-
-        System.out.println("\nCreando tabla shelters...");
-        shelterController.createTableShelters();
-
-        System.out.println("\nPoblando tabla shelters...\n");
-        shelterController.insertShelters();
-        //System.out.println("Limpiando tabla shelters...\n");
-        //shelterController.clieanUpTable();
 
     }
 }
