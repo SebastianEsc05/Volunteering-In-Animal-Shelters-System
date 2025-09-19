@@ -80,8 +80,7 @@ public class VolunteerEntity {
 
     @Override
     public String toString() {
-
-        String formato = "| %-5d | %-15s | %-15s | %-30s | %-15s | %-15s |";
+        String formato = "| %-5d | %-15s | %-15s | %-30s | %-19s | %-15s |";
 
         return  String.format(formato,getId_volunteer(),getName_volunteer(),getPhone_number(),getEmail(),getDate_birth(),getSpecialty());
         /**return "VolunteerEntity{" +

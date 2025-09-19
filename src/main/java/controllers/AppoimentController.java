@@ -2,8 +2,8 @@ package controllers;
 
 import config.ConexionDB;
 import dao.AppoimentDAO;
-import interfaces.IAppoimentDAO;
-import interfaces.IShelterDAO;
+import interfaces.controller.IAppoimentController;
+import interfaces.dao.IAppoimentDAO;
 import models.AppoimentEntity;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AppoimentController {
+public class AppoimentController implements IAppoimentController {
 
     private IAppoimentDAO appoimentDAO;
 
@@ -50,14 +50,7 @@ public class AppoimentController {
         if(id < 0){
             return null;
         }
-        return this.appoimentDAO.read(id);
-    }
-
-    public boolean deleteAppoiment(int id){
-        if(id < 0){
-            return false;
-        }
-        return this.appoimentDAO.delete(id);
+        return this.appoimentDAO.readById(id);
     }
 
     public boolean updateAppoiment(int id, String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity){
@@ -76,6 +69,13 @@ public class AppoimentController {
         AppoimentEntity appoimentEntity = new AppoimentEntity(comments, status, date_booked, date_event, id_animal, id_volunteer, activity);
         appoimentEntity.setId(id);
         return this.appoimentDAO.update(appoimentEntity);
+    }
+
+    public boolean deleteAppoiment(int id){
+        if(id < 0){
+            return false;
+        }
+        return this.appoimentDAO.deleteById(id);
     }
 
     public List<AppoimentEntity> readAllAppoiments(){
