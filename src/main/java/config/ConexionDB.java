@@ -8,11 +8,17 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConexionDB {
+    /**
+     * variables that represents database credentials
+     */
     private static String url;
     private static String user;
     private static String password;
     private static String driver;
 
+    /**
+     * static block that construct the database credentials
+     */
     static {
         try(InputStream input = ConexionDB.class.getClassLoader().getResourceAsStream("db.properties")){
             Properties props = new Properties();
@@ -34,6 +40,11 @@ public class ConexionDB {
         }
     }
 
+    /**
+     * Get a connection with MySQL database
+     * @return Connection with the database
+     * @throws SQLException
+     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }

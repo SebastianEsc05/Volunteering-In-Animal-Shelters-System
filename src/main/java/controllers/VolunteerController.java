@@ -15,12 +15,28 @@ import java.util.regex.Pattern;
 
 public class VolunteerController {
 
+    /**
+     * The Data Access Object used for all volunteers operations
+     */
     private IVolunteerDAO volunteerDAO;
 
+    /**
+     * constructs a new VolunteerController
+     */
     public VolunteerController(){
         this.volunteerDAO = new VolunteerDAO();
     }
 
+    /**
+     * creates a new volunteer on database 
+     * @param name
+     * @param phone_number
+     * @param email
+     * @param date_birth
+     * @param specialty
+     * @return
+     * @throws SQLException
+     */
     public boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty) throws SQLException {
         if(phone_number == null || !validate_phone_number(phone_number)){
             System.out.println("Voluntario no agregado Telefono invalido");
@@ -54,7 +70,12 @@ public class VolunteerController {
         }
 
     }
-
+    /**
+     * Read a volunteer by the id on database
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public VolunteerEntity readVolunteer(int id) throws SQLException {
         if(id <= 0){
             return null;
@@ -62,7 +83,12 @@ public class VolunteerController {
         return this.volunteerDAO.read(id);
 
     }
-
+    /**
+     * Deletes a volunteer by the id on database
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public boolean deleteVolunteer(int id) throws SQLException {
         if(id <= 0 ){
             return false;
@@ -70,6 +96,16 @@ public class VolunteerController {
         return this.volunteerDAO.delete(id);
     }
 
+    /**
+     * Update a volunteer on database
+     * @param id
+     * @param name
+     * @param phone_number
+     * @param email
+     * @param date_birth
+     * @param specialty
+     * @return
+     */
     public boolean updateVolunteer(int id, String name, String phone_number, String email, String date_birth, String specialty){
         if(name == null){
             return false;
@@ -83,11 +119,19 @@ public class VolunteerController {
         volunteerEntity.setId_volunteer(id);
         return this.volunteerDAO.update(volunteerEntity);
     }
-
+    /**
+     * returns a list of volunteers
+     * @return returns a list from selecting all the rows from Volunteers Table on database
+     */
     public List<VolunteerEntity> readAllVolunteers(){
         return this.volunteerDAO.readAll();
     }
 
+    /**
+     * validates a phone number format
+     * @param phone
+     * @return true if the number matches with the format otherwise returns false
+     */
     boolean validate_phone_number(String phone){
         String RegexTelefono = "^\\d{10}$";
         Pattern patternTelefonoPattern = Pattern.compile(RegexTelefono);
@@ -96,7 +140,11 @@ public class VolunteerController {
 
         return matcherTelefono.matches();
     }
-
+    /**
+     * validates a email format
+     * @param email
+     * @return true if email address matches with the format otherwise returns false
+     */
     boolean validateEmail(String email){
         // Expresion regular de Email
         String RegexEmail = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
@@ -108,7 +156,11 @@ public class VolunteerController {
 
         return  matcherEmail.matches();
     }
-
+    /**
+     * Find a phone number on database
+     * @param phone
+     * @return true if phone number matches with a row otherwise returns false
+     */
     public boolean phoneExists(String phone){
         String sql = "SELECT COUNT(*) FROM voluntarios WHERE telefono = ?";
         try(
@@ -125,7 +177,11 @@ public class VolunteerController {
         }
         return false;
     }
-
+    /**
+     * find a email address on database
+     * @param email
+     * @return true if email address matches with a row otherwise returns false
+     */
     public boolean emailExists(String email){
         String sql = "SELECT COUNT(*) FROM voluntarios WHERE email = ?";
         try(
