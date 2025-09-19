@@ -35,7 +35,7 @@ public class VolunteerDAO implements IVolunteerDAO {
     }
 
     @Override
-    public VolunteerEntity read(int id) throws PersistenceException {
+    public VolunteerEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM voluntarios where id = ?";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -84,7 +84,7 @@ public class VolunteerDAO implements IVolunteerDAO {
     }
 
     @Override
-    public boolean delete(int id) throws PersistenceException {
+    public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM voluntarios WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();

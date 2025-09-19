@@ -12,12 +12,74 @@ import java.util.List;
 public class ShelterDAO implements IShelterDAO {
 
     @Override
+    public void createTableShelters() throws PersistenceException {
+        String sql = "CREATE TABLE refugios (" +
+                "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
+                "nombre VARCHAR(100) NOT NULL, " +
+                "responsable VARCHAR(50) NOT NULL, " +
+                "capacidad INT NOT NULL, " +
+                "ubicacion VARCHAR(100)" +
+                ");";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement st = conn.createStatement()) {
+            st.execute(sql);
+            System.out.println("Tabla 'Refugios' creada.");
+
+        }catch (SQLException e) {
+            System.out.println("Error al crear la tabla refugios: " + e.getMessage());
+
+        }
+    }
+
+    @Override
+    public void insertShelters() throws PersistenceException {
+        int contInserts = 0;
+        String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Shelter 1
+            System.out.println("Insertando refugio 1...");
+            pstmt.setString(1, "Refugio California");
+            pstmt.setString(2, "Lucia Gómez");
+            pstmt.setInt(3, 25);
+            pstmt.setString(4, "Los Angeles, CA");
+            pstmt.executeUpdate();
+            contInserts++;
+
+            // Producto 2
+            System.out.println("Insertando refugio 2...");
+            pstmt.setString(1, "Casa Ramirez");
+            pstmt.setString(2, "Gustavo Cerati");
+            pstmt.setInt(3, 28);
+            pstmt.setString(4, "Buenos Aires, Argentina");
+            pstmt.executeUpdate();
+            contInserts++;
+
+            // Producto 3
+            System.out.println("Insertando refugio 3...");
+            pstmt.setString(1, "Refugio La Paz");
+            pstmt.setString(2, "Rocio Guadalupe Diaz");
+            pstmt.setInt(3, 30);
+            pstmt.setString(4, "Madrid, España");
+            pstmt.executeUpdate();
+            contInserts++;
+
+        } catch (SQLException e) {
+            System.out.println("Error al insertar productos: " + e.getMessage());
+        }
+
+        System.out.printf("Se insertaron %d Refugios.%n", contInserts);
+    }
+
+    @Override
     public boolean create(ShelterEntity shelterEntity) throws PersistenceException {
         String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?,?,?,?);";
-        try (
-                Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)
-        ){
+
+        try (Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)){
             ps.setString(1, shelterEntity.getName_shelter());;
             ps.setString(2, shelterEntity.getResponsible());
             ps.setInt(3, shelterEntity.getCapacity());
@@ -34,7 +96,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public ShelterEntity read(int id) throws PersistenceException {
+    public ShelterEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM refugios where id = ?";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -81,7 +143,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public boolean delete(int id) throws PersistenceException {
+    public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM refugios WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -127,6 +189,21 @@ public class ShelterDAO implements IShelterDAO {
             System.out.println(shelterEntity);
         }
         return shelters;
+    }
+
+    @Override
+    public void clieanUpTable() throws PersistenceException {
+        String sql = "DELETE FROM refugios";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement stmt = conn.createStatement()) {
+            int filas = stmt.executeUpdate(sql);
+            System.out.println("Se eliminaron " + filas + " registros de la tabla refugios.");
+
+        } catch (SQLException e) {
+            System.out.println("Error al limpiar la tabla refugios: " + e.getMessage());
+
+        }
     }
 
 }

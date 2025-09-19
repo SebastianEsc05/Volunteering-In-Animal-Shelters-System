@@ -50,7 +50,7 @@ public class AppoimentController implements IAppoimentController {
         if(id < 0){
             return null;
         }
-        return this.appoimentDAO.read(id);
+        return this.appoimentDAO.readById(id);
     }
 
     public boolean updateAppoiment(int id, String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity){
@@ -75,7 +75,7 @@ public class AppoimentController implements IAppoimentController {
         if(id < 0){
             return false;
         }
-        return this.appoimentDAO.delete(id);
+        return this.appoimentDAO.deleteById(id);
     }
 
     public List<AppoimentEntity> readAllAppoiments(){

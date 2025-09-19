@@ -6,9 +6,20 @@ import models.ShelterEntity;
 import java.util.List;
 
 public interface IShelterDAO {
+
+    void createTableShelters() throws PersistenceException;
+
+    void insertShelters() throws PersistenceException;
+
     boolean create(ShelterEntity shelterEntity) throws PersistenceException;
-    ShelterEntity read(int id) throws PersistenceException;
+
+    ShelterEntity readById(int id) throws PersistenceException;
+
     boolean update(ShelterEntity shelterEntity) throws PersistenceException;
-    boolean delete(int id) throws PersistenceException;
+
+    boolean deleteById(int id) throws PersistenceException;
+
     List<ShelterEntity> readAll() throws PersistenceException;
+
+    void clieanUpTable() throws PersistenceException;
 }

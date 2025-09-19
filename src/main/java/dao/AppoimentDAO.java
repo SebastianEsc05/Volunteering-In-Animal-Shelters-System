@@ -49,7 +49,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public AppoimentEntity read(int id) throws PersistenceException {
+    public AppoimentEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM asignaciones where id = ?";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -111,7 +111,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public boolean delete(int id) throws PersistenceException {
+    public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM asignaciones WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();

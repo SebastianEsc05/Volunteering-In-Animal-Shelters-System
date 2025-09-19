@@ -5,14 +5,44 @@ import dao.exceptions.PersistenceException;
 import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalDAO implements IAnimalDAO {
+    @Override
+    public void createTableAnimals() throws PersistenceException {
+        String sql = "CREATE TABLE animales (" +
+                "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
+                "nombre VARCHAR(100) NOT NULL, " +
+                "edad INT NOT NULL, " +
+                "fecha_ingreso DATE NOT NULL, " +
+                "estado_salud VARCHAR(50), " +
+                "especie VARCHAR(100), " +
+                "id_refugio INT,    " +
+                "FOREIGN KEY (id_refugio) REFERENCES refugios(id)\n" +
+                ");";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement st = conn.createStatement()) {
+            st.execute(sql);
+            System.out.println("Tabla 'Animales' creada.");
+
+        }catch (SQLException e) {
+            System.out.println("Error al crear la tabla animales: " + e.getMessage());
+
+        }
+    }
+
+    @Override
+    public void insertAnimals() throws PersistenceException {
+
+    }
+
+    @Override
+    public AnimalEntity readByHealthSituation(String healthSituation) throws PersistenceException {
+        return null;
+    }
 
     @Override
     public boolean create(AnimalEntity animalEntity) throws PersistenceException {
@@ -38,7 +68,7 @@ public class AnimalDAO implements IAnimalDAO {
     }
 
     @Override
-    public AnimalEntity read(int id) throws PersistenceException {
+    public AnimalEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM animales where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -91,7 +121,7 @@ public class AnimalDAO implements IAnimalDAO {
     }
 
     @Override
-    public boolean delete(int id) throws PersistenceException {
+    public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM animales WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();

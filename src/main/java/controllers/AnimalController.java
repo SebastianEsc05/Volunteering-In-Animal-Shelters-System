@@ -52,7 +52,7 @@ public class AnimalController implements IAnimalController {
         if(id <= 0){
             return null;
         }
-        return this.animalDAO.read(id);
+        return this.animalDAO.readById(id);
 
     }
 
@@ -72,7 +72,7 @@ public class AnimalController implements IAnimalController {
         if(id <= 0){
             return false;
         }
-        return this.animalDAO.delete(id);
+        return this.animalDAO.deleteById(id);
     }
 
     public List<AnimalEntity> readAllAnimals(){

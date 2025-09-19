@@ -1,10 +1,15 @@
 package interfaces.controller;
 
+import dao.exceptions.PersistenceException;
 import models.ShelterEntity;
 
 import java.util.List;
 
 public interface IShelterController {
+
+    void createTableShelters();
+
+    void insertShelters();
 
     boolean addShelter(String name, String responsible, int capacity, String location);
 
@@ -15,4 +20,6 @@ public interface IShelterController {
     boolean deleteShelter(int id);
 
     List<ShelterEntity> readAllShelters();
+
+    void clieanUpTable();
 }

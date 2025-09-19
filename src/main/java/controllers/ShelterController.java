@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.ShelterDAO;
+import dao.exceptions.PersistenceException;
 import interfaces.controller.IShelterController;
 import interfaces.dao.IShelterDAO;
 import models.ShelterEntity;
@@ -13,6 +14,16 @@ public class ShelterController implements IShelterController {
 
     public ShelterController(){
         this.shelterDAO = new ShelterDAO();
+    }
+
+    @Override
+    public void createTableShelters(){
+        this.shelterDAO.createTableShelters();
+    }
+
+    @Override
+    public void insertShelters(){
+        this.shelterDAO.insertShelters();
     }
 
     public boolean addShelter(String name, String responsible, int capacity, String location){
@@ -32,7 +43,7 @@ public class ShelterController implements IShelterController {
         if(id < 0){
             return null;
         }
-        return this.shelterDAO.read(id);
+        return this.shelterDAO.readById(id);
     }
 
     public boolean updateShelter(int id, String name, String responible, int capaciy, String location){
@@ -53,11 +64,16 @@ public class ShelterController implements IShelterController {
         if(id < 0){
             return false;
         }
-        return this.shelterDAO.delete(id);
+        return this.shelterDAO.deleteById(id);
     }
 
     public List<ShelterEntity> readAllShelters(){
         return this.shelterDAO.readAll();
+    }
+
+    @Override
+    public void clieanUpTable() {
+        this.shelterDAO.clieanUpTable();
     }
 
 }

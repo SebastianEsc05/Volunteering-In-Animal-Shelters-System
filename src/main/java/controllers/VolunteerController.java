@@ -60,7 +60,7 @@ public class VolunteerController implements IVolunteerController{
         if(id <= 0){
             return null;
         }
-        return this.volunteerDAO.read(id);
+        return this.volunteerDAO.readById(id);
 
     }
 
@@ -82,7 +82,7 @@ public class VolunteerController implements IVolunteerController{
         if(id <= 0 ){
             return false;
         }
-        return this.volunteerDAO.delete(id);
+        return this.volunteerDAO.deleteById(id);
     }
 
     public List<VolunteerEntity> readAllVolunteers(){

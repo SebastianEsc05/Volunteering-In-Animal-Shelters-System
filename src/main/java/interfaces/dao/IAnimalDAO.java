@@ -6,9 +6,20 @@ import models.AnimalEntity;
 import java.util.List;
 
 public interface IAnimalDAO {
+
+    void createTableAnimals() throws PersistenceException;
+
+    void insertAnimals() throws PersistenceException;
+
     boolean create(AnimalEntity animalEntity) throws PersistenceException;
-    AnimalEntity read(int id) throws PersistenceException;
+
+    AnimalEntity readById(int id) throws PersistenceException;
+
+    AnimalEntity readByHealthSituation(String healthSituation) throws PersistenceException;
+
     boolean update(AnimalEntity animalEntity) throws PersistenceException;
-    boolean delete(int id) throws PersistenceException;
+
+    boolean deleteById(int id) throws PersistenceException;
+
     List<AnimalEntity> readAll() throws PersistenceException;
 }
