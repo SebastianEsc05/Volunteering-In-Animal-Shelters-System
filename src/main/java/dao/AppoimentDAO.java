@@ -1,9 +1,9 @@
 package dao;
 
 import config.ConexionDB;
-import interfaces.IAppoimentDAO;
+import dao.exceptions.PersistenceException;
+import interfaces.dao.IAppoimentDAO;
 import models.AppoimentEntity;
-import models.VolunteerEntity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.util.List;
 public class AppoimentDAO implements IAppoimentDAO {
 
     @Override
-    public boolean create(AppoimentEntity appoimentEntity) {
+    public boolean create(AppoimentEntity appoimentEntity) throws PersistenceException {
         String sql = "INSERT INTO asignaciones (observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad) VALUES (?,?,?,?,?,?,?)";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -49,7 +49,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public AppoimentEntity read(int id) {
+    public AppoimentEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM asignaciones where id = ?";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -79,7 +79,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public boolean update(AppoimentEntity appoimentEntity) {
+    public boolean update(AppoimentEntity appoimentEntity) throws PersistenceException {
         String sql = "UPDATE asignaciones SET observaciones = ?, estado = ?, fecha_de_agenda = ?, fecha_realizacion = ?, id_animal = ?, id_voluntario = ?, actividad = ? where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -111,7 +111,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM asignaciones WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -134,7 +134,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public List<AppoimentEntity> readAll() {
+    public List<AppoimentEntity> readAll() throws PersistenceException {
         String sql = "SELECT * FROM asignaciones";
         List<AppoimentEntity> appoiments = new ArrayList<>();
         try (

@@ -1,15 +1,11 @@
 package dao;
 
 import config.ConexionDB;
-import controllers.VolunteerController;
-import interfaces.IVolunteerDAO;
+import dao.exceptions.PersistenceException;
+import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
 
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +18,7 @@ public class VolunteerDAO implements IVolunteerDAO {
      * adds a volunteer entity object into the volunteer Table on database
      * @param volunteerEntity
      */
-    public boolean create(VolunteerEntity volunteerEntity) throws SQLException {
+    public boolean create(VolunteerEntity volunteerEntity) throws PersistenceException {
 
         String sql = "INSERT INTO voluntarios (nombre, telefono, email, fecha_nacimiento, especialidad) VALUES (?,?,?,?,?)";
             try(
@@ -49,7 +45,7 @@ public class VolunteerDAO implements IVolunteerDAO {
      * @return VolunteerEntity
      */
     @Override
-    public VolunteerEntity read(int id) throws SQLException {
+    public VolunteerEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM voluntarios where id = ?";
         try(
                 Connection con = ConexionDB.getConnection();
@@ -79,7 +75,7 @@ public class VolunteerDAO implements IVolunteerDAO {
      * Updates a volunteer in the database
      */
     @Override
-    public boolean update(VolunteerEntity volunteerEntity) {
+    public boolean update(VolunteerEntity volunteerEntity) throws PersistenceException {
         String sql = "UPDATE voluntarios SET nombre = ?, telefono = ?, email = ?, fecha_nacimiento = ?, especialidad = ? where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -102,7 +98,7 @@ public class VolunteerDAO implements IVolunteerDAO {
      * Deletes a volunteer in the database by the ID
      */
     @Override
-    public boolean delete(int id) {
+    public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM voluntarios WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -129,7 +125,7 @@ public class VolunteerDAO implements IVolunteerDAO {
      * @return a list with every volunteer from the database
      */
     @Override
-    public List<VolunteerEntity> readAll() {
+    public List<VolunteerEntity> readAll() throws PersistenceException {
         String sql = "SELECT * FROM voluntarios";
         List<VolunteerEntity> volunteers = new ArrayList<>();
         try (
@@ -149,9 +145,11 @@ public class VolunteerDAO implements IVolunteerDAO {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+
         for(VolunteerEntity volunteerEntity : volunteers){
             System.out.println(volunteerEntity.toString());
         }
+        System.out.println("----------------------------------------------------------------------------------------------------------------------");
         return volunteers;
     }
 
