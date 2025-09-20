@@ -13,19 +13,27 @@ import java.awt.*;
 import java.text.ParseException;
 
 public class AddAppoimentPanel extends AddEntityPanel {
+    private JPanel activityPanel;
     private FormattedDateField dateField;
     private TxtFieldPh animalTextField;
     private TxtFieldPh volunteerTextField;
     private TxtFieldPh activityTextField;
     private TextAreaCustom observationsTextArea;
+    private JCheckBox animalCheckBox;
 
     public AddAppoimentPanel(MainFrame owner) {
         super(owner);
+        this.activityPanel = new JPanel();
+        this.activityPanel.setOpaque(false);
+        this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        this.activityPanel.setPreferredSize(new Dimension(300, 70));
         this.dateField = new FormattedDateField();
         this.animalTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.volunteerTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.activityTextField = new TxtFieldPh(" ", 200, 30, 15, 15);
         this.observationsTextArea = new TextAreaCustom(4, 20);
+        animalCheckBox = new JCheckBox("Involucra animal");
+        animalCheckBox.setFont(FontUtil.loadFont(12, "Inter_Light"));
 
         //Panels
         this.componentsPanel = new JPanel() {
@@ -53,7 +61,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
                 String detailsText = "Observaciones";
                 FontMetrics metricsDetails = g2d.getFontMetrics(SubTittleFont);
                 int xDetailsText = (getWidth() - metricsDetails.stringWidth(detailsText)) / 2;
-                g2d.drawString(detailsText, xDetailsText, 225);
+                g2d.drawString(detailsText, xDetailsText, 270);
 
                 g2d.dispose();
             }
@@ -78,7 +86,9 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.componentsPanel.add(this.dateField);
         this.componentsPanel.add(this.animalTextField);
         this.componentsPanel.add(this.volunteerTextField);
-        this.componentsPanel.add(this.activityTextField);
+        this.activityPanel.add(this.activityTextField);
+        this.activityPanel.add(this.animalCheckBox);
+        this.componentsPanel.add(this.activityPanel);
         this.componentsPanel.add(textAreascroll);
         this.buttonsPanel.add(this.backBtn);
         this.buttonsPanel.add(this.addBtn);
