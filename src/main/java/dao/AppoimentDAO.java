@@ -106,6 +106,7 @@ public class AppoimentDAO implements IAppoimentDAO {
             ps.setInt(8, appoimentEntity.getId());
             System.out.println("Asignacion actualizado con exito");
             return ps.executeUpdate() > 0;
+
         } catch (SQLException exception) {
             System.out.println("No se ha podido actualizar la asignacion");
             exception.printStackTrace();

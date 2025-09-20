@@ -1,5 +1,8 @@
 package presentation.panels.addentitypanels;
 
+import controllers.AnimalController;
+import controllers.AppoimentController;
+import controllers.ControllerException;
 import models.AppoimentEntity;
 import presentation.frames.MainFrame;
 import presentation.styles.FontUtil;
@@ -8,6 +11,7 @@ import presentation.styles.textfields.FormattedDateField;
 import presentation.styles.textfields.TextAreaCustom;
 import presentation.styles.textfields.TxtFieldPh;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -68,6 +72,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
                 g2d.dispose();
             }
         };
+
         this.componentsPanel.setOpaque(false);
         this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 60));
         this.componentsPanel.setPreferredSize(new Dimension(366, 400));
@@ -107,41 +112,52 @@ public class AddAppoimentPanel extends AddEntityPanel {
     }
 
     public void addApooiment() {
+        try {
+            //Get data from textFields
+            Integer animalId = null;
+            String animalIdText = animalTextField.getText().trim();
+            if (!animalIdText.isEmpty()) {
+                if (animalIdText.matches("\\d+")) {
+                    animalId = Integer.parseInt(animalIdText);
+                }
+            } else {
+                    JOptionPane.showMessageDialog(this, "El ID de animal debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
+            int volunteerId = 0;
+            if (!volunteerTextField.getText().trim().isEmpty()) {
+                volunteerId = Integer.parseInt(volunteerTextField.getText());
+            }
 
-        //Get data from textFields
-        Integer animalId = null;
-        if (!animalTextField.getText().trim().isEmpty()) {
-            animalId = Integer.parseInt(animalTextField.getText());
+            String activity = activityTextField.getText();
+            boolean animalCheck = animalCheckBox.isSelected();
+            String comments = commentsTextArea.getText();
+
+            //Actual date from today
+            LocalDate todayDate = LocalDate.now();
+
+            //Get Date booked from dateField
+            LocalDate dateBooked = null;
+            if (dateField.getFecha() != null) {
+                dateBooked = dateField.getFecha().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+            }
+
+            AppoimentController appoimentController = new AppoimentController();
+            boolean success = appoimentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments,"pendiente", animalCheck);
+            if (success){
+                JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+            }else{
+                JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar el cliente",  "Error",  JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (ControllerException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        Integer volunteerId = null;
-        if (!volunteerTextField.getText().trim().isEmpty()) {
-            volunteerId = Integer.parseInt(volunteerTextField.getText());
-        }
-
-        String activity = activityTextField.getText();
-        boolean animalCheck = animalCheckBox.isSelected();
-        String comments = commentsTextArea.getText();
-
-        //Actual date from today
-        LocalDate todayDate = LocalDate.now();
-
-        //Get Date booked from dateField
-        LocalDate dateBooked = null;
-        if (dateField.getFecha() != null) {
-            dateBooked = dateField.getFecha().toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-        }
-
-        AppoimentEntity apoimentEntity = new AppoimentEntity();
-        apoimentEntity.setDate_booked(dateBooked);
-        apoimentEntity.setDate_event(todayDate);
-        apoimentEntity.setId_animal(animalId);
-        apoimentEntity.setId_volunteer(volunteerId);
-        apoimentEntity.set_activity(activity);
-        apoimentEntity.setComments(comments);
 
     }
 
