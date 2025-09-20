@@ -1,5 +1,9 @@
 package presentation.panels.addentitypanels;
 
+import controllers.AnimalController;
+import controllers.AppoimentController;
+import controllers.ControllerException;
+import models.AppoimentEntity;
 import presentation.frames.MainFrame;
 import presentation.styles.FontUtil;
 import presentation.styles.Style;
@@ -7,25 +11,35 @@ import presentation.styles.textfields.FormattedDateField;
 import presentation.styles.textfields.TextAreaCustom;
 import presentation.styles.textfields.TxtFieldPh;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class AddAppoimentPanel extends AddEntityPanel {
+    private JPanel activityPanel;
     private FormattedDateField dateField;
     private TxtFieldPh animalTextField;
     private TxtFieldPh volunteerTextField;
     private TxtFieldPh activityTextField;
-    private TextAreaCustom observationsTextArea;
+    private TextAreaCustom commentsTextArea;
+    private JCheckBox animalCheckBox;
 
     public AddAppoimentPanel(MainFrame owner) {
         super(owner);
+        this.activityPanel = new JPanel();
+        this.activityPanel.setOpaque(false);
+        this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        this.activityPanel.setPreferredSize(new Dimension(300, 70));
         this.dateField = new FormattedDateField();
         this.animalTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.volunteerTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.activityTextField = new TxtFieldPh(" ", 200, 30, 15, 15);
-        this.observationsTextArea = new TextAreaCustom(4, 20);
+        this.commentsTextArea = new TextAreaCustom(4, 20);
+        animalCheckBox = new JCheckBox("Involucra animal");
+        animalCheckBox.setFont(FontUtil.loadFont(12, "Inter_Light"));
 
         //Panels
         this.componentsPanel = new JPanel() {
@@ -53,11 +67,12 @@ public class AddAppoimentPanel extends AddEntityPanel {
                 String detailsText = "Observaciones";
                 FontMetrics metricsDetails = g2d.getFontMetrics(SubTittleFont);
                 int xDetailsText = (getWidth() - metricsDetails.stringWidth(detailsText)) / 2;
-                g2d.drawString(detailsText, xDetailsText, 225);
+                g2d.drawString(detailsText, xDetailsText, 270);
 
                 g2d.dispose();
             }
         };
+
         this.componentsPanel.setOpaque(false);
         this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 60));
         this.componentsPanel.setPreferredSize(new Dimension(366, 400));
@@ -65,7 +80,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.buttonsPanel.setOpaque(false);
         this.buttonsPanel.setPreferredSize(new Dimension(400, 100));
 
-        JScrollPane textAreascroll = new JScrollPane(this.observationsTextArea);
+        JScrollPane textAreascroll = new JScrollPane(this.commentsTextArea);
         textAreascroll.setBorder(null);
         textAreascroll.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -74,11 +89,15 @@ public class AddAppoimentPanel extends AddEntityPanel {
             this.owner.showNewPanel(this.owner.getAppoimentPanel());
         });
 
+        addBtn.addActionListener(e -> addApooiment());
+
         //Add components
         this.componentsPanel.add(this.dateField);
         this.componentsPanel.add(this.animalTextField);
         this.componentsPanel.add(this.volunteerTextField);
-        this.componentsPanel.add(this.activityTextField);
+        this.activityPanel.add(this.activityTextField);
+        this.activityPanel.add(this.animalCheckBox);
+        this.componentsPanel.add(this.activityPanel);
         this.componentsPanel.add(textAreascroll);
         this.buttonsPanel.add(this.backBtn);
         this.buttonsPanel.add(this.addBtn);
@@ -89,6 +108,56 @@ public class AddAppoimentPanel extends AddEntityPanel {
         add(this.mainPanel);
         System.out.println(this.dateField.getY() + " " + this.animalTextField.getY() + " " + this.volunteerTextField.getY());
         System.out.println(this.activityTextField.getX());
+
+    }
+
+    public void addApooiment() {
+        try {
+            //Get data from textFields
+            Integer animalId = null;
+            String animalIdText = animalTextField.getText().trim();
+            if (!animalIdText.isEmpty()) {
+                if (animalIdText.matches("\\d+")) {
+                    animalId = Integer.parseInt(animalIdText);
+                }
+            } else {
+                    JOptionPane.showMessageDialog(this, "El ID de animal debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+            int volunteerId = 0;
+            if (!volunteerTextField.getText().trim().isEmpty()) {
+                volunteerId = Integer.parseInt(volunteerTextField.getText());
+            }
+
+            String activity = activityTextField.getText();
+            boolean animalCheck = animalCheckBox.isSelected();
+            String comments = commentsTextArea.getText();
+
+            //Actual date from today
+            LocalDate todayDate = LocalDate.now();
+
+            //Get Date booked from dateField
+            LocalDate dateBooked = null;
+            if (dateField.getFecha() != null) {
+                dateBooked = dateField.getFecha().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+            }
+
+            AppoimentController appoimentController = new AppoimentController();
+            boolean success = appoimentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments,"pendiente", animalCheck);
+            if (success){
+                JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+            }else{
+                JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar el cliente",  "Error",  JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (ControllerException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
