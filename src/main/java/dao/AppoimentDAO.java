@@ -6,6 +6,7 @@ import interfaces.dao.IAppoimentDAO;
 import models.AppoimentEntity;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,24 +26,24 @@ public class AppoimentDAO implements IAppoimentDAO {
         ) {
             ps.setString(1, appoimentEntity.getComments());
             ps.setObject(2, appoimentEntity.getStatus());
-            ps.setString(3, appoimentEntity.getDate_booked());
-
-            if (appoimentEntity.getDate_event() != null && !appoimentEntity.getDate_event().isEmpty()) {
-                ps.setString(4, appoimentEntity.getDate_event());
+            ps.setObject(3, appoimentEntity.getDateBooked());
+            if (appoimentEntity.getDateEvent() != null ) {
+                ps.setObject(4, appoimentEntity.getDateEvent());
             } else {
                 ps.setNull(4, java.sql.Types.DATE);
             }
 
-            if (appoimentEntity.getId_animal() != null) {
-                ps.setInt(5, appoimentEntity.getId_animal());
+            if (appoimentEntity.getIdAnimal() != null) {
+                ps.setInt(5, appoimentEntity.getIdAnimal());
             } else {
                 ps.setNull(5, java.sql.Types.INTEGER);
             }
 
-            ps.setInt(6, appoimentEntity.getId_volunteer());
+            ps.setInt(6, appoimentEntity.getIdVolunteer());
             ps.setString(7, appoimentEntity.getActivity());
             System.out.println("La asignación se ha agregado exitosamente");
             return ps.executeUpdate() > 0;
+
         } catch (SQLException exception) {
             System.out.println("No se ha podido agregar la asignación");
             exception.printStackTrace();
@@ -63,11 +64,11 @@ public class AppoimentDAO implements IAppoimentDAO {
                     appoimentEntity.setId(rs.getInt("id"));
                     appoimentEntity.setComments(rs.getString("observaciones"));
                     appoimentEntity.setStatus(rs.getString("estado"));
-                    appoimentEntity.setDate_booked(rs.getString("fecha_de_agenda"));
-                    appoimentEntity.setDate_event(rs.getString("fecha_realizacion"));
-                    appoimentEntity.setId_animal(rs.getInt("id_animal"));
-                    appoimentEntity.setId_volunteer(rs.getInt("id_voluntario"));
-                    appoimentEntity.set_activity(rs.getString("actividad"));
+                    appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                    appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
+                    appoimentEntity.setIdAnimal(rs.getInt("id_animal"));
+                    appoimentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                    appoimentEntity.setActivity(rs.getString("actividad"));
                     System.out.println("Asignacion encotrada: " + appoimentEntity.toString());
                     return appoimentEntity;
                 }
@@ -88,19 +89,19 @@ public class AppoimentDAO implements IAppoimentDAO {
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, appoimentEntity.getComments());
             ps.setObject(2, appoimentEntity.getStatus());
-            ps.setString(3, appoimentEntity.getDate_booked());
-            if (appoimentEntity.getDate_event() != null && !appoimentEntity.getDate_event().isEmpty()) {
-                ps.setString(4, appoimentEntity.getDate_event());
+            ps.setObject(3, appoimentEntity.getDateBooked());
+            if (appoimentEntity.getDateEvent() != null ) {
+                ps.setObject(4, appoimentEntity.getDateEvent());
             } else {
                 ps.setNull(4, java.sql.Types.DATE);
             }
 
-            if (appoimentEntity.getId_animal() != null) {
-                ps.setInt(5, appoimentEntity.getId_animal());
+            if (appoimentEntity.getIdAnimal() != null) {
+                ps.setInt(5, appoimentEntity.getIdAnimal());
             } else {
                 ps.setNull(5, java.sql.Types.INTEGER);
             }
-            ps.setInt(6, appoimentEntity.getId_volunteer());
+            ps.setInt(6, appoimentEntity.getIdVolunteer());
             ps.setString(7, appoimentEntity.getActivity());
             ps.setInt(8, appoimentEntity.getId());
             System.out.println("Asignacion actualizado con exito");
@@ -148,11 +149,11 @@ public class AppoimentDAO implements IAppoimentDAO {
                 appoimentEntity.setId(rs.getInt("id"));
                 appoimentEntity.setComments(rs.getString("observaciones"));
                 appoimentEntity.setStatus(rs.getString("estado"));
-                appoimentEntity.setDate_booked(rs.getString("fecha_de_agenda"));
-                appoimentEntity.setDate_event(rs.getString("fecha_realizacion"));
-                appoimentEntity.setId_animal(rs.getInt("id_animal"));
-                appoimentEntity.setId_volunteer(rs.getInt("id_voluntario"));
-                appoimentEntity.set_activity(rs.getString("actividad"));
+                appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
+                appoimentEntity.setIdAnimal(rs.getInt("id_animal"));
+                appoimentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                appoimentEntity.setActivity(rs.getString("actividad"));
                 appoiments.add(appoimentEntity);
             }
         } catch (SQLException exception) {

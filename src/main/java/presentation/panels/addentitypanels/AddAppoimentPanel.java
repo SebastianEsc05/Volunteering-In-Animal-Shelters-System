@@ -1,5 +1,6 @@
 package presentation.panels.addentitypanels;
 
+import models.AppoimentEntity;
 import presentation.frames.MainFrame;
 import presentation.styles.FontUtil;
 import presentation.styles.Style;
@@ -8,9 +9,10 @@ import presentation.styles.textfields.TextAreaCustom;
 import presentation.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class AddAppoimentPanel extends AddEntityPanel {
     private JPanel activityPanel;
@@ -18,7 +20,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
     private TxtFieldPh animalTextField;
     private TxtFieldPh volunteerTextField;
     private TxtFieldPh activityTextField;
-    private TextAreaCustom observationsTextArea;
+    private TextAreaCustom commentsTextArea;
     private JCheckBox animalCheckBox;
 
     public AddAppoimentPanel(MainFrame owner) {
@@ -31,7 +33,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.animalTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.volunteerTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.activityTextField = new TxtFieldPh(" ", 200, 30, 15, 15);
-        this.observationsTextArea = new TextAreaCustom(4, 20);
+        this.commentsTextArea = new TextAreaCustom(4, 20);
         animalCheckBox = new JCheckBox("Involucra animal");
         animalCheckBox.setFont(FontUtil.loadFont(12, "Inter_Light"));
 
@@ -73,7 +75,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.buttonsPanel.setOpaque(false);
         this.buttonsPanel.setPreferredSize(new Dimension(400, 100));
 
-        JScrollPane textAreascroll = new JScrollPane(this.observationsTextArea);
+        JScrollPane textAreascroll = new JScrollPane(this.commentsTextArea);
         textAreascroll.setBorder(null);
         textAreascroll.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -81,6 +83,8 @@ public class AddAppoimentPanel extends AddEntityPanel {
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAppoimentPanel());
         });
+
+        addBtn.addActionListener(e -> addApooiment());
 
         //Add components
         this.componentsPanel.add(this.dateField);
@@ -99,6 +103,45 @@ public class AddAppoimentPanel extends AddEntityPanel {
         add(this.mainPanel);
         System.out.println(this.dateField.getY() + " " + this.animalTextField.getY() + " " + this.volunteerTextField.getY());
         System.out.println(this.activityTextField.getX());
+
+    }
+
+    public void addApooiment() {
+
+
+        //Get data from textFields
+        Integer animalId = null;
+        if (!animalTextField.getText().trim().isEmpty()) {
+            animalId = Integer.parseInt(animalTextField.getText());
+        }
+
+        Integer volunteerId = null;
+        if (!volunteerTextField.getText().trim().isEmpty()) {
+            volunteerId = Integer.parseInt(volunteerTextField.getText());
+        }
+
+        String activity = activityTextField.getText();
+        boolean animalCheck = animalCheckBox.isSelected();
+        String comments = commentsTextArea.getText();
+
+        //Actual date from today
+        LocalDate todayDate = LocalDate.now();
+
+        //Get Date booked from dateField
+        LocalDate dateBooked = null;
+        if (dateField.getFecha() != null) {
+            dateBooked = dateField.getFecha().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+        }
+
+        AppoimentEntity apoimentEntity = new AppoimentEntity();
+        apoimentEntity.setDate_booked(dateBooked);
+        apoimentEntity.setDate_event(todayDate);
+        apoimentEntity.setId_animal(animalId);
+        apoimentEntity.setId_volunteer(volunteerId);
+        apoimentEntity.set_activity(activity);
+        apoimentEntity.setComments(comments);
 
     }
 
