@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IVolunteerController {
 
+    void insertVolunteers() throws PersistenceException;
+
     boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty);
 
     VolunteerEntity readVolunteer(int idVolunteer);
@@ -16,4 +18,5 @@ public interface IVolunteerController {
     boolean deleteVolunteer(int idVolunteer);
 
     List<VolunteerEntity> readAllVolunteers();
+
 }

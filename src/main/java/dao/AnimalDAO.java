@@ -10,29 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalDAO implements IAnimalDAO {
-    @Override
-    public void createTableAnimals() throws PersistenceException {
-        String sql = "CREATE TABLE animales (" +
-                "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
-                "nombre VARCHAR(100) NOT NULL, " +
-                "edad INT NOT NULL, " +
-                "fecha_ingreso DATE NOT NULL, " +
-                "estado_salud VARCHAR(50), " +
-                "especie VARCHAR(100), " +
-                "id_refugio INT,    " +
-                "FOREIGN KEY (id_refugio) REFERENCES refugios(id)\n" +
-                ");";
-
-        try (Connection conn = ConexionDB.getConnection();
-             Statement st = conn.createStatement()) {
-            st.execute(sql);
-            System.out.println("Tabla 'Animales' creada.");
-
-        }catch (SQLException e) {
-            System.out.println("Error al crear la tabla animales: " + e.getMessage());
-
-        }
-    }
 
     @Override
     public void insertAnimals() throws PersistenceException {
@@ -171,6 +148,21 @@ public class AnimalDAO implements IAnimalDAO {
             System.out.println(animalEntity.toString());
         }
         return animals;
+    }
+
+    @Override
+    public boolean isNotEmpty() {
+        String sql = "SELECT 1 FROM animales LIMIT 1";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar registros de la tabla animales", e);
+        }
     }
 
 

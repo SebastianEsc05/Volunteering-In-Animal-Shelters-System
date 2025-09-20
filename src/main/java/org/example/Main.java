@@ -18,6 +18,11 @@ public class Main {
         System.out.println("\nCreando la base de datos y tablas correspondientes...");
         DatabaseInitializer databaseInitializer = new DatabaseInitializer();
         ShelterController shelterController = new ShelterController();
+        VolunteerController volunteerController = new VolunteerController();
+
+        System.out.println("\nInsertando datos de prueba...\n");
+        shelterController.insertShelters();
+        volunteerController.insertVolunteers();
 
     }
 }

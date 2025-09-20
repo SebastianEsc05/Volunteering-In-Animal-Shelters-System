@@ -33,12 +33,12 @@ public class DatabaseInitializer {
              Statement stmt = conn.createStatement()) {
             String sqlSheltersTable = "CREATE TABLE IF NOT EXISTS refugios(" +
                     "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
-                    "nombre VARCHAR(100) NOT NULL, " +
+                    "nombre VARCHAR(100) NOT NULL UNIQUE, " +
                     "responsable VARCHAR(50), " +
                     "capacidad INT, " +
                     "ubicacion VARCHAR(100))";
             stmt.executeUpdate(sqlSheltersTable);
-            System.out.println("Se ha creado la tabla 'refugios' \n");
+            System.out.println("Se ha creado la tabla 'refugios'");
 
             String sqlAnimalsTable = "CREATE TABLE IF NOT EXISTS animales(" +
                     "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
@@ -50,7 +50,7 @@ public class DatabaseInitializer {
                     "id_refugio INT, " +
                     "FOREIGN KEY (id_refugio) REFERENCES refugios(id))";
             stmt.executeUpdate(sqlAnimalsTable);
-            System.out.println("Se ha creado la tabla 'animales'\n");
+            System.out.println("Se ha creado la tabla 'animales'");
 
             String sqlVolunteersTable = "CREATE TABLE IF NOT EXISTS voluntarios(" +
                     "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
@@ -60,7 +60,7 @@ public class DatabaseInitializer {
                     "fecha_nacimiento DATE NOT NULL, " +
                     "especialidad VARCHAR(100))";
             stmt.executeUpdate(sqlVolunteersTable);
-            System.out.println("Se ha creado la tabla 'voluntarios'\n");
+            System.out.println("Se ha creado la tabla 'voluntarios'");
 
             String sqlAppoimentsTable = "CREATE TABLE IF NOT EXISTS asignaciones(" +
                     "id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, " +
@@ -71,10 +71,11 @@ public class DatabaseInitializer {
                     "id_animal INT, " +
                     "id_voluntario INT, " +
                     "actividad VARCHAR(100) NOT NULL, " +
+                    "requiere_animal BOOLEAN NOT NULL, " +
                     "FOREIGN KEY (id_animal) REFERENCES animales(id), " +
                     "FOREIGN KEY (id_voluntario) REFERENCES voluntarios(id))";
             stmt.executeUpdate(sqlAppoimentsTable);
-            System.out.println("Se ha creado la tabla 'asignaciones'\n");
+            System.out.println("Se ha creado la tabla 'asignaciones'");
 
         } catch (SQLException e) {
             System.out.println("Error al crear las tablas: " + e.getMessage() + "\n");

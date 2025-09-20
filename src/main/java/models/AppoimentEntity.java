@@ -1,36 +1,32 @@
 package models;
 
+import java.time.LocalDate;
+
 public class AppoimentEntity {
 
     private int id;
+    private LocalDate dateEvent;
+    private LocalDate dateBooked;
+    private Integer idAnimal;
+    private int idVolunteer;
+    private String activity;
     private String comments;
     private String status;
-    private String date_booked;
-    private String date_event;
-    private Integer id_animal;
-    private int id_volunteer;
-    private String activity;
+    private boolean animalCheck;
 
-    public AppoimentEntity(){}
-
-    public AppoimentEntity(int id, String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity) {
-        this.comments = comments;
-        this.status = status;
-        this.date_booked = date_booked;
-        this.date_event = date_event;
-        this.id_animal = id_animal;
-        this.id_volunteer = id_volunteer;
-        this.activity = activity;
+    public AppoimentEntity() {
     }
 
-    public AppoimentEntity(String comments, String status, String date_booked, String date_event, Integer id_animal, int id_volunteer, String activity) {
+    public AppoimentEntity(int id, LocalDate dateEvent, LocalDate dateBooked, Integer idAnimal, int idVolunteer, String activity, String comments, String status, boolean animalCheck) {
+        this.id = id;
+        this.dateEvent = dateEvent;
+        this.dateBooked = dateBooked;
+        this.idAnimal = idAnimal;
+        this.idVolunteer = idVolunteer;
+        this.activity = activity;
         this.comments = comments;
         this.status = status;
-        this.date_booked = date_booked;
-        this.date_event = date_event;
-        this.id_animal = id_animal;
-        this.id_volunteer = id_volunteer;
-        this.activity = activity;
+        this.animalCheck = animalCheck;
     }
 
     public int getId() {
@@ -39,6 +35,46 @@ public class AppoimentEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public LocalDate getDateEvent() {
+        return dateEvent;
+    }
+
+    public void setDateEvent(LocalDate dateEvent) {
+        this.dateEvent = dateEvent;
+    }
+
+    public LocalDate getDateBooked() {
+        return dateBooked;
+    }
+
+    public void setDateBooked(LocalDate dateBooked) {
+        this.dateBooked = dateBooked;
+    }
+
+    public Integer getIdAnimal() {
+        return idAnimal;
+    }
+
+    public void setIdAnimal(Integer idAnimal) {
+        this.idAnimal = idAnimal;
+    }
+
+    public int getIdVolunteer() {
+        return idVolunteer;
+    }
+
+    public void setIdVolunteer(int idVolunteer) {
+        this.idVolunteer = idVolunteer;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
     }
 
     public String getComments() {
@@ -57,61 +93,29 @@ public class AppoimentEntity {
         this.status = status;
     }
 
-    public String getDate_booked() {
-        return date_booked;
+    public boolean isAnimalCheck() {
+        return animalCheck;
     }
 
-    public void setDate_booked(String date_booked) {
-        this.date_booked = date_booked;
-    }
-
-    public String getDate_event() {
-        return date_event;
-    }
-
-    public void setDate_event(String date_event) {
-        this.date_event = date_event;
-    }
-
-    public Integer getId_animal() {
-        return id_animal;
-    }
-
-    public void setId_animal(Integer id_animal) {
-        this.id_animal = id_animal;
-    }
-
-    public int getId_volunteer() {
-        return id_volunteer;
-    }
-
-    public void setId_volunteer(int id_volunteer) {
-        this.id_volunteer = id_volunteer;
-    }
-
-    public String getActivity() {
-        return activity;
-    }
-
-    public void set_activity(String activity) {
-        this.activity = activity;
+    public void setAnimalCheck(boolean animalCheck) {
+        this.animalCheck = animalCheck;
     }
 
     @Override
     public String toString() {
-
-        String formato = "| %-5d | %-15s | %-15s | %-15s | %-15s | %-5d | %-5d | %-15s |";
-        return String.format(formato,getId(),getComments(),getStatus(),getDate_booked(),getDate_event(),getId_animal(),getId_volunteer(),getActivity());
-
-        /**return "AppoimentEntity{" +
-                "id_appoiment=" + id + //1
-                ", comments='" + comments + '\'' + //2
-                ", status=" + status + //3
-                ", date_booked='" + date_booked + '\'' + //4
-                ", date_event='" + date_event + '\'' + //5
-                ", id_animal=" + id_animal + //6
-                ", id_volunteer=" + id_volunteer + //7
-                ", activity=" + activity + //8
-                '}';**/
+//        return String.format(formato, getId(), getComments(), getStatus(), getDate_booked(), getDate_event(), getId_animal(), getId_volunteer(), getActivity());
+        String formatTS = "| %-5d | %-15s | %-15s | %-15s | %-15s | %-5d | %-5d | %-15s |";
+        return "AppoimentEntity{" +
+                "id=" + id +
+                ", dateEvent=" + dateEvent +
+                ", dateBooked=" + dateBooked +
+                ", idAnimal=" + idAnimal +
+                ", idVolunteer=" + idVolunteer +
+                ", activity='" + activity + '\'' +
+                ", comments='" + comments + '\'' +
+                ", status='" + status + '\'' +
+                ", animalCheck=" + animalCheck +
+                '}';
     }
+
 }

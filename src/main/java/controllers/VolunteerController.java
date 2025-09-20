@@ -2,6 +2,7 @@ package controllers;
 
 import config.ConexionDB;
 import dao.VolunteerDAO;
+import dao.exceptions.PersistenceException;
 import interfaces.controller.IVolunteerController;
 import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
@@ -20,6 +21,11 @@ public class VolunteerController implements IVolunteerController{
 
     public VolunteerController(){
         this.volunteerDAO = new VolunteerDAO();
+    }
+
+    @Override
+    public void insertVolunteers() throws PersistenceException {
+        this.volunteerDAO.insertVolunteers();
     }
 
     public boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty) {
