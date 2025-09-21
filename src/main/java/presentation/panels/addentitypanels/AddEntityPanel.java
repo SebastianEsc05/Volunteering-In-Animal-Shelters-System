@@ -2,10 +2,12 @@ package presentation.panels.addentitypanels;
 
 import presentation.frames.MainFrame;
 import presentation.styles.Button;
+import presentation.styles.CustomTable;
 import presentation.styles.Style;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AddEntityPanel extends JPanel {
@@ -13,6 +15,7 @@ public class AddEntityPanel extends JPanel {
     protected JPanel mainPanel;
     protected JPanel componentsPanel;
     protected JPanel buttonsPanel;
+
     protected Button addBtn;
     protected Button backBtn;
 

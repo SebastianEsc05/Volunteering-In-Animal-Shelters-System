@@ -1,9 +1,11 @@
 package presentation.panels.entitypanels;
 
 import presentation.frames.MainFrame;
+import presentation.panels.SidebarPanel;
 import presentation.panels.addentitypanels.AddAnimalPanel;
 import presentation.panels.addentitypanels.AddAppoimentPanel;
 import presentation.styles.Button;
+import presentation.styles.ComboBoxCustom;
 import presentation.styles.FontUtil;
 import presentation.styles.Style;
 
@@ -12,12 +14,14 @@ import java.awt.*;
 
 public class AnimalsPanel extends EntityPanel{
     private AddAnimalPanel addAnimalPanel;
+    private ComboBoxCustom healthStatusCombo;
     private Button newAnimalBtn;
 
     public AnimalsPanel(MainFrame owner) {
         super(owner);
         this.addAnimalPanel = new AddAnimalPanel(owner);
         this.newAnimalBtn = new Button("Nuevo Animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        this.healthStatusCombo = new ComboBoxCustom("healthSearch");
         addComponents();
 
         //ActionListeners
@@ -29,10 +33,19 @@ public class AnimalsPanel extends EntityPanel{
 
     @Override
     public void addComponents(){
-        this.sideBarPanel.setTitle("Animales");
+        //SideBarPanel
+        this.sideBarPanel = new SidebarPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+
+            }
+        };
         this.sideBarPanel.add(newAnimalBtn);
+        this.sideBarPanel.add(healthStatusCombo);
         this.tablePanel.add(backBtn);
-        this.mainPanel.add(this.sideBarPanel);
+        this.eastPanel.add(this.sideBarPanel);
+
+        this.mainPanel.add(this.eastPanel);
         this.mainPanel.add(Box.createHorizontalStrut(0));
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
