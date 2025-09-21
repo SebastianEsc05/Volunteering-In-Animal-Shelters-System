@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IVolunteerDAO {
 
+    void insertVolunteers() throws PersistenceException;
+
     boolean create(VolunteerEntity volunteerEntity) throws PersistenceException;
 
     VolunteerEntity readById(int id) throws PersistenceException;
@@ -16,4 +18,6 @@ public interface IVolunteerDAO {
     boolean deleteById(int id) throws PersistenceException;
 
     List<VolunteerEntity> readAll() throws PersistenceException;
+
+    boolean isNotEmpty();
 }

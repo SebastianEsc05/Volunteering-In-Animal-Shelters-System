@@ -17,11 +17,6 @@ public class ShelterController implements IShelterController {
     }
 
     @Override
-    public void createTableShelters(){
-        this.shelterDAO.createTableShelters();
-    }
-
-    @Override
     public void insertShelters(){
         this.shelterDAO.insertShelters();
     }

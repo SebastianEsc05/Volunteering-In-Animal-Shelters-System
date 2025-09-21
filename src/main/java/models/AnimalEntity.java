@@ -6,18 +6,18 @@ public class AnimalEntity {
     private int age;
     private String date_entry;
     private String health_situation;
-    private String specie;
+    private String species;
     private int id_shelter;
 
     public AnimalEntity() {}
 
-    public AnimalEntity(int id, String name, int age, String date_entry, String health_situation,String specie, int id_shelter) {
+    public AnimalEntity(int id, String name, int age, String date_entry, String health_situation,String species, int id_shelter) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.date_entry = date_entry;
         this.health_situation = health_situation;
-        this.specie = specie;
+        this.species = species;
         this.id_shelter = id_shelter;
 
     }
@@ -28,7 +28,7 @@ public class AnimalEntity {
         this.age = age;
         this.date_entry = date_entry;
         this.health_situation = health_situation;
-        this.specie = specie;
+        this.species = specie;
         this.id_shelter = id_shelter;
 
     }
@@ -74,11 +74,11 @@ public class AnimalEntity {
     }
 
     public String getSpecie() {
-        return specie;
+        return species;
     }
 
     public void setSpecie(String specie) {
-        this.specie = specie;
+        this.species = specie;
     }
 
     public int getId_shelter() {

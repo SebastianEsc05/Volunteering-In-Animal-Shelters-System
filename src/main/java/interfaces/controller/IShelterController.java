@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IShelterController {
 
-    void createTableShelters();
-
     void insertShelters();
 
     boolean addShelter(String name, String responsible, int capacity, String location);

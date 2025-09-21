@@ -11,6 +11,54 @@ import java.util.List;
 
 public class VolunteerDAO implements IVolunteerDAO {
 
+    @Override
+    public void insertVolunteers() throws PersistenceException {
+        if (isNotEmpty()) {
+            System.out.println("Error: La tabla 'voluntarios' ya tiene datos. No se insertarán datos de ejemplo.\n");
+            return;
+        }
+
+        int contInserts = 0;
+        String sql = "INSERT INTO voluntarios (nombre, telefono, email, fecha_nacimiento, especialidad) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            System.out.println("Insertando voluntario 1...");
+            pstmt.setString(1, "Ana Gómez");
+            pstmt.setString(2, "5512345678");
+            pstmt.setString(3, "ana.gomez@example.com");
+            pstmt.setDate(4, java.sql.Date.valueOf("1990-05-14"));
+            pstmt.setString(5, "Adiestramiento");
+            pstmt.executeUpdate();
+            contInserts++;
+
+            System.out.println("Insertando voluntario 2...");
+            pstmt.setString(1, "Carlos Pérez");
+            pstmt.setString(2, "5523456789");
+            pstmt.setString(3, "carlos.perez@example.com");
+            pstmt.setDate(4, java.sql.Date.valueOf("1985-09-21"));
+            pstmt.setString(5, "Logística");
+            pstmt.executeUpdate();
+            contInserts++;
+
+            System.out.println("Insertando voluntario 3...");
+            pstmt.setString(1, "María López");
+            pstmt.setString(2, "5534567890");
+            pstmt.setString(3, "maria.lopez@example.com");
+            pstmt.setDate(4, java.sql.Date.valueOf("1992-12-03"));
+            pstmt.setString(5, "Veterinaria");
+            pstmt.executeUpdate();
+            contInserts++;
+
+
+        } catch (SQLException e) {
+            System.out.println("Error al insertar voluntarios: " + e.getMessage());
+        }
+
+        System.out.printf("Se insertaron %d voluntarios.%n", contInserts);
+
+
+    }
 
     
     @Override
@@ -151,6 +199,21 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
         System.out.println("----------------------------------------------------------------------------------------------------------------------");
         return volunteers;
+    }
+
+    @Override
+    public boolean isNotEmpty() {
+        String sql = "SELECT 1 FROM voluntarios LIMIT 1";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar registros de la tabla voluntarios", e);
+        }
     }
 
 
