@@ -12,6 +12,7 @@ public class AddEntityPanel extends JPanel {
     protected JPanel mainPanel;
     protected JPanel componentsPanel;
     protected JPanel buttonsPanel;
+
     protected Button addBtn;
     protected Button backBtn;
 

@@ -1,6 +1,7 @@
 package views.panels.entitypanels;
 
 import views.frames.MainFrame;
+import views.panels.SidebarPanel;
 import views.styles.Button;
 import views.styles.FontUtil;
 import views.styles.Style;
@@ -20,10 +21,19 @@ public class SheltersPanel extends EntityPanel {
 
     @Override
     public void addComponents(){
-        this.sideBarPanel.setTitle("Refugios");
-        this.sideBarPanel.add(this.newShelterBtn);
+        //SideBarPanel
+        this.sideBarPanel = new SidebarPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+            }
+        };
+        this.sideBarPanel.add(newShelterBtn );
         this.tablePanel.add(backBtn);
-        this.mainPanel.add(this.sideBarPanel);
+        eastPanel.add(Box.createHorizontalGlue());
+        this.eastPanel.add(this.sideBarPanel);
+        eastPanel.add(Box.createHorizontalGlue());
+
+        this.mainPanel.add(this.eastPanel);
         this.mainPanel.add(Box.createHorizontalStrut(0));
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);

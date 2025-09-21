@@ -1,6 +1,7 @@
 package views.panels.entitypanels;
 
 import views.frames.MainFrame;
+import views.panels.SidebarPanel;
 import views.styles.Button;
 import views.styles.FontUtil;
 import views.styles.Style;
@@ -20,10 +21,17 @@ public class VolunteersPanel extends EntityPanel {
 
     @Override
     public void addComponents() {
-        this.sideBarPanel.setTitle("Voluntarios");
-        this.sideBarPanel.add(this.newVolunteerBtn);
+        //SideBarPanel
+        this.sideBarPanel = new SidebarPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+            }
+        };
+        this.sideBarPanel.add(newVolunteerBtn);
         this.tablePanel.add(backBtn);
-        this.mainPanel.add(this.sideBarPanel);
+        this.eastPanel.add(this.sideBarPanel);
+
+        this.mainPanel.add(this.eastPanel);
         this.mainPanel.add(Box.createHorizontalStrut(0));
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
