@@ -19,4 +19,6 @@ public interface IAppoimentController {
     boolean deleteAppoiment(int id) throws ControllerException;
 
     List<AppoimentEntity> readAllAppoiments() throws ControllerException;
+
+    List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException;
 }

@@ -168,17 +168,66 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public boolean isNotEmpty() {
-        String sql = "SELECT 1 FROM asignaciones LIMIT 1";
+    public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
+        String sql;
+        List<AppoimentEntity> appoiments = new ArrayList<> ();
 
-        try (Connection conn = ConexionDB.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        if(id.equals(null)){
+            sql = "SELECT * FROM asignaciones WHERE estado =?";
+            try(Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);){
+                    ps.setInt( 1, id.intValue());
+                    ResultSet rs=ps.executeQuery();
+                while (rs.next()){
+                    AppoimentEntity appoimentEntity = new AppoimentEntity();
+                    appoimentEntity.setId(rs.getInt("id"));
+                    appoimentEntity.setStatus(rs.getString(  "estado"));
+                    appoimentEntity.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));
+                    appoimentEntity.setDateEvent(LocalDateTime.parse(rs.getString("fecha_realizacion")));
+                    appoimentEntity.setIdAnimal(rs.getInt( "id_animal"));
+                    appoimentEntity.setIdVolunteer(rs.getInt( "id_voluntario"));
+                    appoimentEntity.setActivity(rs.getString(  "actividad"));
+                    appoimentEntity.setComments(rs.getString( "observaciones"));
+                    appoiments.add(appoimentEntity);
+                }
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }else{
+//if if has a value
+            sql="""
+                SELECT * FROM asignaciones
+                WHERE id=? AND estado = ?;""";
 
-            return rs.next();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al verificar registros de la tabla asignaciones", e);
+            try(Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql) ;){
+                ps.setInt(1,id.intValue());
+                ps.setString(2,estado);
+                ResultSet rs=ps.executeQuery();
+                while (rs.next()){
+                    AppoimentEntity appoimentEntity = new AppoimentEntity();
+                    appoimentEntity.setId(rs.getInt(  "id"));
+                    appoimentEntity.setStatus(rs.getString( "estado"));
+                    appoimentEntity.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));
+                    appoimentEntity.setDateEvent(LocalDateTime.parse(rs.getString("fecha_realizacion")));
+                    appoimentEntity.setIdAnimal(rs.getInt( "id_animal"));
+                    appoimentEntity.setIdVolunteer(rs.getInt( "id_voluntario"));
+                    appoimentEntity.setActivity(rs.getString("actividad"));
+                    appoimentEntity.setComments(rs.getString("observaciones"));
+                    appoiments.add(appoimentEntity);
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
         }
+        return appoiments;
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return false;
+    }
+
 }
+
