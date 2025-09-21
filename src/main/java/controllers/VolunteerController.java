@@ -7,10 +7,7 @@ import interfaces.controller.IVolunteerController;
 import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +25,7 @@ public class VolunteerController implements IVolunteerController{
         this.volunteerDAO.insertVolunteers();
     }
 
-    public boolean addVolunteer(String name, String phone_number, String email, String date_birth, String specialty) {
+    public boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty) {
         if(phone_number == null || !validate_phone_number(phone_number)){
             System.out.println("Voluntario no agregado Telefono invalido");
             return false;
@@ -49,9 +46,10 @@ public class VolunteerController implements IVolunteerController{
             System.out.println("Voluntario no agregado, nombre invalido");
             return false;
         }
-        if(date_birth == null) date_birth = "";
+        if(date_birth == null){
+            return false;
+        }
         if(specialty == null)specialty = "";
-
 
         if(validateEmail(email)&&validate_phone_number(phone_number)){
             VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
@@ -70,13 +68,19 @@ public class VolunteerController implements IVolunteerController{
 
     }
 
-    public boolean updateVolunteer(int id, String name, String phone_number, String email, String date_birth, String specialty){
+    public boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty){
         if(name == null){
             return false;
         }
-        if(phone_number == null)phone_number = "";
-        if(email == null) email = "";
-        if(date_birth == null) date_birth = "";
+        if(phone_number == null){
+            return false;
+        }
+        if(email == null){
+            return false;
+        }
+        if(date_birth == null){
+            return false;
+        }
         if(specialty == null)specialty = "";
 
         VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email,date_birth,specialty);

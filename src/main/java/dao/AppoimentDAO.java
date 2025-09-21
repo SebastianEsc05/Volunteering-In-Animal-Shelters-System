@@ -7,6 +7,7 @@ import models.AppoimentEntity;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +65,8 @@ public class AppoimentDAO implements IAppoimentDAO {
                     appoimentEntity.setId(rs.getInt("id"));
                     appoimentEntity.setComments(rs.getString("observaciones"));
                     appoimentEntity.setStatus(rs.getString("estado"));
-                    appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
-                    appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
+                    appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                    appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
                     appoimentEntity.setIdAnimal(rs.getInt("id_animal"));
                     appoimentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                     appoimentEntity.setActivity(rs.getString("actividad"));
@@ -150,8 +151,8 @@ public class AppoimentDAO implements IAppoimentDAO {
                 appoimentEntity.setId(rs.getInt("id"));
                 appoimentEntity.setComments(rs.getString("observaciones"));
                 appoimentEntity.setStatus(rs.getString("estado"));
-                appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
-                appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
+                appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
                 appoimentEntity.setIdAnimal(rs.getInt("id_animal"));
                 appoimentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                 appoimentEntity.setActivity(rs.getString("actividad"));
