@@ -60,7 +60,12 @@ public class VolunteerDAO implements IVolunteerDAO {
 
     }
 
+    
     @Override
+    /**
+     * adds a volunteer entity object into the volunteer Table on database
+     * @param volunteerEntity
+     */
     public boolean create(VolunteerEntity volunteerEntity) throws PersistenceException {
 
         String sql = "INSERT INTO voluntarios (nombre, telefono, email, fecha_nacimiento, especialidad) VALUES (?,?,?,?,?)";
@@ -82,6 +87,11 @@ public class VolunteerDAO implements IVolunteerDAO {
             }
     }
 
+    /**
+     * Find and returns a volunteer by the Unique ID
+     * @param id
+     * @return VolunteerEntity
+     */
     @Override
     public VolunteerEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM voluntarios where id = ?";
@@ -109,7 +119,9 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
         return null;
     }
-
+    /**
+     * Updates a volunteer in the database
+     */
     @Override
     public boolean update(VolunteerEntity volunteerEntity) throws PersistenceException {
         String sql = "UPDATE voluntarios SET nombre = ?, telefono = ?, email = ?, fecha_nacimiento = ?, especialidad = ? where id = ?";
@@ -130,7 +142,9 @@ public class VolunteerDAO implements IVolunteerDAO {
             return false;
         }
     }
-
+    /**
+     * Deletes a volunteer in the database by the ID
+     */
     @Override
     public boolean deleteById(int id) throws PersistenceException {
         String sql = "DELETE FROM voluntarios WHERE id = ?";
@@ -154,6 +168,10 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
     }
 
+    /**
+     * returns a list with all the volunteers from the database
+     * @return a list with every volunteer from the database
+     */
     @Override
     public List<VolunteerEntity> readAll() throws PersistenceException {
         String sql = "SELECT * FROM voluntarios";

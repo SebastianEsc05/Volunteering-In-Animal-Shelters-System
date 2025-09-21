@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class AppoimentController implements IAppoimentController {
@@ -22,7 +23,7 @@ public class AppoimentController implements IAppoimentController {
         this.appoimentDAO = new AppoimentDAO();
     }
 
-    public boolean addAppoiment(LocalDate todayDate, LocalDate dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException{
+    public boolean addAppoiment(LocalDateTime todayDate, LocalDateTime dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException{
         try{
             if(animalId != null){
                 if(animalId < 0 || !animalExists(animalId)){
@@ -67,7 +68,7 @@ public class AppoimentController implements IAppoimentController {
         return this.appoimentDAO.readById(id);
     }
 
-    public boolean updateAppoiment(int id, String comments, String status, LocalDate date_booked, LocalDate date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException{
+    public boolean updateAppoiment(int id, String comments, String status, LocalDateTime date_booked, LocalDateTime date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException{
         if(id < 0){
             return  false;
         }
@@ -101,6 +102,11 @@ public class AppoimentController implements IAppoimentController {
 
     public List<AppoimentEntity> readAllAppoiments() throws ControllerException{
         return this.appoimentDAO.readAll();
+    }
+
+
+    public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
+        return  this.appoimentDAO.searchByState(id,estado);
     }
 
     public boolean animalExists(int id) throws ControllerException{

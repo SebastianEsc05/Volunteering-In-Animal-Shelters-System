@@ -19,5 +19,7 @@ public interface IAppoimentDAO {
 
     List<AppoimentEntity> readAll() throws PersistenceException;
 
+    List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException;
+
     boolean isNotEmpty();
 }
