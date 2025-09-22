@@ -8,6 +8,7 @@ import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,9 +27,6 @@ public class VolunteerController implements IVolunteerController{
         this.volunteerDAO = new VolunteerDAO();
     }
 
-    
-
-    
     @Override
     public void insertVolunteers() throws PersistenceException {
         this.volunteerDAO.insertVolunteers();
@@ -95,13 +93,12 @@ public class VolunteerController implements IVolunteerController{
      * Deletes a volunteer by the id on database
      * @param id
      * @return
-     * @throws SQLException
      */
-    public boolean deleteVolunteer(int id) throws SQLException {
+    public boolean deleteVolunteer(int id) {
         if(id <= 0 ){
             return false;
         }
-        return this.volunteerDAO.delete(id);
+        return this.volunteerDAO.deleteById(id);
     }
 
     /**
@@ -114,7 +111,7 @@ public class VolunteerController implements IVolunteerController{
      * @param specialty
      * @return
      */
-    public boolean updateVolunteer(int id, String name, String phone_number, String email, String date_birth, String specialty){
+    public boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty){
         if(name == null){
             return false;
         }
@@ -133,14 +130,7 @@ public class VolunteerController implements IVolunteerController{
         volunteerEntity.setId_volunteer(id);
         return this.volunteerDAO.update(volunteerEntity);
     }
-    
 
-    public boolean deleteVolunteer(int id) {
-        if(id <= 0 ){
-            return false;
-        }
-        return this.volunteerDAO.deleteById(id);
-    }
     /**
      * returns a list of volunteers
      * @return returns a list from selecting all the rows from Volunteers Table on database
@@ -205,7 +195,7 @@ public class VolunteerController implements IVolunteerController{
         return false;
     }
     /**
-     * find a email address on database
+     * find a email address on a database
      * @param email
      * @return true if email address matches with a row otherwise returns false
      */

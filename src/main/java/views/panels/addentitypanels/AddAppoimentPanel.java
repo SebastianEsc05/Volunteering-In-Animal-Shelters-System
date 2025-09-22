@@ -12,6 +12,7 @@ import views.styles.textfields.TxtFieldPh;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class AddAppoimentPanel extends AddEntityPanel {
@@ -131,14 +132,14 @@ public class AddAppoimentPanel extends AddEntityPanel {
             String comments = commentsTextArea.getText();
 
             //Actual date from today
-            LocalDate todayDate = LocalDate.now();
+            LocalDateTime todayDate = LocalDateTime.now();
 
             //Get Date booked from dateField
-            LocalDate dateBooked = null;
+            LocalDateTime dateBooked = null;
             if (dateField.getFecha() != null) {
                 dateBooked = dateField.getFecha().toInstant()
                         .atZone(ZoneId.systemDefault())
-                        .toLocalDate();
+                        .toLocalDateTime();
             }
 
             AppoimentController appoimentController = new AppoimentController();
@@ -154,7 +155,6 @@ public class AddAppoimentPanel extends AddEntityPanel {
         } catch (ControllerException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     @Override

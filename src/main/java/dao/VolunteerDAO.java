@@ -6,7 +6,9 @@ import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class VolunteerDAO implements IVolunteerDAO {
@@ -60,10 +62,9 @@ public class VolunteerDAO implements IVolunteerDAO {
 
     }
 
-    
     @Override
     /**
-     * adds a volunteer entity object into the volunteer Table on database
+     * adds a volunteer entity object into the volunteer Table on a database
      * @param volunteerEntity
      */
     public boolean create(VolunteerEntity volunteerEntity) throws PersistenceException {
@@ -76,14 +77,16 @@ public class VolunteerDAO implements IVolunteerDAO {
                 ps.setString(1,volunteerEntity.getName_volunteer());
                 ps.setString(2,volunteerEntity.getPhone_number());
                 ps.setString(3,volunteerEntity.getEmail());
-                ps.setString(4, volunteerEntity.getDate_birth());
+                ps.setDate(4, volunteerEntity.getDate_birth());
                 ps.setString(5, volunteerEntity.getSpecialty());
                 System.out.println("El voluntario se ha agregado exitosamente");
                 return ps.executeUpdate() > 0;
+
             }catch (SQLException exception){
                 System.out.println("No se ha podido insertar el voluntario");
                 exception.printStackTrace();
                 return false;
+
             }
     }
 
@@ -106,7 +109,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                         volunteerEntity.setName_volunteer(rs.getString("nombre"));
                         volunteerEntity.setPhone_number(rs.getString("telefono"));
                         volunteerEntity.setEmail(rs.getString("email"));
-                        volunteerEntity.setDate_birth(rs.getString("fecha_nacimiento"));
+                        volunteerEntity.setDate_birth(rs.getDate("fecha_nacimiento"));
                         volunteerEntity.setSpecialty(rs.getString("especialidad"));
                         System.out.println("Voluntario encontrado: " + volunteerEntity.toString());
                         return volunteerEntity;
@@ -119,6 +122,7 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
         return null;
     }
+
     /**
      * Updates a volunteer in the database
      */
@@ -131,7 +135,7 @@ public class VolunteerDAO implements IVolunteerDAO {
             ps.setString(1, volunteerEntity.getName_volunteer());
             ps.setString(2, volunteerEntity.getPhone_number());
             ps.setString(3, volunteerEntity.getEmail());
-            ps.setString(4, volunteerEntity.getDate_birth());
+            ps.setDate(4, volunteerEntity.getDate_birth());
             ps.setString(5, volunteerEntity.getSpecialty());
             ps.setInt(6, volunteerEntity.getId_volunteer());
             System.out.println("Voluntario actualizado con exito");
@@ -142,6 +146,7 @@ public class VolunteerDAO implements IVolunteerDAO {
             return false;
         }
     }
+
     /**
      * Deletes a volunteer in the database by the ID
      */
@@ -186,7 +191,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                 volunteerEntity.setName_volunteer(rs.getString("nombre"));
                 volunteerEntity.setPhone_number(rs.getString("telefono"));
                 volunteerEntity.setEmail(rs.getString("email"));
-                volunteerEntity.setDate_birth(rs.getString("fecha_nacimiento"));
+                volunteerEntity.setDate_birth(rs.getDate("fecha_nacimiento"));
                 volunteerEntity.setSpecialty(rs.getString("especialidad"));
                 volunteers.add(volunteerEntity);
             }

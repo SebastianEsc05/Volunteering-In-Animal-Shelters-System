@@ -6,6 +6,7 @@ import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class AnimalDAO implements IAnimalDAO {
         ) {
             ps.setString(1, animalEntity.getName());
             ps.setInt(2, animalEntity.getAge());
-            ps.setString(3, animalEntity.getDate_entry());
+            ps.setObject(3, animalEntity.getDate_entry());
             ps.setString(4, animalEntity.getHealth_situation());
             ps.setString(5, animalEntity.getSpecie());
             ps.setInt(6, animalEntity.getId_shelter());
@@ -57,7 +58,7 @@ public class AnimalDAO implements IAnimalDAO {
                     animalEntity.setId(rs.getInt("id"));
                     animalEntity.setName(rs.getString("nombre"));
                     animalEntity.setAge(rs.getInt("edad"));
-                    animalEntity.setDate_entry(rs.getString("fecha_ingreso"));
+                    animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDateTime.class));
                     animalEntity.setHealth_situation(rs.getString("estado_salud"));
                     animalEntity.setSpecie(rs.getString("especie"));
                     animalEntity.setId_shelter(rs.getInt("id_refugio"));
@@ -83,7 +84,7 @@ public class AnimalDAO implements IAnimalDAO {
                 PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, animalEntity.getName());
             ps.setInt(2, animalEntity.getAge());
-            ps.setString(3, animalEntity.getDate_entry());
+            ps.setObject(3, animalEntity.getDate_entry());
             ps.setString(4, animalEntity.getHealth_situation());
             ps.setString(5, animalEntity.getSpecie());
             ps.setInt(6, animalEntity.getId_shelter());
@@ -133,7 +134,7 @@ public class AnimalDAO implements IAnimalDAO {
                 animalEntity.setId(rs.getInt("id"));
                 animalEntity.setName(rs.getString("nombre"));
                 animalEntity.setAge(rs.getInt("edad"));
-                animalEntity.setDate_entry(rs.getString("fecha_ingreso"));
+                animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDateTime.class));
                 animalEntity.setHealth_situation(rs.getString("estado_salud"));
                 animalEntity.setSpecie(rs.getString("especie"));
                 animalEntity.setId_shelter(rs.getInt("id_refugio"));

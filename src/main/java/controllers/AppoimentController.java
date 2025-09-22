@@ -104,7 +104,6 @@ public class AppoimentController implements IAppoimentController {
         return this.appoimentDAO.readAll();
     }
 
-
     public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
         return  this.appoimentDAO.searchByState(id,estado);
     }

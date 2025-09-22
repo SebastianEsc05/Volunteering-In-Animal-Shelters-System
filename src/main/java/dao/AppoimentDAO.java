@@ -15,12 +15,58 @@ public class AppoimentDAO implements IAppoimentDAO {
 
     @Override
     public void insertAppointments() throws PersistenceException {
+        int contInserts = 0;
+        String sql = "INSERT INTO asignaciones " +
+                "(observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad, requiere_animal) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "Chequeo general de salud");
+            pstmt.setString(2, "pendiente");
+            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now())); // fecha agenda hoy
+            pstmt.setTimestamp(4, null);
+            pstmt.setInt(5, 1); // id_animal
+            pstmt.setInt(6, 1); // id_voluntario
+            pstmt.setString(7, "Revisión médica");
+            pstmt.setBoolean(8, true);
+            pstmt.executeUpdate();
+            contInserts++;
+
+            pstmt.setString(1, "Limpieza del área");
+            pstmt.setString(2, "pendiente");
+            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setTimestamp(4, null);
+            pstmt.setNull(5, Types.INTEGER); // no requiere animal
+            pstmt.setInt(6, 2); // id_voluntario
+            pstmt.setString(7, "Limpieza y desinfección");
+            pstmt.setBoolean(8, false);
+            pstmt.executeUpdate();
+            contInserts++;
+
+            pstmt.setString(1, "Paseo matutino");
+            pstmt.setString(2, "pendiente");
+            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setTimestamp(4, null);
+            pstmt.setInt(5, 2); // id_animal
+            pstmt.setInt(6, 3); // id_voluntario
+            pstmt.setString(7, "Paseo al aire libre");
+            pstmt.setBoolean(8, true);
+            pstmt.executeUpdate();
+            contInserts++;
+
+        } catch (SQLException e) {
+            throw new PersistenceException("Error al insertar asignaciones");
+        }
+
+        System.out.printf("Se insertaron %d asignaciones.%n", contInserts);
 
     }
 
     @Override
     public boolean create(AppoimentEntity appoimentEntity) throws PersistenceException {
         String sql = "INSERT INTO asignaciones (observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad) VALUES (?,?,?,?,?,?,?)";
+
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -28,7 +74,7 @@ public class AppoimentDAO implements IAppoimentDAO {
             ps.setString(1, appoimentEntity.getComments());
             ps.setObject(2, appoimentEntity.getStatus());
             ps.setObject(3, appoimentEntity.getDateBooked());
-            if (appoimentEntity.getDateEvent() != null ) {
+            if (appoimentEntity.getDateEvent() != null) {
                 ps.setObject(4, appoimentEntity.getDateEvent());
             } else {
                 ps.setNull(4, java.sql.Types.DATE);
@@ -91,7 +137,7 @@ public class AppoimentDAO implements IAppoimentDAO {
             ps.setString(1, appoimentEntity.getComments());
             ps.setObject(2, appoimentEntity.getStatus());
             ps.setObject(3, appoimentEntity.getDateBooked());
-            if (appoimentEntity.getDateEvent() != null ) {
+            if (appoimentEntity.getDateEvent() != null) {
                 ps.setObject(4, appoimentEntity.getDateEvent());
             } else {
                 ps.setNull(4, java.sql.Types.DATE);
@@ -169,59 +215,44 @@ public class AppoimentDAO implements IAppoimentDAO {
 
     @Override
     public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
-        String sql;
-        List<AppoimentEntity> appoiments = new ArrayList<> ();
+        List<AppoimentEntity> result = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM animales WHERE 1=1");
 
-        if(id.equals(null)){
-            sql = "SELECT * FROM asignaciones WHERE estado =?";
-            try(Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql);){
-                    ps.setInt( 1, id.intValue());
-                    ResultSet rs=ps.executeQuery();
-                while (rs.next()){
-                    AppoimentEntity appoimentEntity = new AppoimentEntity();
-                    appoimentEntity.setId(rs.getInt("id"));
-                    appoimentEntity.setStatus(rs.getString(  "estado"));
-                    appoimentEntity.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));
-                    appoimentEntity.setDateEvent(LocalDateTime.parse(rs.getString("fecha_realizacion")));
-                    appoimentEntity.setIdAnimal(rs.getInt( "id_animal"));
-                    appoimentEntity.setIdVolunteer(rs.getInt( "id_voluntario"));
-                    appoimentEntity.setActivity(rs.getString(  "actividad"));
-                    appoimentEntity.setComments(rs.getString( "observaciones"));
-                    appoiments.add(appoimentEntity);
-                }
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }else{
-//if if has a value
-            sql="""
-                SELECT * FROM asignaciones
-                WHERE id=? AND estado = ?;""";
-
-            try(Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql) ;){
-                ps.setInt(1,id.intValue());
-                ps.setString(2,estado);
-                ResultSet rs=ps.executeQuery();
-                while (rs.next()){
-                    AppoimentEntity appoimentEntity = new AppoimentEntity();
-                    appoimentEntity.setId(rs.getInt(  "id"));
-                    appoimentEntity.setStatus(rs.getString( "estado"));
-                    appoimentEntity.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));
-                    appoimentEntity.setDateEvent(LocalDateTime.parse(rs.getString("fecha_realizacion")));
-                    appoimentEntity.setIdAnimal(rs.getInt( "id_animal"));
-                    appoimentEntity.setIdVolunteer(rs.getInt( "id_voluntario"));
-                    appoimentEntity.setActivity(rs.getString("actividad"));
-                    appoimentEntity.setComments(rs.getString("observaciones"));
-                    appoiments.add(appoimentEntity);
-                }
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
+        if (id != null) {
+            sql.append(" AND id = ?");
         }
-        return appoiments;
+        if (estado != null) {
+            sql.append(" AND estado_de_salud = ?");
+        }
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+            int index = 1;
+            if (id != null) {
+                ps.setInt(index++, id);
+            }
+            if (estado != null) {
+                ps.setString(index, estado);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AppoimentEntity a = new AppoimentEntity();
+                a.setId(rs.getInt("id"));
+                a.setStatus(rs.getString("estado"));
+                a.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));
+                a.setDateEvent(LocalDateTime.parse(rs.getString("fecha_realizacion")));
+                a.setIdAnimal(rs.getInt( "id_animal"));
+                a.setIdVolunteer(rs.getInt( "id_voluntario"));
+                a.setActivity(rs.getString(  "actividad"));
+                a.setComments(rs.getString( "observaciones"));
+                result.add(a);
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException("Error al buscar asignaciones");
+        }
+
+        return result;
     }
 
     @Override
