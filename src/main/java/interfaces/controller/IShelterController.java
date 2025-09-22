@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IShelterController {
 
-    void insertShelters();
+    void insertShelters() throws PersistenceException;
 
     boolean addShelter(String name, String responsible, int capacity, String location);
 

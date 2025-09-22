@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface IAppoimentController {
 
+    void insertAppoiments() throws PersistenceException;
+
     boolean addAppoiment(LocalDateTime  todayDate, LocalDateTime dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException;
 
     AppoimentEntity readAppoiment(int id) throws ControllerException;

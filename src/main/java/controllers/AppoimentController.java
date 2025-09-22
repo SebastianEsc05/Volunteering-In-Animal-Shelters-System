@@ -19,27 +19,32 @@ public class AppoimentController implements IAppoimentController {
 
     private IAppoimentDAO appoimentDAO;
 
-    public AppoimentController(){
+    public AppoimentController() {
         this.appoimentDAO = new AppoimentDAO();
     }
 
-    public boolean addAppoiment(LocalDateTime todayDate, LocalDateTime dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException{
-        try{
-            if(animalId != null){
-                if(animalId < 0 || !animalExists(animalId)){
+    @Override
+    public void insertAppoiments() throws PersistenceException {
+        appoimentDAO.insertAppoiments();
+    }
+
+    public boolean addAppoiment(LocalDateTime todayDate, LocalDateTime dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException {
+        try {
+            if (animalId != null) {
+                if (animalId < 0 || !animalExists(animalId)) {
                     System.out.println("no se encontro registro del animal");
                     return false;
                 }
             }
-            if(volunteerId < 0 || !volunteerExists(volunteerId) ){
+            if (volunteerId < 0 || !volunteerExists(volunteerId)) {
                 System.out.println("no se encontró registro del voluntario");
                 return false;
             }
-            if(activity == null ){
+            if (activity == null) {
                 System.out.println("asegurese de proporcionar una actividad");
                 return false;
             }
-            if(comments == null || comments.trim().isEmpty()) comments = "";
+            if (comments == null || comments.trim().isEmpty()) comments = "";
 
             //Agregar la verificacion de que la fecha del evento no sea anterior a la fecha actual o que sea reservada para "domingo"
 
@@ -55,30 +60,30 @@ public class AppoimentController implements IAppoimentController {
 
             return this.appoimentDAO.create(appoimentEntity);
 
-        }catch (PersistenceException ex) {
+        } catch (PersistenceException ex) {
             throw new ControllerException(ex.getMessage());
         }
 
     }
 
-    public AppoimentEntity readAppoiment(int id) throws ControllerException{
-        if(id < 0){
+    public AppoimentEntity readAppoiment(int id) throws ControllerException {
+        if (id < 0) {
             return null;
         }
         return this.appoimentDAO.readById(id);
     }
 
-    public boolean updateAppoiment(int id, String comments, String status, LocalDateTime date_booked, LocalDateTime date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException{
-        if(id < 0){
-            return  false;
-        }
-        if(comments == null || comments.trim().isEmpty() || status == null || date_booked == null || activity == null || activity.trim().isEmpty()){
+    public boolean updateAppoiment(int id, String comments, String status, LocalDateTime date_booked, LocalDateTime date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException {
+        if (id < 0) {
             return false;
         }
-        if(id_animal != null && id_animal < 0) {
+        if (comments == null || comments.trim().isEmpty() || status == null || date_booked == null || activity == null || activity.trim().isEmpty()) {
             return false;
         }
-        if(id_volunteer < 0){
+        if (id_animal != null && id_animal < 0) {
+            return false;
+        }
+        if (id_volunteer < 0) {
             return false;
         }
         AppoimentEntity appoimentEntity = new AppoimentEntity();
@@ -93,30 +98,30 @@ public class AppoimentController implements IAppoimentController {
         return this.appoimentDAO.update(appoimentEntity);
     }
 
-    public boolean deleteAppoiment(int id) throws ControllerException{
-        if(id < 0){
+    public boolean deleteAppoiment(int id) throws ControllerException {
+        if (id < 0) {
             return false;
         }
         return this.appoimentDAO.deleteById(id);
     }
 
-    public List<AppoimentEntity> readAllAppoiments() throws ControllerException{
+    public List<AppoimentEntity> readAllAppoiments() throws ControllerException {
         return this.appoimentDAO.readAll();
     }
 
     public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
-        return  this.appoimentDAO.searchByState(id,estado);
+        return this.appoimentDAO.searchByState(id, estado);
     }
 
-    public boolean animalExists(int id) throws ControllerException{
+    public boolean animalExists(int id) throws ControllerException {
         String sql = "SELECT COUNT(*) FROM animales WHERE id = ?";
-        try(
+        try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)
         ) {
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
@@ -125,15 +130,15 @@ public class AppoimentController implements IAppoimentController {
         return false;
     }
 
-    public boolean volunteerExists(int id) throws ControllerException{
+    public boolean volunteerExists(int id) throws ControllerException {
         String sql = "SELECT COUNT(*) FROM voluntarios WHERE id = ?";
-        try(
+        try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)
         ) {
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {

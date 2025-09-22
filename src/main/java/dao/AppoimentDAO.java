@@ -14,7 +14,12 @@ import java.util.List;
 public class AppoimentDAO implements IAppoimentDAO {
 
     @Override
-    public void insertAppointments() throws PersistenceException {
+    public void insertAppoiments() throws PersistenceException {
+        if (isNotEmpty()) {
+            System.out.println("Error: La tabla 'asignaciones' ya tiene datos. No se insertarán datos de ejemplo.\n");
+            return;
+
+        }
         int contInserts = 0;
         String sql = "INSERT INTO asignaciones " +
                 "(observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad, requiere_animal) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -24,10 +29,10 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             pstmt.setString(1, "Chequeo general de salud");
             pstmt.setString(2, "pendiente");
-            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now())); // fecha agenda hoy
-            pstmt.setTimestamp(4, null);
-            pstmt.setInt(5, 1); // id_animal
-            pstmt.setInt(6, 1); // id_voluntario
+            pstmt.setObject(3, LocalDateTime.now());
+            pstmt.setObject(4, LocalDateTime.of(2025, 9, 26, 16, 0));
+            pstmt.setInt(5, 1);
+            pstmt.setInt(6, 1);
             pstmt.setString(7, "Revisión médica");
             pstmt.setBoolean(8, true);
             pstmt.executeUpdate();
@@ -35,10 +40,10 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             pstmt.setString(1, "Limpieza del área");
             pstmt.setString(2, "pendiente");
-            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            pstmt.setTimestamp(4, null);
-            pstmt.setNull(5, Types.INTEGER); // no requiere animal
-            pstmt.setInt(6, 2); // id_voluntario
+            pstmt.setObject(3, LocalDateTime.now());
+            pstmt.setObject(4, LocalDateTime.of(2025, 12, 5, 5, 30));
+            pstmt.setNull(5, Types.INTEGER);
+            pstmt.setInt(6, 2);
             pstmt.setString(7, "Limpieza y desinfección");
             pstmt.setBoolean(8, false);
             pstmt.executeUpdate();
@@ -46,10 +51,10 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             pstmt.setString(1, "Paseo matutino");
             pstmt.setString(2, "pendiente");
-            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            pstmt.setTimestamp(4, null);
-            pstmt.setInt(5, 2); // id_animal
-            pstmt.setInt(6, 3); // id_voluntario
+            pstmt.setObject(3, LocalDateTime.now());
+            pstmt.setObject(4, LocalDateTime.of(2025, 10, 26, 14, 30));
+            pstmt.setInt(5, 2);
+            pstmt.setInt(6, 3);
             pstmt.setString(7, "Paseo al aire libre");
             pstmt.setBoolean(8, true);
             pstmt.executeUpdate();
@@ -257,7 +262,17 @@ public class AppoimentDAO implements IAppoimentDAO {
 
     @Override
     public boolean isNotEmpty() {
-        return false;
+        String sql = "SELECT 1 FROM asignaciones LIMIT 1";
+
+        try (Connection conn = ConexionDB.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar registros de la tabla asignaciones", e);
+        }
     }
 
 }
