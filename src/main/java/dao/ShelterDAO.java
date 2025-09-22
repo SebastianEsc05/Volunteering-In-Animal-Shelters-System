@@ -201,5 +201,4 @@ public class ShelterDAO implements IShelterDAO {
             throw new RuntimeException("Error al verificar registros de la tabla refugios", e);
         }
     }
-
 }

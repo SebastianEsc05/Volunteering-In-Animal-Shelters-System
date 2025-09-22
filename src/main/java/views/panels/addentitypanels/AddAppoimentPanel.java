@@ -11,7 +11,6 @@ import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -136,8 +135,8 @@ public class AddAppoimentPanel extends AddEntityPanel {
 
             //Get Date booked from dateField
             LocalDateTime dateBooked = null;
-            if (dateField.getFecha() != null) {
-                dateBooked = dateField.getFecha().toInstant()
+            if (dateField.getDate() != null) {
+                dateBooked = dateField.getDate().toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDateTime();
             }

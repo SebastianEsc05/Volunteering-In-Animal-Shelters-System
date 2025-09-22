@@ -2,6 +2,7 @@ package controllers;
 
 import config.ConexionDB;
 import dao.AnimalDAO;
+import dao.exceptions.PersistenceException;
 import interfaces.controller.IAnimalController;
 import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
@@ -21,6 +22,11 @@ public class AnimalController implements IAnimalController {
 
     public AnimalController(){
         this.animalDAO = new AnimalDAO();
+    }
+
+    @Override
+    public void insertAnimals() throws PersistenceException {
+        animalDAO.insertAnimals();
     }
 
     public boolean addAnimal(String name, int age, LocalDateTime date_entry, String health_situation, String specie, int id_shelter){

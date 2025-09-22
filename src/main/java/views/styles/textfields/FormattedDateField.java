@@ -50,7 +50,7 @@ public class FormattedDateField extends JFormattedTextField {
         }
     }
 
-    public Date getFecha() {
+    public Date getDate() {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
             sdf.setLenient(false);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IAppoimentDAO {
 
-    void insertAppointments() throws PersistenceException;
+    void insertAppoiments() throws PersistenceException;
 
     boolean create(AppoimentEntity appoimentEntity) throws PersistenceException;
 
