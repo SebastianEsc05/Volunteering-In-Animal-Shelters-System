@@ -19,14 +19,14 @@ public class MainPresentacion {
 //        LogInFrame logInFrame = new LogInFrame();
         System.out.println("\nCreando la base de datos y tablas correspondientes...");
         DatabaseInitializer databaseInitializer = new DatabaseInitializer();
-        IAnimalController animalController = new AnimalController();
         IShelterController shelterController = new ShelterController();
+        IAnimalController animalController = new AnimalController();
         IVolunteerController volunteerController = new VolunteerController();
         IAppoimentController appoimentController = new AppoimentController();
 
         System.out.println("\nInsertando datos de prueba...\n");
-        animalController.insertAnimals();
         shelterController.insertShelters();
+        animalController.insertAnimals();
         volunteerController.insertVolunteers();
         appoimentController.insertAppoiments();
         MainFrame mainFrame = new MainFrame();
