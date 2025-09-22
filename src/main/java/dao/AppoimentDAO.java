@@ -29,9 +29,9 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             pstmt.setString(1, "Chequeo general de salud");
             pstmt.setString(2, "pendiente");
-            pstmt.setObject(3, LocalDateTime.now());
-            pstmt.setObject(4, LocalDateTime.of(2025, 9, 26, 16, 0));
-            pstmt.setInt(5, 1);
+            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
+            pstmt.setInt(5, 2);
             pstmt.setInt(6, 1);
             pstmt.setString(7, "Revisión médica");
             pstmt.setBoolean(8, true);
@@ -40,8 +40,8 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             pstmt.setString(1, "Limpieza del área");
             pstmt.setString(2, "pendiente");
-            pstmt.setObject(3, LocalDateTime.now());
-            pstmt.setObject(4, LocalDateTime.of(2025, 12, 5, 5, 30));
+            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
             pstmt.setNull(5, Types.INTEGER);
             pstmt.setInt(6, 2);
             pstmt.setString(7, "Limpieza y desinfección");
@@ -51,9 +51,9 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             pstmt.setString(1, "Paseo matutino");
             pstmt.setString(2, "pendiente");
-            pstmt.setObject(3, LocalDateTime.now());
-            pstmt.setObject(4, LocalDateTime.of(2025, 10, 26, 14, 30));
-            pstmt.setInt(5, 2);
+            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
+            pstmt.setInt(5, 4);
             pstmt.setInt(6, 3);
             pstmt.setString(7, "Paseo al aire libre");
             pstmt.setBoolean(8, true);
@@ -61,7 +61,7 @@ public class AppoimentDAO implements IAppoimentDAO {
             contInserts++;
 
         } catch (SQLException e) {
-            throw new PersistenceException("Error al insertar asignaciones");
+            throw new PersistenceException(e.getMessage());
         }
 
         System.out.printf("Se insertaron %d asignaciones.%n", contInserts);
