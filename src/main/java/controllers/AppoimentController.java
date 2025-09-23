@@ -7,12 +7,14 @@ import interfaces.controller.IAppoimentController;
 import interfaces.dao.IAppoimentDAO;
 import models.AppoimentEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AppoimentController implements IAppoimentController {
@@ -111,6 +113,27 @@ public class AppoimentController implements IAppoimentController {
 
     public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
         return this.appoimentDAO.searchByState(id, estado);
+    }
+
+    @Override
+    public DefaultTableModel getAppoimentTable() {
+        String[] columns = {"ID", "Fecha Realización", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppoimentEntity> appoimentList = appoimentDAO.readAll();
+        for (AppoimentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
     }
 
     public boolean animalExists(int id) throws ControllerException {

@@ -21,23 +21,23 @@ public class CustomTable extends JTable {
     private void configStyle() {
 
         //Background, foreground, font, row height
-        this.setBackground(Color.white);
-        this.setForeground(Color.black);
-        this.setFont(FontUtil.loadFont(12, "Inter_18pt-ExtraLight"));
+        setOpaque(false);
+        this.setForeground(Color.BLACK);
+        this.setFont(FontUtil.loadFont(14, "Inter_Light"));
         this.setRowHeight(60);
 
         //Grid
         this.setShowHorizontalLines(false);
         this.setShowVerticalLines(false);
-        this.setGridColor(new Color(0, 0, 0));
+        this.setGridColor(new Color(255, 255, 255));
         setIntercellSpacing(new Dimension(10, 10));
 
         //Selection colors
-        this.setSelectionBackground(Color.black);
-        this.setSelectionForeground(Color.WHITE);
+        this.setSelectionBackground(Color.white);
 
         //Header
         JTableHeader header = this.getTableHeader();
+        header.setOpaque(false);
         alingColumn();
 
         header.setDefaultRenderer(new DefaultTableCellRenderer() {

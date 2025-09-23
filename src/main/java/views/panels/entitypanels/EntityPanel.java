@@ -29,7 +29,7 @@ public class EntityPanel extends JPanel {
         this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.X_AXIS));
         this.tablePanel = new JPanel();
         this.tablePanel.setOpaque(false);
-        this.tablePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 20));
+        this.tablePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 40));
         this.tablePanel.setPreferredSize(new Dimension(650, owner.getHeight()));
         this.tablePanel.setBorder(BorderFactory.createEmptyBorder(0, -20, 0, 0));
         this.eastPanel = new JPanel();
