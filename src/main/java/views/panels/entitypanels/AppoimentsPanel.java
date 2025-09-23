@@ -1,5 +1,7 @@
 package views.panels.entitypanels;
 
+import controllers.AppoimentController;
+import interfaces.controller.IAppoimentController;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAppoimentPanel;
@@ -12,9 +14,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AppoimentsPanel extends EntityPanel {
+    private IAppoimentController appoimentController;
     private AddAppoimentPanel addAppoimentPanel;
     private Button newAppoimentBtn;
     private ComboBoxCustom statusComboBox;
+    private JScrollPane scrollPane;
     private TxtFieldPh searchField;
 
     public AppoimentsPanel(MainFrame owner) {
@@ -22,9 +26,11 @@ public class AppoimentsPanel extends EntityPanel {
         this.addAppoimentPanel = new AddAppoimentPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
+        this.appoimentController = new AppoimentController();
 
         //Table model
-        model = new DefaultTableModel(new Object[]{"Id", "Fecha de realizacion", "Estado",  "Ver"}, 0);
+
+        model = appoimentController.getAppoimentTable();
         table = new CustomTable(model);
 
         addComponents();
@@ -56,12 +62,12 @@ public class AppoimentsPanel extends EntityPanel {
 
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 410));
-        JScrollPane scroll = new JScrollPane(table);
-//        scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getViewport().setBackground(Color.white);
-        scroll.setBorder(BorderFactory.createLineBorder(Style.COLOR_BACKGROUND_DARK, 1, true));
+        scrollPane = new JScrollPane(table);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         tablePanel.add(backBtn);
-        tablePanel.add(scroll);
+        tablePanel.add(scrollPane);
 
         //East Panel
         this.eastPanel.add(this.sideBarPanel);
@@ -72,6 +78,9 @@ public class AppoimentsPanel extends EntityPanel {
         add(this.mainPanel);
     }
 
+    private void loadTable(){
+
+    }
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -86,6 +95,10 @@ public class AppoimentsPanel extends EntityPanel {
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
+        //table border
+        g2d.setColor(Style.COLOR_BACKGROUND);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
 
     }
 }

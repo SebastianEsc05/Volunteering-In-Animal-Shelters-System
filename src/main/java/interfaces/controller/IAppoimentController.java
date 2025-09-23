@@ -5,6 +5,7 @@ import dao.exceptions.PersistenceException;
 import models.AnimalEntity;
 import models.AppoimentEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,4 +25,6 @@ public interface IAppoimentController {
     List<AppoimentEntity> readAllAppoiments() throws ControllerException;
 
     List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException;
+
+    DefaultTableModel getAppoimentTable();
 }
