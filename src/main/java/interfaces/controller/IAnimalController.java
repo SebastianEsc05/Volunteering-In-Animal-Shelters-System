@@ -3,6 +3,7 @@ package interfaces.controller;
 import dao.exceptions.PersistenceException;
 import models.AnimalEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface IAnimalController {
     boolean deleteAnimal(int id) throws PersistenceException;
 
     List<AnimalEntity> readAllAnimals() throws PersistenceException;
+
+    DefaultTableModel getAnimalTable();
 
 }

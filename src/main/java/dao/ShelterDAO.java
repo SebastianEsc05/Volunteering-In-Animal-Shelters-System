@@ -61,7 +61,7 @@ public class ShelterDAO implements IShelterDAO {
 
         try (Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, shelterEntity.getName_shelter());;
+            ps.setString(1, shelterEntity.getNameShelter());;
             ps.setString(2, shelterEntity.getResponsible());
             ps.setInt(3, shelterEntity.getCapacity());
             ps.setString(4, shelterEntity.getLocation());
@@ -86,8 +86,8 @@ public class ShelterDAO implements IShelterDAO {
             try(ResultSet rs = ps.executeQuery()){
                 if(rs.next()){
                    ShelterEntity shelterEntity = new ShelterEntity();
-                   shelterEntity.setId_shelter(rs.getInt("id"));
-                   shelterEntity.setName_shelter(rs.getString("nombre"));
+                   shelterEntity.setIdShelter(rs.getInt("id"));
+                   shelterEntity.setNameShelter(rs.getString("nombre"));
                    shelterEntity.setResponsible(rs.getString("responsable"));
                    shelterEntity.setCapacity(rs.getInt("capacidad"));
                    shelterEntity.setLocation(rs.getString("ubicacion"));
@@ -109,11 +109,11 @@ public class ShelterDAO implements IShelterDAO {
         try (
             Connection con = ConexionDB.getConnection();
             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, shelterEntity.getName_shelter());
+            ps.setString(1, shelterEntity.getNameShelter());
             ps.setString(2, shelterEntity.getResponsible());;
             ps.setInt(3, shelterEntity.getCapacity());
             ps.setString(4, shelterEntity.getLocation());
-            ps.setInt(5, shelterEntity.getId_shelter());
+            ps.setInt(5, shelterEntity.getIdShelter());
             System.out.println("Refugio actualizado con exito");
             return ps.executeUpdate() > 0;
         } catch (SQLException exception) {
@@ -156,8 +156,8 @@ public class ShelterDAO implements IShelterDAO {
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 ShelterEntity shelterEntity = new ShelterEntity();
-                shelterEntity.setId_shelter(rs.getInt("id"));
-                shelterEntity.setName_shelter(rs.getString("nombre"));
+                shelterEntity.setIdShelter(rs.getInt("id"));
+                shelterEntity.setNameShelter(rs.getString("nombre"));
                 shelterEntity.setResponsible(rs.getString("responsable"));
                 shelterEntity.setCapacity(rs.getInt("capacidad"));
                 shelterEntity.setLocation(rs.getString("ubicacion"));
@@ -165,9 +165,6 @@ public class ShelterDAO implements IShelterDAO {
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
-        }
-        for(ShelterEntity shelterEntity : shelters){
-            System.out.println(shelterEntity);
         }
         return shelters;
     }

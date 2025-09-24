@@ -1,44 +1,38 @@
 package models;
 
 public class ShelterEntity {
-    private int id_shelter;
-    private String name_shelter;
+    private int idShelter;
+    private String nameShelter;
     private String responsible;
+    private int animalCount;
     private int capacity;
     private String location;
 
     public ShelterEntity(){}
 
-    public ShelterEntity(int id_shelter,String name_shelter, String responsible, int capacity, String location) {
-        this.id_shelter = id_shelter;
-        this.name_shelter = name_shelter;
+    public ShelterEntity(int idShelter, String nameShelter, String responsible, int animalCount, int capacity, String location) {
+        this.idShelter = idShelter;
+        this.nameShelter = nameShelter;
         this.responsible = responsible;
+        this.animalCount = animalCount;
         this.capacity = capacity;
         this.location = location;
     }
 
-    public ShelterEntity(String name_shelter, String responsible, int capacity, String location) {
-        this.name_shelter = name_shelter;
-        this.responsible = responsible;
-        this.capacity = capacity;
-        this.location = location;
+    public int getIdShelter() {
+        return idShelter;
     }
 
-
-    public int getId_shelter() {
-        return id_shelter;
+    public void setIdShelter(int idShelter) {
+        this.idShelter = idShelter;
     }
 
-    public void setId_shelter(int id_shelter) {
-        this.id_shelter = id_shelter;
+    public String getNameShelter() {
+        return nameShelter;
     }
 
-    public String getName_shelter() {
-        return name_shelter;
-    }
-
-    public void setName_shelter(String name_shelter) {
-        this.name_shelter = name_shelter;
+    public void setNameShelter(String nameShelter) {
+        this.nameShelter = nameShelter;
     }
 
     public String getResponsible() {
@@ -47,6 +41,14 @@ public class ShelterEntity {
 
     public void setResponsible(String responsible) {
         this.responsible = responsible;
+    }
+
+    public int getAnimalCount() {
+        return animalCount;
+    }
+
+    public void setAnimalCount(int animalCount) {
+        this.animalCount = animalCount;
     }
 
     public int getCapacity() {
@@ -69,7 +71,7 @@ public class ShelterEntity {
     public String toString() {
 
         String formato = "| %-5d | %-15s | %-15s | %-5d | %-15s |";
-        return String.format(formato,getId_shelter(),getName_shelter(),getResponsible(),getCapacity(),getLocation());
+        return String.format(formato, getIdShelter(), getNameShelter(),getResponsible(),getCapacity(),getLocation());
         /**return "ShelterEntity{" +
                 "id_shelter=" + id_shelter + //1
                 ", name_shelter='" + name_shelter + '\'' + //2
