@@ -117,7 +117,7 @@ public class AppoimentController implements IAppoimentController {
 
     @Override
     public DefaultTableModel getAppoimentTable() {
-        String[] columns = {"ID", "Fecha Realización", "Estado", "Ver"};
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 

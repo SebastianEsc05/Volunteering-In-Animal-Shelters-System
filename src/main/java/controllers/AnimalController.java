@@ -6,12 +6,15 @@ import dao.exceptions.PersistenceException;
 import interfaces.controller.IAnimalController;
 import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
+import models.AppoimentEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -84,6 +87,26 @@ public class AnimalController implements IAnimalController {
 
     public List<AnimalEntity> readAllAnimals(){
         return this.animalDAO.readAll();
+    }
+
+    @Override
+    public DefaultTableModel getAnimalTable() {
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AnimalEntity> animalList = animalDAO.readAll();
+        for (AnimalEntity a : animalList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getName(),
+                    a.getSpecie(),
+                    a.getHealth_situation(),
+            };
+            model.addRow(row);
+        }
+
+        return model;
     }
 
     boolean checkStatus(String value){

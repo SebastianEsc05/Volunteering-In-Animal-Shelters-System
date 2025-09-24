@@ -102,9 +102,6 @@ public class AddAppoimentPanel extends AddEntityPanel {
         this.mainPanel.add(Box.createVerticalStrut(10));
         this.mainPanel.add(this.buttonsPanel);
         add(this.mainPanel);
-        System.out.println(this.dateField.getY() + " " + this.animalTextField.getY() + " " + this.volunteerTextField.getY());
-        System.out.println(this.activityTextField.getX());
-
     }
 
     public void addApooiment() {

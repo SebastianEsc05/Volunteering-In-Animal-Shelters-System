@@ -36,7 +36,6 @@ public class EntityPanel extends JPanel {
         this.eastPanel.setOpaque(false);
         this.eastPanel.setLayout(new BoxLayout(this.eastPanel, BoxLayout.Y_AXIS));
         this.eastPanel.setPreferredSize(new Dimension(280, owner.getHeight()));
-        System.out.println(owner.getWidth()-tablePanel.getWidth());
         this.backBtn = new Button("←", 50, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //ActionListeners

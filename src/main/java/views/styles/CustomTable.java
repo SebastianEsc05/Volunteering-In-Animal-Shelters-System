@@ -73,13 +73,6 @@ public class CustomTable extends JTable {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g2d.setStroke(new BasicStroke(3));
-        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-        g2d.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), 20, 20);
-        g2d.dispose();
 
     }
 }

@@ -189,9 +189,6 @@ public class AnimalDAO implements IAnimalDAO {
             exception.printStackTrace();
         }
 
-        for (AnimalEntity animalEntity : animals) {
-            System.out.println(animalEntity.toString());
-        }
         return animals;
     }
 

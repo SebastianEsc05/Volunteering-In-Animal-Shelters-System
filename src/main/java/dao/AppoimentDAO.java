@@ -212,9 +212,6 @@ public class AppoimentDAO implements IAppoimentDAO {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        for (AppoimentEntity appoimentEntity : appoiments) {
-            System.out.println(appoimentEntity.toString());
-        }
         return appoiments;
     }
 

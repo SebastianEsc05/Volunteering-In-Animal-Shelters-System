@@ -3,6 +3,7 @@ package interfaces.controller;
 import dao.exceptions.PersistenceException;
 import models.ShelterEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public interface IShelterController {
@@ -13,11 +14,13 @@ public interface IShelterController {
 
     ShelterEntity readShelter(int id);
 
-    boolean updateShelter(int id, String name, String responible, int capaciy, String location);
+    boolean updateShelter(int id, String name, String responsible, int capacity, String location);
 
     boolean deleteShelter(int id);
 
     List<ShelterEntity> readAllShelters();
+
+    DefaultTableModel getShelterTable();
 
     void clieanUpTable();
 }
