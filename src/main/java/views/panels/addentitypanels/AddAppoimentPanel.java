@@ -138,10 +138,10 @@ public class AddAppoimentPanel extends AddEntityPanel {
             String activity = activityTextField.getText();
             boolean animalCheck = animalCheckBox.isSelected();
             String comments = commentsTextArea.getText();
-
-
-
-
+            if (activity.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo de actividad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             //Actual date from today
             LocalDateTime todayDate = LocalDateTime.now();
 
@@ -158,6 +158,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
             if (success){
                 JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
+
 
             }else{
                 JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar la asignacion",  "Error",  JOptionPane.ERROR_MESSAGE);
