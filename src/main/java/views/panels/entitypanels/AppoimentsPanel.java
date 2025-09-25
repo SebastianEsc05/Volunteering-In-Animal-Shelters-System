@@ -10,6 +10,7 @@ import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AppoimentsPanel extends EntityPanel {
@@ -39,6 +40,10 @@ public class AppoimentsPanel extends EntityPanel {
         //ActionListeners
         newAppoimentBtn.addActionListener(e -> {
             owner.showNewPanel(this.addAppoimentPanel);
+        });
+
+        statusComboBox.addActionListener(e -> {;
+            actualizarFiltro();
         });
 
     }
@@ -100,6 +105,35 @@ public class AppoimentsPanel extends EntityPanel {
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
     }
+
+    public void actualizarFiltro() {
+        String estado = statusComboBox.getSelectedValue();
+        DefaultTableModel newModel;
+        try {
+            switch (estado) {
+                case "Todos":
+                    newModel = appoimentController.getAppoimentTable();
+                    break;
+                case "Pendiente":
+                    newModel = appoimentController.getAppoimentByStatusPendingTable();
+                    break;
+                case "Cancelada":
+                    newModel = appoimentController.getAppoimentByStatusCanceledTable();
+                    break;
+                case "Finalizada":
+                    newModel = appoimentController.getAppoimentByStatusCompletedTable();
+                    break;
+                default:
+                    newModel = appoimentController.getAppoimentTable();
+            }
+            table.setModel(newModel);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+
 
     @Override
     protected void paintComponent(Graphics g){

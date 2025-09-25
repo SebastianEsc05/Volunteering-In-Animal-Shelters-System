@@ -5,6 +5,7 @@ import dao.exceptions.PersistenceException;
 import interfaces.dao.IAppoimentDAO;
 import models.AppointmentEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -261,6 +262,84 @@ public class AppointmentDAO implements IAppoimentDAO {
     }
 
     @Override
+    public List<AppointmentEntity>  getAppoimentsByStatusPending() {
+        String sql = "SELECT * FROM asignaciones WHERE estado = 'pendiente'";
+        List<AppointmentEntity> appoiments = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                AppointmentEntity appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setId(rs.getInt("id"));
+                appointmentEntity.setComments(rs.getString("observaciones"));
+                appointmentEntity.setStatus(rs.getString("estado"));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                appointmentEntity.setActivity(rs.getString("actividad"));
+                appoiments.add(appointmentEntity);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return appoiments;
+    }
+
+    @Override
+    public List<AppointmentEntity> getAppoimentsByStatusCanceled() {
+        String sql = "SELECT * FROM asignaciones WHERE estado = 'cancelado'";
+        List<AppointmentEntity> appoiments = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                AppointmentEntity appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setId(rs.getInt("id"));
+                appointmentEntity.setComments(rs.getString("observaciones"));
+                appointmentEntity.setStatus(rs.getString("estado"));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                appointmentEntity.setActivity(rs.getString("actividad"));
+                appoiments.add(appointmentEntity);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return appoiments;
+    }
+
+    @Override
+    public List<AppointmentEntity> getAppoimentsByStatusCompleted() {
+        String sql = "SELECT * FROM asignaciones WHERE estado = 'completado'";
+        List<AppointmentEntity> appoiments = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                AppointmentEntity appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setId(rs.getInt("id"));
+                appointmentEntity.setComments(rs.getString("observaciones"));
+                appointmentEntity.setStatus(rs.getString("estado"));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                appointmentEntity.setActivity(rs.getString("actividad"));
+                appoiments.add(appointmentEntity);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return appoiments;
+    }
+
+    @Override
     public boolean isNotEmpty() {
         String sql = "SELECT 1 FROM asignaciones LIMIT 1";
 
@@ -274,6 +353,8 @@ public class AppointmentDAO implements IAppoimentDAO {
             throw new RuntimeException("Error al verificar registros de la tabla asignaciones", e);
         }
     }
+
+
 
 }
 

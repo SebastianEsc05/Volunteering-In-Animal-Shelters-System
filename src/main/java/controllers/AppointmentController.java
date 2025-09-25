@@ -135,6 +135,70 @@ public class AppointmentController implements IAppointmentController {
         return model;
     }
 
+    @Override
+    public DefaultTableModel getAppoimentByStatusPendingTable() {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusPending();
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAppoimentByStatusCanceledTable() {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusCanceled();
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAppoimentByStatusCompletedTable() {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusCompleted();
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+
     public boolean animalExists(int id) throws ControllerException {
         String sql = "SELECT COUNT(*) FROM animales WHERE id = ?";
         try (

@@ -3,6 +3,7 @@ package interfaces.dao;
 import dao.exceptions.PersistenceException;
 import models.AppointmentEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public interface IAppoimentDAO {
@@ -22,4 +23,11 @@ public interface IAppoimentDAO {
     List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException;
 
     boolean isNotEmpty();
+
+    List<AppointmentEntity>  getAppoimentsByStatusPending();
+
+    List<AppointmentEntity>  getAppoimentsByStatusCanceled();
+
+    List<AppointmentEntity>  getAppoimentsByStatusCompleted();
+
 }
