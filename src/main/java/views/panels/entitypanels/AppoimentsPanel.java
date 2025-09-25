@@ -1,7 +1,7 @@
 package views.panels.entitypanels;
 
-import controllers.AppoimentController;
-import interfaces.controller.IAppoimentController;
+import controllers.AppointmentController;
+import interfaces.controller.IAppointmentController;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAppoimentPanel;
@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AppoimentsPanel extends EntityPanel {
-    private IAppoimentController appoimentController;
+    private IAppointmentController appoimentController;
     private AddAppoimentPanel addAppoimentPanel;
     private Button newAppoimentBtn;
     private JScrollPane scrollPane;
@@ -24,7 +24,7 @@ public class AppoimentsPanel extends EntityPanel {
 
     public AppoimentsPanel(MainFrame owner) {
         super(owner);
-        this.appoimentController = new AppoimentController();
+        this.appoimentController = new AppointmentController();
         this.addAppoimentPanel = new AddAppoimentPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
@@ -40,6 +40,10 @@ public class AppoimentsPanel extends EntityPanel {
         //ActionListeners
         newAppoimentBtn.addActionListener(e -> {
             owner.showNewPanel(this.addAppoimentPanel);
+        });
+
+        statusComboBox.addActionListener(e -> {;
+            actualizarFiltro();
         });
 
     }
@@ -101,6 +105,35 @@ public class AppoimentsPanel extends EntityPanel {
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
     }
+
+    public void actualizarFiltro() {
+        String estado = statusComboBox.getSelectedValue();
+        DefaultTableModel newModel;
+        try {
+            switch (estado) {
+                case "Todos":
+                    newModel = appoimentController.getAppoimentTable();
+                    break;
+                case "Pendiente":
+                    newModel = appoimentController.getAppoimentByStatusPendingTable();
+                    break;
+                case "Cancelada":
+                    newModel = appoimentController.getAppoimentByStatusCanceledTable();
+                    break;
+                case "Finalizada":
+                    newModel = appoimentController.getAppoimentByStatusCompletedTable();
+                    break;
+                default:
+                    newModel = appoimentController.getAppoimentTable();
+            }
+            table.setModel(newModel);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+
 
     @Override
     protected void paintComponent(Graphics g){

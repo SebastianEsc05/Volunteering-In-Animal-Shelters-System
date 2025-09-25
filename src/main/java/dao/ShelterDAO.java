@@ -170,7 +170,7 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
-    public void clieanUpTable() throws PersistenceException {
+    public void cleanUpTable() throws PersistenceException {
         String sql = "DELETE FROM refugios";
 
         try (Connection conn = ConexionDB.getConnection();

@@ -1,28 +1,27 @@
 package controllers;
 
 import config.ConexionDB;
-import dao.AppoimentDAO;
+import dao.AppointmentDAO;
 import dao.exceptions.PersistenceException;
-import interfaces.controller.IAppoimentController;
+import interfaces.controller.IAppointmentController;
 import interfaces.dao.IAppoimentDAO;
-import models.AppoimentEntity;
+import models.AppointmentEntity;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class AppoimentController implements IAppoimentController {
+public class AppointmentController implements IAppointmentController {
 
     private IAppoimentDAO appoimentDAO;
 
-    public AppoimentController() {
-        this.appoimentDAO = new AppoimentDAO();
+    public AppointmentController() {
+        this.appoimentDAO = new AppointmentDAO();
     }
 
     @Override
@@ -50,17 +49,17 @@ public class AppoimentController implements IAppoimentController {
 
             //Agregar la verificacion de que la fecha del evento no sea anterior a la fecha actual o que sea reservada para "domingo"
 
-            AppoimentEntity appoimentEntity = new AppoimentEntity();
-            appoimentEntity.setDateEvent(todayDate);
-            appoimentEntity.setDateBooked(dateBooked);
-            appoimentEntity.setIdAnimal(animalId);
-            appoimentEntity.setIdVolunteer(volunteerId);
-            appoimentEntity.setActivity(activity);
-            appoimentEntity.setComments(comments);
-            appoimentEntity.setStatus(status);
-            appoimentEntity.setAnimalCheck(animalCheck);
+            AppointmentEntity appointmentEntity = new AppointmentEntity();
+            appointmentEntity.setDateEvent(todayDate);
+            appointmentEntity.setDateBooked(dateBooked);
+            appointmentEntity.setIdAnimal(animalId);
+            appointmentEntity.setIdVolunteer(volunteerId);
+            appointmentEntity.setActivity(activity);
+            appointmentEntity.setComments(comments);
+            appointmentEntity.setStatus(status);
+            appointmentEntity.setAnimalCheck(animalCheck);
 
-            return this.appoimentDAO.create(appoimentEntity);
+            return this.appoimentDAO.create(appointmentEntity);
 
         } catch (PersistenceException ex) {
             throw new ControllerException(ex.getMessage());
@@ -68,7 +67,7 @@ public class AppoimentController implements IAppoimentController {
 
     }
 
-    public AppoimentEntity readAppoiment(int id) throws ControllerException {
+    public AppointmentEntity readAppoiment(int id) throws ControllerException {
         if (id < 0) {
             return null;
         }
@@ -88,16 +87,16 @@ public class AppoimentController implements IAppoimentController {
         if (id_volunteer < 0) {
             return false;
         }
-        AppoimentEntity appoimentEntity = new AppoimentEntity();
-        appoimentEntity.setId(id);
-        appoimentEntity.setComments(comments);
-        appoimentEntity.setStatus(status);
-        appoimentEntity.setDateBooked(date_booked);
-        appoimentEntity.setDateEvent(date_event);
-        appoimentEntity.setIdAnimal(id_animal);
-        appoimentEntity.setIdVolunteer(id_volunteer);
-        appoimentEntity.setActivity(activity);
-        return this.appoimentDAO.update(appoimentEntity);
+        AppointmentEntity appointmentEntity = new AppointmentEntity();
+        appointmentEntity.setId(id);
+        appointmentEntity.setComments(comments);
+        appointmentEntity.setStatus(status);
+        appointmentEntity.setDateBooked(date_booked);
+        appointmentEntity.setDateEvent(date_event);
+        appointmentEntity.setIdAnimal(id_animal);
+        appointmentEntity.setIdVolunteer(id_volunteer);
+        appointmentEntity.setActivity(activity);
+        return this.appoimentDAO.update(appointmentEntity);
     }
 
     public boolean deleteAppoiment(int id) throws ControllerException {
@@ -107,11 +106,11 @@ public class AppoimentController implements IAppoimentController {
         return this.appoimentDAO.deleteById(id);
     }
 
-    public List<AppoimentEntity> readAllAppoiments() throws ControllerException {
+    public List<AppointmentEntity> readAllAppoiments() throws ControllerException {
         return this.appoimentDAO.readAll();
     }
 
-    public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
+    public List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException {
         return this.appoimentDAO.searchByState(id, estado);
     }
 
@@ -123,8 +122,8 @@ public class AppoimentController implements IAppoimentController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        List<AppoimentEntity> appoimentList = appoimentDAO.readAll();
-        for (AppoimentEntity a : appoimentList) {
+        List<AppointmentEntity> appoimentList = appoimentDAO.readAll();
+        for (AppointmentEntity a : appoimentList) {
             Object[] row = {
                     a.getId(),
                     a.getDateBooked().format(formatter),
@@ -135,6 +134,70 @@ public class AppoimentController implements IAppoimentController {
 
         return model;
     }
+
+    @Override
+    public DefaultTableModel getAppoimentByStatusPendingTable() {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusPending();
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAppoimentByStatusCanceledTable() {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusCanceled();
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAppoimentByStatusCompletedTable() {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusCompleted();
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
 
     public boolean animalExists(int id) throws ControllerException {
         String sql = "SELECT COUNT(*) FROM animales WHERE id = ?";
