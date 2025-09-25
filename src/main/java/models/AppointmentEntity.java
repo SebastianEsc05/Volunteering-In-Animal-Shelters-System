@@ -2,7 +2,7 @@ package models;
 
 import java.time.LocalDateTime;
 
-public class AppoimentEntity {
+public class AppointmentEntity {
 
     private int id;
     private LocalDateTime dateEvent;
@@ -14,10 +14,10 @@ public class AppoimentEntity {
     private String status;
     private boolean animalCheck;
 
-    public AppoimentEntity() {
+    public AppointmentEntity() {
     }
 
-    public AppoimentEntity(int id, LocalDateTime dateEvent, LocalDateTime dateBooked, Integer idAnimal, int idVolunteer, String activity, String comments, String status, boolean animalCheck) {
+    public AppointmentEntity(int id, LocalDateTime dateEvent, LocalDateTime dateBooked, Integer idAnimal, int idVolunteer, String activity, String comments, String status, boolean animalCheck) {
         this.id = id;
         this.dateEvent = dateEvent;
         this.dateBooked = dateBooked;

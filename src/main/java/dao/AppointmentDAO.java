@@ -3,15 +3,14 @@ package dao;
 import config.ConexionDB;
 import dao.exceptions.PersistenceException;
 import interfaces.dao.IAppoimentDAO;
-import models.AppoimentEntity;
+import models.AppointmentEntity;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppoimentDAO implements IAppoimentDAO {
+public class AppointmentDAO implements IAppoimentDAO {
 
     @Override
     public void insertAppoiments() throws PersistenceException {
@@ -31,8 +30,8 @@ public class AppoimentDAO implements IAppoimentDAO {
             pstmt.setString(2, "pendiente");
             pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
-            pstmt.setInt(5, 2);
-            pstmt.setInt(6, 1);
+            pstmt.setInt(5, 1);
+            pstmt.setInt(6, 2);
             pstmt.setString(7, "Revisión médica");
             pstmt.setBoolean(8, true);
             pstmt.executeUpdate();
@@ -42,10 +41,10 @@ public class AppoimentDAO implements IAppoimentDAO {
             pstmt.setString(2, "pendiente");
             pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
-            pstmt.setNull(5, Types.INTEGER);
+            pstmt.setInt(5, 1);
             pstmt.setInt(6, 2);
             pstmt.setString(7, "Limpieza y desinfección");
-            pstmt.setBoolean(8, false);
+            pstmt.setBoolean(8, true);
             pstmt.executeUpdate();
             contInserts++;
 
@@ -53,8 +52,8 @@ public class AppoimentDAO implements IAppoimentDAO {
             pstmt.setString(2, "pendiente");
             pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
-            pstmt.setInt(5, 4);
-            pstmt.setInt(6, 3);
+            pstmt.setInt(5, 1);
+            pstmt.setInt(6, 2);
             pstmt.setString(7, "Paseo al aire libre");
             pstmt.setBoolean(8, true);
             pstmt.executeUpdate();
@@ -69,30 +68,34 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public boolean create(AppoimentEntity appoimentEntity) throws PersistenceException {
-        String sql = "INSERT INTO asignaciones (observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad) VALUES (?,?,?,?,?,?,?)";
+    public boolean create(AppointmentEntity appointmentEntity) throws PersistenceException {
+        String sql = "INSERT INTO asignaciones (observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad, requiere_animal) VALUES (?,?,?,?,?,?,?,?)";
 
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
         ) {
-            ps.setString(1, appoimentEntity.getComments());
-            ps.setObject(2, appoimentEntity.getStatus());
-            ps.setObject(3, appoimentEntity.getDateBooked());
-            if (appoimentEntity.getDateEvent() != null) {
-                ps.setObject(4, appoimentEntity.getDateEvent());
+            ps.setString(1, appointmentEntity.getComments());
+            ps.setObject(2, appointmentEntity.getStatus());
+            ps.setObject(3, appointmentEntity.getDateBooked());
+            if (appointmentEntity.getDateEvent() != null) {
+                ps.setObject(4, appointmentEntity.getDateEvent());
             } else {
                 ps.setNull(4, java.sql.Types.DATE);
             }
 
-            if (appoimentEntity.getIdAnimal() != null) {
-                ps.setInt(5, appoimentEntity.getIdAnimal());
+            if (appointmentEntity.getIdAnimal() != null) {
+                ps.setInt(5, appointmentEntity.getIdAnimal());
             } else {
                 ps.setNull(5, java.sql.Types.INTEGER);
+
+            }
+            ps.setInt(6, appointmentEntity.getIdVolunteer());
+            ps.setString(7, appointmentEntity.getActivity());
+            if(appointmentEntity.isAnimalCheck()){
+                ps.setBoolean(8,appointmentEntity.isAnimalCheck());
             }
 
-            ps.setInt(6, appoimentEntity.getIdVolunteer());
-            ps.setString(7, appoimentEntity.getActivity());
             System.out.println("La asignación se ha agregado exitosamente");
             return ps.executeUpdate() > 0;
 
@@ -104,7 +107,7 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public AppoimentEntity readById(int id) throws PersistenceException {
+    public AppointmentEntity readById(int id) throws PersistenceException {
         String sql = "SELECT * FROM asignaciones where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -112,17 +115,17 @@ public class AppoimentDAO implements IAppoimentDAO {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    AppoimentEntity appoimentEntity = new AppoimentEntity();
-                    appoimentEntity.setId(rs.getInt("id"));
-                    appoimentEntity.setComments(rs.getString("observaciones"));
-                    appoimentEntity.setStatus(rs.getString("estado"));
-                    appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                    appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
-                    appoimentEntity.setIdAnimal(rs.getInt("id_animal"));
-                    appoimentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
-                    appoimentEntity.setActivity(rs.getString("actividad"));
-                    System.out.println("Asignacion encotrada: " + appoimentEntity.toString());
-                    return appoimentEntity;
+                    AppointmentEntity appointmentEntity = new AppointmentEntity();
+                    appointmentEntity.setId(rs.getInt("id"));
+                    appointmentEntity.setComments(rs.getString("observaciones"));
+                    appointmentEntity.setStatus(rs.getString("estado"));
+                    appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                    appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                    appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                    appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                    appointmentEntity.setActivity(rs.getString("actividad"));
+                    System.out.println("Asignacion encotrada: " + appointmentEntity.toString());
+                    return appointmentEntity;
                 }
             }
         } catch (SQLException exception) {
@@ -134,28 +137,28 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public boolean update(AppoimentEntity appoimentEntity) throws PersistenceException {
+    public boolean update(AppointmentEntity appointmentEntity) throws PersistenceException {
         String sql = "UPDATE asignaciones SET observaciones = ?, estado = ?, fecha_de_agenda = ?, fecha_realizacion = ?, id_animal = ?, id_voluntario = ?, actividad = ? where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, appoimentEntity.getComments());
-            ps.setObject(2, appoimentEntity.getStatus());
-            ps.setObject(3, appoimentEntity.getDateBooked());
-            if (appoimentEntity.getDateEvent() != null) {
-                ps.setObject(4, appoimentEntity.getDateEvent());
+            ps.setString(1, appointmentEntity.getComments());
+            ps.setObject(2, appointmentEntity.getStatus());
+            ps.setObject(3, appointmentEntity.getDateBooked());
+            if (appointmentEntity.getDateEvent() != null) {
+                ps.setObject(4, appointmentEntity.getDateEvent());
             } else {
                 ps.setNull(4, java.sql.Types.DATE);
             }
 
-            if (appoimentEntity.getIdAnimal() != null) {
-                ps.setInt(5, appoimentEntity.getIdAnimal());
+            if (appointmentEntity.getIdAnimal() != null) {
+                ps.setInt(5, appointmentEntity.getIdAnimal());
             } else {
                 ps.setNull(5, java.sql.Types.INTEGER);
             }
-            ps.setInt(6, appoimentEntity.getIdVolunteer());
-            ps.setString(7, appoimentEntity.getActivity());
-            ps.setInt(8, appoimentEntity.getId());
+            ps.setInt(6, appointmentEntity.getIdVolunteer());
+            ps.setString(7, appointmentEntity.getActivity());
+            ps.setInt(8, appointmentEntity.getId());
             System.out.println("Asignacion actualizado con exito");
             return ps.executeUpdate() > 0;
 
@@ -190,24 +193,24 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public List<AppoimentEntity> readAll() throws PersistenceException {
+    public List<AppointmentEntity> readAll() throws PersistenceException {
         String sql = "SELECT * FROM asignaciones";
-        List<AppoimentEntity> appoiments = new ArrayList<>();
+        List<AppointmentEntity> appoiments = new ArrayList<>();
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                AppoimentEntity appoimentEntity = new AppoimentEntity();
-                appoimentEntity.setId(rs.getInt("id"));
-                appoimentEntity.setComments(rs.getString("observaciones"));
-                appoimentEntity.setStatus(rs.getString("estado"));
-                appoimentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                appoimentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
-                appoimentEntity.setIdAnimal(rs.getInt("id_animal"));
-                appoimentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
-                appoimentEntity.setActivity(rs.getString("actividad"));
-                appoiments.add(appoimentEntity);
+                AppointmentEntity appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setId(rs.getInt("id"));
+                appointmentEntity.setComments(rs.getString("observaciones"));
+                appointmentEntity.setStatus(rs.getString("estado"));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                appointmentEntity.setActivity(rs.getString("actividad"));
+                appoiments.add(appointmentEntity);
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -216,8 +219,8 @@ public class AppoimentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException {
-        List<AppoimentEntity> result = new ArrayList<>();
+    public List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException {
+        List<AppointmentEntity> result = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM animales WHERE 1=1");
 
         if (id != null) {
@@ -239,7 +242,7 @@ public class AppoimentDAO implements IAppoimentDAO {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                AppoimentEntity a = new AppoimentEntity();
+                AppointmentEntity a = new AppointmentEntity();
                 a.setId(rs.getInt("id"));
                 a.setStatus(rs.getString("estado"));
                 a.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));

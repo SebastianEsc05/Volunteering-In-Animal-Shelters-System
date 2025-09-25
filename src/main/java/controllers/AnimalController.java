@@ -6,7 +6,6 @@ import dao.exceptions.PersistenceException;
 import interfaces.controller.IAnimalController;
 import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
-import models.AppoimentEntity;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
@@ -14,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

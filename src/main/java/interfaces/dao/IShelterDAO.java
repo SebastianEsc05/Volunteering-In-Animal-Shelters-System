@@ -19,7 +19,7 @@ public interface IShelterDAO {
 
     List<ShelterEntity> readAll() throws PersistenceException;
 
-    void clieanUpTable() throws PersistenceException;
+    void cleanUpTable() throws PersistenceException;
 
     boolean isNotEmpty() throws PersistenceException;
 }

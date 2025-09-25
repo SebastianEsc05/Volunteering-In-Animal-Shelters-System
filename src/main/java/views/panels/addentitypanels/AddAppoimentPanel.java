@@ -1,6 +1,6 @@
 package views.panels.addentitypanels;
 
-import controllers.AppoimentController;
+import controllers.AppointmentController;
 import controllers.ControllerException;
 import views.frames.MainFrame;
 import views.styles.FontUtil;
@@ -109,9 +109,21 @@ public class AddAppoimentPanel extends AddEntityPanel {
             //Get data from textFields
             Integer animalId = null;
             String animalIdText = animalTextField.getText().trim();
+
+            if(animalIdText.isEmpty()){
+                if(animalCheckBox.isSelected()){
+                    JOptionPane.showMessageDialog(this, "Debe ingresar un ID de animal si la actividad involucra un animal", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
             if (!animalIdText.isEmpty()) {
                 if (animalIdText.matches("\\d+")) {
                     animalId = Integer.parseInt(animalIdText);
+                }
+                if(!animalCheckBox.isSelected()){
+                    JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.","Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             } else {
                     JOptionPane.showMessageDialog(this, "El ID de animal debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
@@ -127,6 +139,9 @@ public class AddAppoimentPanel extends AddEntityPanel {
             boolean animalCheck = animalCheckBox.isSelected();
             String comments = commentsTextArea.getText();
 
+
+
+
             //Actual date from today
             LocalDateTime todayDate = LocalDateTime.now();
 
@@ -138,13 +153,14 @@ public class AddAppoimentPanel extends AddEntityPanel {
                         .toLocalDateTime();
             }
 
-            AppoimentController appoimentController = new AppoimentController();
+            AppointmentController appoimentController = new AppointmentController();
             boolean success = appoimentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments,"pendiente", animalCheck);
             if (success){
                 JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
+                resetFields();
 
             }else{
-                JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar el cliente",  "Error",  JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar la asignacion",  "Error",  JOptionPane.ERROR_MESSAGE);
 
             }
 
@@ -152,6 +168,16 @@ public class AddAppoimentPanel extends AddEntityPanel {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public void resetFields() {
+        this.animalTextField.setText("");
+        this.volunteerTextField.setText("");
+        this.activityTextField.setText("");
+        this.commentsTextArea.setText("");
+        this.dateField.setValue(null);
+        this.animalCheckBox.setSelected(false);
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {

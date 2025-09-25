@@ -1,12 +1,11 @@
 package views.main;
 
 import controllers.AnimalController;
-import controllers.AppoimentController;
+import controllers.AppointmentController;
 import controllers.ShelterController;
 import controllers.VolunteerController;
-import dao.AnimalDAO;
 import interfaces.controller.IAnimalController;
-import interfaces.controller.IAppoimentController;
+import interfaces.controller.IAppointmentController;
 import interfaces.controller.IShelterController;
 import interfaces.controller.IVolunteerController;
 import views.frames.MainFrame;
@@ -22,7 +21,7 @@ public class MainPresentacion {
         IShelterController shelterController = new ShelterController();
         IAnimalController animalController = new AnimalController();
         IVolunteerController volunteerController = new VolunteerController();
-        IAppoimentController appoimentController = new AppoimentController();
+        IAppointmentController appoimentController = new AppointmentController();
 
         System.out.println("\nInsertando datos de prueba...\n");
         shelterController.insertShelters();

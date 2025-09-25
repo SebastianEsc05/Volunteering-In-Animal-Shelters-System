@@ -1,7 +1,7 @@
 package interfaces.dao;
 
 import dao.exceptions.PersistenceException;
-import models.AppoimentEntity;
+import models.AppointmentEntity;
 
 import java.util.List;
 
@@ -9,17 +9,17 @@ public interface IAppoimentDAO {
 
     void insertAppoiments() throws PersistenceException;
 
-    boolean create(AppoimentEntity appoimentEntity) throws PersistenceException;
+    boolean create(AppointmentEntity appointmentEntity) throws PersistenceException;
 
-    AppoimentEntity readById(int id) throws PersistenceException;
+    AppointmentEntity readById(int id) throws PersistenceException;
 
-    boolean update(AppoimentEntity appoimentEntity) throws PersistenceException;
+    boolean update(AppointmentEntity appointmentEntity) throws PersistenceException;
 
     boolean deleteById(int id) throws PersistenceException;
 
-    List<AppoimentEntity> readAll() throws PersistenceException;
+    List<AppointmentEntity> readAll() throws PersistenceException;
 
-    List<AppoimentEntity> searchByState(Integer id, String estado) throws PersistenceException;
+    List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException;
 
     boolean isNotEmpty();
 }

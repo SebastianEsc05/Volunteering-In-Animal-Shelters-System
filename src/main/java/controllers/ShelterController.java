@@ -100,7 +100,7 @@ public class ShelterController implements IShelterController {
 
     @Override
     public void clieanUpTable() {
-        this.shelterDAO.clieanUpTable();
+        this.shelterDAO.cleanUpTable();
     }
 
 }

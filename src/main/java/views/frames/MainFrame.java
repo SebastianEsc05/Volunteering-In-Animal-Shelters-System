@@ -1,7 +1,5 @@
 package views.frames;
 
-import controllers.AppoimentController;
-import interfaces.controller.IAppoimentController;
 import views.panels.entitypanels.AnimalsPanel;
 import views.panels.entitypanels.AppoimentsPanel;
 import views.panels.MainMenuPanel;

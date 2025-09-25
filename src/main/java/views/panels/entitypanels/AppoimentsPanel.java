@@ -1,7 +1,7 @@
 package views.panels.entitypanels;
 
-import controllers.AppoimentController;
-import interfaces.controller.IAppoimentController;
+import controllers.AppointmentController;
+import interfaces.controller.IAppointmentController;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAppoimentPanel;
@@ -10,11 +10,10 @@ import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AppoimentsPanel extends EntityPanel {
-    private IAppoimentController appoimentController;
+    private IAppointmentController appoimentController;
     private AddAppoimentPanel addAppoimentPanel;
     private Button newAppoimentBtn;
     private JScrollPane scrollPane;
@@ -24,7 +23,7 @@ public class AppoimentsPanel extends EntityPanel {
 
     public AppoimentsPanel(MainFrame owner) {
         super(owner);
-        this.appoimentController = new AppoimentController();
+        this.appoimentController = new AppointmentController();
         this.addAppoimentPanel = new AddAppoimentPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
