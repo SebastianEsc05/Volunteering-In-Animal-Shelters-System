@@ -3,6 +3,7 @@ package interfaces.controller;
 import dao.exceptions.PersistenceException;
 import models.VolunteerEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.Date;
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface IVolunteerController {
     boolean deleteVolunteer(int idVolunteer);
 
     List<VolunteerEntity> readAllVolunteers();
+
+    DefaultTableModel getVolunteerTable();
 
 }
