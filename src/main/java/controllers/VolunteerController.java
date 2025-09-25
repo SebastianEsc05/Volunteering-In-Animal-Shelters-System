@@ -5,10 +5,14 @@ import dao.VolunteerDAO;
 import dao.exceptions.PersistenceException;
 import interfaces.controller.IVolunteerController;
 import interfaces.dao.IVolunteerDAO;
+import models.ShelterEntity;
 import models.VolunteerEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -142,6 +146,28 @@ public class VolunteerController implements IVolunteerController{
         System.out.println("----------------------------------------------------------------------------------------------------------------------");
         return this.volunteerDAO.readAll();
 
+    }
+
+    @Override
+    public DefaultTableModel getVolunteerTable() {
+        String[] columns = {"Id", "Nombre", "Edad", "Telefono", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<VolunteerEntity> volineerList = volunteerDAO.readAll();
+        for (VolunteerEntity v : volineerList) {
+            LocalDate birthDate = v.getDate_birth().toLocalDate();
+            LocalDate todayDate = LocalDate.now();
+            Object[] row = {
+                    v.getId_volunteer(),
+                    v.getName_volunteer(),
+                    Period.between(birthDate, todayDate).getYears(),
+                    v.getPhone_number()
+            };
+            model.addRow(row);
+        }
+
+        return model;
     }
 
     /**

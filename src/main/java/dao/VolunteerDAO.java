@@ -199,10 +199,6 @@ public class VolunteerDAO implements IVolunteerDAO {
             exception.printStackTrace();
         }
 
-        for(VolunteerEntity volunteerEntity : volunteers){
-            System.out.println(volunteerEntity.toString());
-        }
-        System.out.println("----------------------------------------------------------------------------------------------------------------------");
         return volunteers;
     }
 

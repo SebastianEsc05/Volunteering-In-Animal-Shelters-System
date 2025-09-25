@@ -58,6 +58,7 @@ public class EntityPanel extends JPanel {
         g2d.setColor(Style.COLOR_BACKGROUND);
         g2d.fillRoundRect(sideBarPanel.getX(), sideBarPanel.getY()+20, sideBarPanel.getWidth(), 60, 20, 20);
 
+
     }
 
 }
