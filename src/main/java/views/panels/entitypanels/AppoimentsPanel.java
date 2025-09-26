@@ -92,10 +92,9 @@ public class AppoimentsPanel extends EntityPanel {
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 410));
         scrollPane = new JScrollPane(table);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setOpaque(true);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(Color.WHITE);
         tablePanel.add(backBtn);
         tablePanel.add(scrollPane);
 
@@ -113,6 +112,10 @@ public class AppoimentsPanel extends EntityPanel {
         DefaultTableModel newModel;
         try {
             switch (estado) {
+                case "Todos":
+                    newModel = appoimentController.getAppoimentTable();
+
+                    break;
                 case "Pendiente":
                     newModel = appoimentController.getAppoimentByStatusPendingTable();
                     break;
@@ -126,6 +129,7 @@ public class AppoimentsPanel extends EntityPanel {
                     newModel = appoimentController.getAppoimentTable();
             }
             table.setModel(newModel);
+            table.repaint();
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -149,12 +153,12 @@ public class AppoimentsPanel extends EntityPanel {
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
         //table border
-        g2d.setColor(Style.COLOR_BACKGROUND);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
-        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-        g2d.setStroke(new BasicStroke(1.5f));
-        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
-        g2d.dispose();
+//        g2d.setColor(Style.COLOR_BACKGROUND);
+//        g2d.setStroke(new BasicStroke(3));
+//        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
+//        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
+//        g2d.setStroke(new BasicStroke(1.5f));
+//        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
+//        g2d.dispose();
     }
 }
