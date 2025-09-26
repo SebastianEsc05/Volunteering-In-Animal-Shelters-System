@@ -68,6 +68,8 @@ public class CustomTable extends JTable {
     }
 
     public void addColumnButton() {
+        getColumn("Ver").setCellRenderer(new ButtonRenderer());
+        getColumn("Ver").getCellEditor();
 
     }
 

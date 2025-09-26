@@ -35,6 +35,7 @@ public class AppoimentsPanel extends EntityPanel {
         //Table model
         model = appoimentController.getAppoimentTable();
         table = new CustomTable(model);
+        table.addColumnButton();
 
         addComponents();
 
