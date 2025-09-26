@@ -10,6 +10,7 @@ import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
@@ -91,6 +92,7 @@ public class AppoimentsPanel extends EntityPanel {
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 410));
         scrollPane = new JScrollPane(table);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -111,9 +113,6 @@ public class AppoimentsPanel extends EntityPanel {
         DefaultTableModel newModel;
         try {
             switch (estado) {
-                case "Todos":
-                    newModel = appoimentController.getAppoimentTable();
-                    break;
                 case "Pendiente":
                     newModel = appoimentController.getAppoimentByStatusPendingTable();
                     break;
@@ -156,6 +155,6 @@ public class AppoimentsPanel extends EntityPanel {
         g2d.setColor(Style.COLOR_BACKGROUND_DARK);
         g2d.setStroke(new BasicStroke(1.5f));
         g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
-
+        g2d.dispose();
     }
 }

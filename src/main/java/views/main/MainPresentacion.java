@@ -10,7 +10,6 @@ import interfaces.controller.IShelterController;
 import interfaces.controller.IVolunteerController;
 import views.frames.MainFrame;
 import structure.DatabaseInitializer;
-
 import java.sql.SQLException;
 
 public class MainPresentacion {
