@@ -56,6 +56,13 @@ public class AppointmentsPanel extends EntityPanel {
 
     }
 
+    public void refreshTable(){
+        table.setModel(appoimentController.getAppointmentTable());
+        table.addColumnButton();
+        revalidate();
+        repaint();
+    }
+
     @Override
     public void addComponents(){
         //SideBarPanel

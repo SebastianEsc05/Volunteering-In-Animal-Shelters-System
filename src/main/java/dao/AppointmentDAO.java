@@ -6,6 +6,7 @@ import interfaces.dao.IAppointmentDAO;
 import models.AppointmentEntity;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,8 +120,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                     appointmentEntity.setId(rs.getInt("id"));
                     appointmentEntity.setComments(rs.getString("observaciones"));
                     appointmentEntity.setStatus(rs.getString("estado"));
-                    appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                    appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                    appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                    appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
                     appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
                     appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                     appointmentEntity.setActivity(rs.getString("actividad"));
@@ -205,8 +206,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                 appointmentEntity.setId(rs.getInt("id"));
                 appointmentEntity.setComments(rs.getString("observaciones"));
                 appointmentEntity.setStatus(rs.getString("estado"));
-                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
                 appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
                 appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                 appointmentEntity.setActivity(rs.getString("actividad"));
@@ -245,8 +246,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                 AppointmentEntity a = new AppointmentEntity();
                 a.setId(rs.getInt("id"));
                 a.setStatus(rs.getString("estado"));
-                a.setDateBooked(LocalDateTime.parse(rs.getString("fecha_de_agenda")));
-                a.setDateEvent(LocalDateTime.parse(rs.getString("fecha_realizacion")));
+                a.setDateBooked(LocalDate.parse(rs.getString("fecha_de_agenda")));
+                a.setDateEvent(LocalDate.parse(rs.getString("fecha_realizacion")));
                 a.setIdAnimal(rs.getInt( "id_animal"));
                 a.setIdVolunteer(rs.getInt( "id_voluntario"));
                 a.setActivity(rs.getString(  "actividad"));
@@ -273,8 +274,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                 appointmentEntity.setId(rs.getInt("id"));
                 appointmentEntity.setComments(rs.getString("observaciones"));
                 appointmentEntity.setStatus(rs.getString("estado"));
-                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
                 appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
                 appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                 appointmentEntity.setActivity(rs.getString("actividad"));
@@ -299,8 +300,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                 appointmentEntity.setId(rs.getInt("id"));
                 appointmentEntity.setComments(rs.getString("observaciones"));
                 appointmentEntity.setStatus(rs.getString("estado"));
-                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
                 appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
                 appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                 appointmentEntity.setActivity(rs.getString("actividad"));
@@ -325,8 +326,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                 appointmentEntity.setId(rs.getInt("id"));
                 appointmentEntity.setComments(rs.getString("observaciones"));
                 appointmentEntity.setStatus(rs.getString("estado"));
-                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
                 appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
                 appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                 appointmentEntity.setActivity(rs.getString("actividad"));
@@ -352,8 +353,8 @@ public class AppointmentDAO implements IAppointmentDAO {
                     appointmentEntity.setId(rs.getInt("id"));
                     appointmentEntity.setComments(rs.getString("observaciones"));
                     appointmentEntity.setStatus(rs.getString("estado"));
-                    appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
-                    appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                    appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDate.class));
+                    appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDate.class));
                     appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
                     appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
                     appointmentEntity.setActivity(rs.getString("actividad"));

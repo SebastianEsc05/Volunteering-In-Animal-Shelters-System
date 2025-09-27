@@ -1,12 +1,13 @@
 package models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AppointmentEntity {
 
     private int id;
-    private LocalDateTime dateEvent;
-    private LocalDateTime dateBooked;
+    private LocalDate dateEvent;
+    private LocalDate dateBooked;
     private Integer idAnimal;
     private int idVolunteer;
     private String activity;
@@ -17,7 +18,7 @@ public class AppointmentEntity {
     public AppointmentEntity() {
     }
 
-    public AppointmentEntity(int id, LocalDateTime dateEvent, LocalDateTime dateBooked, Integer idAnimal, int idVolunteer, String activity, String comments, String status, boolean animalCheck) {
+    public AppointmentEntity(int id, LocalDate dateEvent, LocalDate dateBooked, Integer idAnimal, int idVolunteer, String activity, String comments, String status, boolean animalCheck) {
         this.id = id;
         this.dateEvent = dateEvent;
         this.dateBooked = dateBooked;
@@ -37,19 +38,19 @@ public class AppointmentEntity {
         this.id = id;
     }
 
-    public LocalDateTime getDateEvent() {
+    public LocalDate getDateEvent() {
         return dateEvent;
     }
 
-    public void setDateEvent(LocalDateTime dateEvent) {
+    public void setDateEvent(LocalDate dateEvent) {
         this.dateEvent = dateEvent;
     }
 
-    public LocalDateTime getDateBooked() {
+    public LocalDate getDateBooked() {
         return dateBooked;
     }
 
-    public void setDateBooked(LocalDateTime dateBooked) {
+    public void setDateBooked(LocalDate dateBooked) {
         this.dateBooked = dateBooked;
     }
 

@@ -98,6 +98,13 @@ public class SheltersPanel extends EntityPanel {
         add(this.mainPanel);
     }
 
+    public void refreshTable(){
+        table.setModel(shelterController.getShelterTable());
+        table.addColumnButton();
+        revalidate();
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
