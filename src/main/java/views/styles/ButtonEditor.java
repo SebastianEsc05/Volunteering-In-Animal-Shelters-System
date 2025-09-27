@@ -14,11 +14,10 @@ import java.awt.*;
 public class ButtonEditor extends DefaultCellEditor{
     private MainFrame owner;
     private JButton button;
-    private CustomTable table;
     private PanelCategory category;
     private boolean isPushed;
     private int currentRow;
-//    private IAppointmentController appointmentController;
+    private int id;
 
     public ButtonEditor(JCheckBox checkBox, MainFrame owner, PanelCategory category) {
         super(checkBox);
@@ -35,7 +34,7 @@ public class ButtonEditor extends DefaultCellEditor{
         button.addActionListener(e -> {
             if (isPushed) {
                 switch (category) {
-                    case APPOINTMENTS -> owner.showNewPanel(new AppointmentInfoPanel(owner));
+                    case APPOINTMENTS -> owner.showNewPanel(new AppointmentInfoPanel(owner, id));
                     case SHELTERS   -> owner.showNewPanel(new ShelterInfoPanel(owner));
                     case ANIMALS    -> owner.showNewPanel(new AnimalInfoPanel(owner));
                     case VOLUNTEERS -> owner.showNewPanel(new VolunteerInfoPanel(owner));
@@ -49,6 +48,8 @@ public class ButtonEditor extends DefaultCellEditor{
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         this.currentRow = row;
         this.isPushed = true;
+        int id = (int) table.getValueAt(row, table.getColumnModel().getColumnIndex("Id"));
+        this.id = id;
         return button;
     }
 
