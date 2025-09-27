@@ -23,6 +23,7 @@ public class CustomTable extends JTable {
 
     public void setModel(TableModel model) {
         super.setModel(model);
+        alingColumn();
     }
 
     private void configStyle() {
