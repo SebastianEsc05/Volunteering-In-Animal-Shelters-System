@@ -85,7 +85,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
             this.owner.showNewPanel(this.owner.getAppoimentPanel());
         });
 
-        addBtn.addActionListener(e -> addApooiment());
+        addBtn.addActionListener(e -> addAppointment());
 
         //Add components
         this.componentsPanel.add(this.dateField);
@@ -104,7 +104,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
         add(this.mainPanel);
     }
 
-    public void addApooiment() {
+    public void addAppointment() {
         try {
             //Get data from textFields
             Integer animalId = null;

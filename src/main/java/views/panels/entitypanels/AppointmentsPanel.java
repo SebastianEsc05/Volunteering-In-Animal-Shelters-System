@@ -103,7 +103,7 @@ public class AppointmentsPanel extends EntityPanel {
         this.sideBarPanel.add(searchBtn);
 
         //Table Panel
-        table.setPreferredScrollableViewportSize(new Dimension(600, 410));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 440));
         scrollPane = new JScrollPane(table);
         scrollPane.setOpaque(true);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
