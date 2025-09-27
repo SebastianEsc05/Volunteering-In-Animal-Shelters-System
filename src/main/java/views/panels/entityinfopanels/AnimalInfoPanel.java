@@ -38,7 +38,7 @@ public class AnimalInfoPanel extends EntityPanel {
 
         });
         backBtn.addActionListener(e -> {
-            this.owner.showNewPanel(this.owner.getAppointmentPanel());
+            this.owner.showNewPanel(this.owner.getAnimalsPanel());
         });
 
     }
