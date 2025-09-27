@@ -38,9 +38,6 @@ public class EntityPanel extends JPanel {
         this.eastPanel.setPreferredSize(new Dimension(280, owner.getHeight()));
         this.backBtn = new Button("←", 50, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
-        //ActionListeners
-
-
     }
 
     public void addComponents() {
@@ -55,7 +52,6 @@ public class EntityPanel extends JPanel {
         //Figure 1
         g2d.setColor(Style.COLOR_BACKGROUND);
         g2d.fillRoundRect(sideBarPanel.getX(), sideBarPanel.getY()+20, sideBarPanel.getWidth(), 60, 20, 20);
-
 
     }
 
