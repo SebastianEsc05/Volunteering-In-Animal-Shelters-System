@@ -3,6 +3,7 @@ package views.styles;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class Button extends JButton {
     private boolean hovered = false;
@@ -39,6 +40,12 @@ public class Button extends JButton {
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent e) {
+                hovered = false;
+                repaint();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 hovered = false;
                 repaint();
             }

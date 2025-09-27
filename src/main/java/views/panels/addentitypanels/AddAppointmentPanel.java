@@ -3,6 +3,7 @@ package views.panels.addentitypanels;
 import controllers.AppointmentController;
 import controllers.ControllerException;
 import views.frames.MainFrame;
+import views.panels.entitypanels.AppointmentsPanel;
 import views.styles.FontUtil;
 import views.styles.Style;
 import views.styles.textfields.FormattedDateField;
@@ -11,8 +12,13 @@ import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddAppointmentPanel extends AddEntityPanel {
     private JPanel activityPanel;
@@ -30,6 +36,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
         this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
         this.activityPanel.setPreferredSize(new Dimension(300, 70));
         this.dateField = new FormattedDateField();
+
         this.animalTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.volunteerTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
         this.activityTextField = new TxtFieldPh(" ", 200, 30, 15, 15);
@@ -83,9 +90,10 @@ public class AddAppointmentPanel extends AddEntityPanel {
         //ActionListeners
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAppointmentPanel());
+            resetFields();
         });
 
-        addBtn.addActionListener(e -> addApooiment());
+        addBtn.addActionListener(e -> addAppointment());
 
         //Add components
         this.componentsPanel.add(this.dateField);
@@ -104,31 +112,30 @@ public class AddAppointmentPanel extends AddEntityPanel {
         add(this.mainPanel);
     }
 
-    public void addApooiment() {
+    public void addAppointment() {
         try {
             //Get data from textFields
             Integer animalId = null;
             String animalIdText = animalTextField.getText().trim();
 
-            if(animalIdText.isEmpty()){
-                if(animalCheckBox.isSelected()){
+            if (animalIdText.isEmpty()) {
+                if (animalCheckBox.isSelected()) {
                     JOptionPane.showMessageDialog(this, "Debe ingresar un ID de animal si la actividad involucra un animal", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
             if (!animalIdText.isEmpty()) {
-                if (animalIdText.matches("\\d+")) {
-                    animalId = Integer.parseInt(animalIdText);
-                }
-                if(!animalCheckBox.isSelected()){
-                    JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.","Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } else {
+                if (!animalIdText.matches("\\d+")) {
                     JOptionPane.showMessageDialog(this, "El ID de animal debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                animalId = Integer.parseInt(animalIdText);
+                if (!animalCheckBox.isSelected()) {
+                    JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
 
             int volunteerId = 0;
             if (!volunteerTextField.getText().trim().isEmpty()) {
@@ -142,33 +149,52 @@ public class AddAppointmentPanel extends AddEntityPanel {
                 JOptionPane.showMessageDialog(this, "El campo de actividad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            //Actual date from today
-            LocalDateTime todayDate = LocalDateTime.now();
+            LocalDate todayDate = LocalDate.now();
+            LocalDate dateBooked = null;
 
-            //Get Date booked from dateField
-            LocalDateTime dateBooked = null;
-            if (dateField.getDate() != null) {
-                dateBooked = dateField.getDate().toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime();
-                if(dateBooked.isAfter(todayDate)){
-                    JOptionPane.showMessageDialog(this, "La fecha reservada no puede ser anterior a la fecha actual", "Error", JOptionPane.ERROR_MESSAGE);
+            if (dateField.getText() != null && !dateField.getText().trim().isEmpty()) {
+                try {
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    df.setLenient(false);
+                    Date parsedDate = df.parse(dateField.getText().trim());
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(parsedDate);
+
+                    dateBooked = LocalDate.of(
+                            cal.get(Calendar.YEAR),
+                            cal.get(Calendar.MONTH) + 1,
+                            cal.get(Calendar.DAY_OF_MONTH)
+                    );
+
+                    if (dateBooked.isBefore(todayDate)) {
+                        JOptionPane.showMessageDialog(this,
+                                "La fecha reservada no puede ser anterior a la fecha actual",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        System.out.println(dateBooked + " esta antes de " + todayDate);
+                        return;
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Formato de fecha inválido. Use dd/MM/yyyy",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
-
             AppointmentController appoimentController = new AppointmentController();
-            boolean success = appoimentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments,"pendiente", animalCheck);
-            if (success){
+            boolean success = appoimentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments, "pendiente", animalCheck);
+            if (success) {
                 JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
 
-
-            }else{
-                JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar la asignacion",  "Error",  JOptionPane.ERROR_MESSAGE);
+                AppointmentsPanel appointmentsPanel = this.owner.getAppointmentPanel();
+                appointmentsPanel.refreshTable();
+                this.owner.showNewPanel(appointmentsPanel);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar la asignacion", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
-
         } catch (ControllerException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
