@@ -10,7 +10,6 @@ import views.panels.entityinfopanels.AppointmentInfoPanel;
 import views.styles.*;
 import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;

@@ -2,6 +2,7 @@ package views.panels.addentitypanels;
 
 import controllers.AppointmentController;
 import controllers.ControllerException;
+import dao.exceptions.PersistenceException;
 import views.frames.MainFrame;
 import views.panels.entitypanels.AppointmentsPanel;
 import views.styles.FontUtil;
@@ -12,6 +13,7 @@ import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -138,7 +140,11 @@ public class AddAppointmentPanel extends AddEntityPanel {
             }
 
             int volunteerId = 0;
-            if (!volunteerTextField.getText().trim().isEmpty()) {
+            if(!volunteerTextField.getText().matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "El ID de voluntario debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!volunteerTextField.getText().trim().isEmpty() ) {
                 volunteerId = Integer.parseInt(volunteerTextField.getText());
             }
 
@@ -187,16 +193,14 @@ public class AddAppointmentPanel extends AddEntityPanel {
             if (success) {
                 JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
-
                 AppointmentsPanel appointmentsPanel = this.owner.getAppointmentPanel();
                 appointmentsPanel.refreshTable();
                 this.owner.showNewPanel(appointmentsPanel);
-            } else {
-                JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar la asignacion", "Error", JOptionPane.ERROR_MESSAGE);
-
             }
-        } catch (ControllerException e) {
+        } catch (ControllerException | PersistenceException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
