@@ -4,6 +4,7 @@ import dao.ShelterDAO;
 import dao.exceptions.PersistenceException;
 import interfaces.controller.IShelterController;
 import interfaces.dao.IShelterDAO;
+import models.AnimalEntity;
 import models.ShelterEntity;
 
 import javax.swing.table.DefaultTableModel;
@@ -119,6 +120,27 @@ public class ShelterController implements IShelterController {
                     s.getResponsible(),
                     s.getAnimalCount(),
                     s.getCapacity()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+
+    }
+
+    @Override
+    public DefaultTableModel getAnimalsByShelterIdTable(int id) {
+        String[] columns = {"Id", "Nombre", "Edad", "Especie", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AnimalEntity> animalList = shelterDAO.getAnimals(id);
+        for (AnimalEntity a : animalList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getName(),
+                    a.getAge(),
+                    a.getSpecie(),
             };
             model.addRow(row);
         }

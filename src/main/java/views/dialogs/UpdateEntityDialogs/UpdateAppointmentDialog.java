@@ -1,4 +1,6 @@
 package views.dialogs.UpdateEntityDialogs;
 
-public class UpdateAppointmentDialog {
+import javax.swing.*;
+
+public class UpdateAppointmentDialog extends UpdateEntityDialog {
 }

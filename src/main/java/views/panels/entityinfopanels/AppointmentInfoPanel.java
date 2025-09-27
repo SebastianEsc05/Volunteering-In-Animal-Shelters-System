@@ -13,18 +13,16 @@ import views.styles.Style;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class AppointmentInfoPanel extends EntityPanel {
     private IAppointmentController appointmentController;
     private UpdateAppointmentDialog updateAppoimentDialog;
-    private JPanel buttonPanel;
+    private JPanel buttonsPanel;
     private JPanel infoPanel;
     private JLabel headerLabel;
+    private JLabel dateLabel;
     private JLabel dateHeader;
     private StatusLabel statusLabel;
     private Button updateBtn;
@@ -35,17 +33,23 @@ public class AppointmentInfoPanel extends EntityPanel {
         super(owner);
         appointmentController = new AppointmentController();
         updateAppoimentDialog = new UpdateAppointmentDialog();
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        buttonPanel.setPreferredSize(new Dimension(500, 60));
-        buttonPanel.setOpaque(false);
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        buttonsPanel.setPreferredSize(new Dimension(500, 60));
+        buttonsPanel.setOpaque(false);
         appointmentId = id;
+
+        //Id Header
+        headerLabel = new JLabel(String.valueOf(id));
+        headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
+        //Date booked header
         LocalDate date = appointmentController.readAppoiment(appointmentId).getDateBooked();
         String formatDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        headerLabel = new JLabel(String.valueOf(id)+" "+ formatDate);
-        headerLabel.setFont(FontUtil.loadFont( 20, "Inter_18pt-ExtraLight"));
+        dateLabel = new JLabel(formatDate);
+        dateLabel.setFont(FontUtil.loadFont( 16, "Inter_18pt-ExtraLight"));
+        //Status header
         statusLabel = new StatusLabel(appointmentController.readAppoiment(appointmentId).getStatus());
-        updateBtn = new Button("Editar asignacion", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        updateBtn = new Button("Editar información", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
         addComponents();
 
@@ -84,6 +88,7 @@ public class AppointmentInfoPanel extends EntityPanel {
         };
         sideBarPanel.add(updateBtn);
         sideBarPanel.add(deleteBtn);
+        buttonsPanel.add(backBtn);
 
         //InfoPanel
         infoPanel = new JPanel(){
@@ -104,16 +109,18 @@ public class AppointmentInfoPanel extends EntityPanel {
         };
         infoPanel.setOpaque(false);
         infoPanel.setPreferredSize(new Dimension(500, 290));
+        infoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
+        infoPanel.add(headerLabel);
+        infoPanel.add(dateLabel);
+        infoPanel.add(Box.createRigidArea(new Dimension(180, 10)));
+        infoPanel.add(statusLabel);
 
-        buttonPanel.add(backBtn);
-        infoPanel.add(headerLabel, BorderLayout.WEST);
-        infoPanel.add(statusLabel, BorderLayout.EAST);
-
-        tablePanel.add(buttonPanel);
+        tablePanel.add(buttonsPanel);
         tablePanel.add(infoPanel);
 
         //East Panel
-        this.eastPanel.add(this.sideBarPanel);
+        eastPanel.add(this.sideBarPanel);
         eastPanel.add(Box.createHorizontalGlue());
 
         this.mainPanel.add(this.eastPanel);

@@ -3,9 +3,11 @@ package dao;
 import config.ConexionDB;
 import dao.exceptions.PersistenceException;
 import interfaces.dao.IShelterDAO;
+import models.AnimalEntity;
 import models.ShelterEntity;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -235,5 +237,32 @@ public class ShelterDAO implements IShelterDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Error al verificar registros de la tabla refugios", e);
         }
+    }
+
+    @Override
+    public List<AnimalEntity> getAnimals(int id) throws PersistenceException {
+        List<AnimalEntity> animals = new ArrayList<>();
+        String sql = "SELECT * FROM animales WHERE id_refugio = ?";
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    AnimalEntity animal = new AnimalEntity();
+                    animal.setId(rs.getInt("id"));
+                    animal.setName(rs.getString("nombre"));
+                    animal.setAge(rs.getInt("edad"));
+                    animal.setDate_entry(rs.getObject("fecha_ingreso" , LocalDate.class));
+                    animal.setHealth_situation(rs.getString("estado_salud"));
+                    animal.setSpecie(rs.getString("especie"));
+                    animals.add(animal);
+                }
+            }
+        } catch (SQLException exception) {
+            System.out.println("No se ha encontrado el refugio");
+            exception.printStackTrace();
+        }
+        return animals;
     }
 }

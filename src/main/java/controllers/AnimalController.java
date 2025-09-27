@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -30,7 +31,7 @@ public class AnimalController implements IAnimalController {
         animalDAO.insertAnimals();
     }
 
-    public boolean addAnimal(String name, int age, LocalDateTime date_entry, String health_situation, String specie, int id_shelter){
+    public boolean addAnimal(String name, int age, LocalDate date_entry, String health_situation, String specie, int id_shelter){
         if(!checkStatus(health_situation)){
             System.out.println("estado de salud no valido");
             return false;
@@ -64,7 +65,7 @@ public class AnimalController implements IAnimalController {
 
     }
 
-    public boolean updateAnimal(int id, String name, int age, LocalDateTime  date_entry, String health_situation, String specie, int id_shelter){
+    public boolean updateAnimal(int id, String name, int age, LocalDate  date_entry, String health_situation, String specie, int id_shelter){
         if(name == null || name.trim().isEmpty() || date_entry == null || health_situation == null || specie == null){
             return false;
         }

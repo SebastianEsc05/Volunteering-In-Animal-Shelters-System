@@ -24,7 +24,7 @@ public class AnimalInfoPanel extends EntityPanel {
     private Button deleteBtn;
     private int animalId;
 
-    public AnimalInfoPanel(MainFrame owner) {
+    public AnimalInfoPanel(MainFrame owner, int id) {
         super(owner);
         animalController = new AnimalController();
         updateAnimalDialog = new UpdateAnimalDialog();

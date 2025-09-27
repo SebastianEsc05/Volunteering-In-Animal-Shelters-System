@@ -6,6 +6,7 @@ import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +103,7 @@ public class AnimalDAO implements IAnimalDAO {
                     animalEntity.setId(rs.getInt("id"));
                     animalEntity.setName(rs.getString("nombre"));
                     animalEntity.setAge(rs.getInt("edad"));
-                    animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDateTime.class));
+                    animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDate.class));
                     animalEntity.setHealth_situation(rs.getString("estado_salud"));
                     animalEntity.setSpecie(rs.getString("especie"));
                     animalEntity.setId_shelter(rs.getInt("id_refugio"));
@@ -178,7 +179,7 @@ public class AnimalDAO implements IAnimalDAO {
                 animalEntity.setId(rs.getInt("id"));
                 animalEntity.setName(rs.getString("nombre"));
                 animalEntity.setAge(rs.getInt("edad"));
-                animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDateTime.class));
+                animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDate.class));
                 animalEntity.setHealth_situation(rs.getString("estado_salud"));
                 animalEntity.setSpecie(rs.getString("especie"));
                 animalEntity.setId_shelter(rs.getInt("id_refugio"));
