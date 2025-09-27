@@ -4,29 +4,28 @@ import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
-import views.panels.addentitypanels.AddAppoimentPanel;
+import views.panels.addentitypanels.AddAppointmentPanel;
 import views.styles.*;
 import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class AppoimentsPanel extends EntityPanel {
+public class AppointmentsPanel extends EntityPanel {
     private IAppointmentController appoimentController;
-    private AddAppoimentPanel addAppoimentPanel;
+    private AddAppointmentPanel addAppointmentPanel;
     private Button newAppoimentBtn;
     private JScrollPane scrollPane;
     private ComboBoxCustom statusComboBox;
     private TxtFieldPh searchField;
     private Button searchBtn;
 
-    public AppoimentsPanel(MainFrame owner) {
+    public AppointmentsPanel(MainFrame owner) {
         super(owner);
         this.appoimentController = new AppointmentController();
-        this.addAppoimentPanel = new AddAppoimentPanel(owner);
+        this.addAppointmentPanel = new AddAppointmentPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
         searchField = new TxtFieldPh("Id", 185, 35, 15, 25);
@@ -41,7 +40,7 @@ public class AppoimentsPanel extends EntityPanel {
 
         //ActionListeners
         newAppoimentBtn.addActionListener(e -> {
-            owner.showNewPanel(this.addAppoimentPanel);
+            owner.showNewPanel(this.addAppointmentPanel);
         });
 
         statusComboBox.addActionListener(e -> {;

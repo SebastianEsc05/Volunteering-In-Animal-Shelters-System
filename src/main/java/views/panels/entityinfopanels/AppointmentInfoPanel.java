@@ -2,8 +2,7 @@ package views.panels.entityinfopanels;
 
 import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
-import models.AppointmentEntity;
-import views.dialogs.UpdateEntityDialogs.UpdateAppoimentDialog;
+import views.dialogs.UpdateEntityDialogs.UpdateAppointmentDialog;
 import views.frames.MainFrame;
 import views.panels.entitypanels.EntityPanel;
 import views.styles.Button;
@@ -13,9 +12,9 @@ import views.styles.Style;
 import javax.swing.*;
 import java.awt.*;
 
-public class AppoimentInfoPanel extends EntityPanel {
+public class AppointmentInfoPanel extends EntityPanel {
     private IAppointmentController appoimentController;
-    private UpdateAppoimentDialog updateAppoimentDialog;
+    private UpdateAppointmentDialog updateAppointmentDialog;
     private JPanel detailPanel;
     private StatusLabel statusLabel;
     private Button updateBtn;
@@ -23,10 +22,10 @@ public class AppoimentInfoPanel extends EntityPanel {
     private Button backBtn;
     private int appointmentId;
 
-    public AppoimentInfoPanel(MainFrame owner, int appointmentId) {
+    public AppointmentInfoPanel(MainFrame owner, int appointmentId) {
         super(owner);
         appoimentController = new AppointmentController();
-        updateAppoimentDialog = new UpdateAppoimentDialog();
+        updateAppointmentDialog = new UpdateAppointmentDialog();
         statusLabel = new StatusLabel(appoimentController.readAppoiment(appointmentId).getStatus());
         this.appointmentId = appointmentId;
         detailPanel = new JPanel();

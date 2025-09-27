@@ -2,16 +2,15 @@ package dao;
 
 import config.ConexionDB;
 import dao.exceptions.PersistenceException;
-import interfaces.dao.IAppoimentDAO;
+import interfaces.dao.IAppointmentDAO;
 import models.AppointmentEntity;
 
-import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppointmentDAO implements IAppoimentDAO {
+public class AppointmentDAO implements IAppointmentDAO {
 
     @Override
     public void insertAppoiments() throws PersistenceException {

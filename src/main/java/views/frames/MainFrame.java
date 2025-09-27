@@ -1,7 +1,7 @@
 package views.frames;
 
 import views.panels.entitypanels.AnimalsPanel;
-import views.panels.entitypanels.AppoimentsPanel;
+import views.panels.entitypanels.AppointmentsPanel;
 import views.panels.MainMenuPanel;
 import views.panels.entitypanels.SheltersPanel;
 import views.panels.entitypanels.VolunteersPanel;
@@ -12,7 +12,7 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     private final JPanel mainPanel;
     private final MainMenuPanel mainMenuPanel;
-    private final AppoimentsPanel appoimentPanel;
+    private final AppointmentsPanel appoimentPanel;
     private final SheltersPanel sheltersPanel;
     private final VolunteersPanel volunteersPanel;
     private final AnimalsPanel animalsPanel;
@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         this.mainPanel = new JPanel();
         mainPanel.setOpaque(false);
         this.mainMenuPanel = new MainMenuPanel(this);
-        this.appoimentPanel = new AppoimentsPanel(this);
+        this.appoimentPanel = new AppointmentsPanel(this);
         this.sheltersPanel = new SheltersPanel(this);
         this.volunteersPanel = new VolunteersPanel(this);
         this.animalsPanel = new AnimalsPanel(this);
@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
         return this.mainMenuPanel;
     }
 
-    public AppoimentsPanel getAppoimentPanel() {
+    public AppointmentsPanel getAppoimentPanel() {
         return this.appoimentPanel;
     }
 

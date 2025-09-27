@@ -4,7 +4,7 @@ import config.ConexionDB;
 import dao.AppointmentDAO;
 import dao.exceptions.PersistenceException;
 import interfaces.controller.IAppointmentController;
-import interfaces.dao.IAppoimentDAO;
+import interfaces.dao.IAppointmentDAO;
 import models.AppointmentEntity;
 
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AppointmentController implements IAppointmentController {
 
-    private IAppoimentDAO appoimentDAO;
+    private IAppointmentDAO appoimentDAO;
 
     public AppointmentController() {
         this.appoimentDAO = new AppointmentDAO();

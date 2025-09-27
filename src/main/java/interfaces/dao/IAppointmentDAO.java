@@ -3,10 +3,9 @@ package interfaces.dao;
 import dao.exceptions.PersistenceException;
 import models.AppointmentEntity;
 
-import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-public interface IAppoimentDAO {
+public interface IAppointmentDAO {
 
     void insertAppoiments() throws PersistenceException;
 
