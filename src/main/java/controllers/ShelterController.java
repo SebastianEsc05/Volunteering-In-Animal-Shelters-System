@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.ShelterDAO;
+import dao.exceptions.PersistenceException;
 import interfaces.controller.IShelterController;
 import interfaces.dao.IShelterDAO;
 import models.AnimalEntity;
@@ -22,22 +23,28 @@ public class ShelterController implements IShelterController {
         this.shelterDAO.insertShelters();
     }
 
-    public boolean addShelter(String name, String responsible, int capacity, String location){
-        if(name == null ){
-            return false;
+    public boolean addShelter(String name, String responsible, int capacity, String location) throws ControllerException {
+        try{
+            if(name == null ){
+                return false;
+            }
+            if(responsible == null)responsible = "";
+            if(capacity < 0){
+                return false;
+            }
+            if(location == null) location = "";
+            ShelterEntity shelterEntity = new ShelterEntity();
+            shelterEntity.setNameShelter(name);
+            shelterEntity.setResponsible(responsible);
+            shelterEntity.setAnimalCount(0);
+            shelterEntity.setCapacity(capacity);
+            shelterEntity.setLocation(location);
+            return this.shelterDAO.create(shelterEntity);
+        }catch (ControllerException ex){
+            throw new ControllerException(ex.getMessage());
+        }catch (PersistenceException ex){
+            throw new PersistenceException(ex.getMessage());
         }
-        if(responsible == null)responsible = "";
-        if(capacity < 0){
-            return false;
-        }
-        if(location == null) location = "";
-        ShelterEntity shelterEntity = new ShelterEntity();
-        shelterEntity.setNameShelter(name);
-        shelterEntity.setResponsible(responsible);
-        shelterEntity.setAnimalCount(0);
-        shelterEntity.setCapacity(capacity);
-        shelterEntity.setLocation(location);
-        return this.shelterDAO.create(shelterEntity);
     }
 
     public ShelterEntity readShelter(int id){

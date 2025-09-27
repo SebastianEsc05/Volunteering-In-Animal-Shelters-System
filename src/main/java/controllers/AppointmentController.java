@@ -33,14 +33,12 @@ public class AppointmentController implements IAppointmentController {
     public boolean addAppoiment(LocalDate todayDate, LocalDate dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException {
         try {
             if (animalId != null) {
-                if (animalId < 0 || !animalExists(animalId)) {
-                    System.out.println("no se encontro registro del animal");
+                if (animalId < 0) {
                     return false;
                 }
             }
-            if (volunteerId < 0 || !volunteerExists(volunteerId)) {
-                System.out.println("no se encontró registro del voluntario");
-                return false;
+            if (volunteerId < 0) {
+               return false;
             }
             if (activity == null) {
                 System.out.println("asegurese de proporcionar una actividad");
@@ -63,6 +61,10 @@ public class AppointmentController implements IAppointmentController {
             return this.appointmentDAO.create(appointmentEntity);
 
         } catch (PersistenceException ex) {
+            throw new PersistenceException(ex.getMessage());
+        } catch (ControllerException e) {
+            throw new RuntimeException(e.getMessage());
+        }catch(SQLException ex){
             throw new ControllerException(ex.getMessage());
         }
 
