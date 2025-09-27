@@ -22,5 +22,8 @@ public interface IShelterController {
 
     DefaultTableModel getShelterTable();
 
+    DefaultTableModel getSheltersByIdTable(int id);
+
+
     void clieanUpTable();
 }

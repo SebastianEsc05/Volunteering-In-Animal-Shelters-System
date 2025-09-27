@@ -3,6 +3,7 @@ package interfaces.dao;
 import dao.exceptions.PersistenceException;
 import models.VolunteerEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public interface IVolunteerDAO {
@@ -18,6 +19,8 @@ public interface IVolunteerDAO {
     boolean deleteById(int id) throws PersistenceException;
 
     List<VolunteerEntity> readAll() throws PersistenceException;
+
+    DefaultTableModel getVooluntersByIdTable(int id);
 
     boolean isNotEmpty();
 }

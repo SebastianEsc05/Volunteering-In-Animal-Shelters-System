@@ -12,6 +12,7 @@ import views.styles.Style;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class VolunteersPanel extends EntityPanel {
@@ -34,8 +35,42 @@ public class VolunteersPanel extends EntityPanel {
         model = volunteerController.getVolunteerTable();
         table = new CustomTable(model);
 
+
         addComponents();
 
+        //ActionListeners
+        newVolunteerBtn.addActionListener(e -> {
+            owner.showNewPanel(this.addVolunteerPanel);
+        });
+
+        searchBtn.addActionListener(e -> {
+            String idText = searchField.getText().trim();
+            if (!idText.isEmpty()) {
+                try {
+                    int id = Integer.parseInt(idText);
+                    buscarPorId(id);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                model = volunteerController.getVolunteerTable();
+                table.setModel(model);
+                table.repaint();
+            }
+        });
+
+    }
+
+    public void buscarPorId(int id) {
+        DefaultTableModel newModel;
+        try {
+            newModel = volunteerController.getVooluntersByIdTable(id);
+            table.setModel(newModel);
+            table.repaint();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
     }
 
     @Override
