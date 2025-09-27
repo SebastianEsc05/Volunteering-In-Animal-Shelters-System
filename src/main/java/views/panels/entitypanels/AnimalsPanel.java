@@ -2,6 +2,7 @@ package views.panels.entitypanels;
 
 import controllers.AnimalController;
 import interfaces.controller.IAnimalController;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAnimalPanel;
@@ -32,13 +33,18 @@ public class AnimalsPanel extends EntityPanel{
 
         //Table model
         model = animalController.getAnimalTable();
-        table = new CustomTable(model);
+        table = new CustomTable(model, owner, PanelCategory.ANIMALS);
+        table.addColumnButton();
         addComponents();
 
         //ActionListeners
         newAnimalBtn.addActionListener(e -> {
             owner.showNewPanel(this.addAnimalPanel);
 
+        });
+
+        backBtn.addActionListener(e -> {
+            this.owner.showNewPanel(this.owner.getMainMenuPanel());
         });
 
     }

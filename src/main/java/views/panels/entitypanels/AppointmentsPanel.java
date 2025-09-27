@@ -2,9 +2,11 @@ package views.panels.entitypanels;
 
 import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAppointmentPanel;
+import views.panels.entityinfopanels.AppointmentInfoPanel;
 import views.styles.*;
 import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
@@ -16,6 +18,7 @@ import java.awt.*;
 public class AppointmentsPanel extends EntityPanel {
     private IAppointmentController appoimentController;
     private AddAppointmentPanel addAppointmentPanel;
+    private AppointmentInfoPanel appointmentInfoPanel;
     private Button newAppoimentBtn;
     private JScrollPane scrollPane;
     private ComboBoxCustom statusComboBox;
@@ -26,16 +29,16 @@ public class AppointmentsPanel extends EntityPanel {
         super(owner);
         this.appoimentController = new AppointmentController();
         this.addAppointmentPanel = new AddAppointmentPanel(owner);
+//        this.appointmentInfoPanel = new AppointmentInfoPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
         searchField = new TxtFieldPh("Id", 185, 35, 15, 25);
         searchBtn = new Button("Buscar", 100, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //Table model
-        model = appoimentController.getAppoimentTable();
-        table = new CustomTable(model);
+        model = appoimentController.getAppointmentTable();
+        table = new CustomTable(model, owner, PanelCategory.APPOINTMENTS);
         table.addColumnButton();
-
         addComponents();
 
         //ActionListeners
@@ -43,28 +46,14 @@ public class AppointmentsPanel extends EntityPanel {
             owner.showNewPanel(this.addAppointmentPanel);
         });
 
-        statusComboBox.addActionListener(e -> {;
+        backBtn.addActionListener(e -> {
+            this.owner.showNewPanel(this.owner.getMainMenuPanel());
+        });
+
+        statusComboBox.addActionListener(e -> {
             actualizarFiltro();
         });
 
-        backBtn.addActionListener(e -> {
-            owner.revalidate();
-            owner.repaint();
-        });
-
-        searchBtn.addActionListener(e -> {
-            String idText = searchField.getText().trim();
-            if (!idText.isEmpty()) {
-                try {
-                    int id = Integer.parseInt(idText);
-                    buscarPorId(id);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                actualizarFiltro(); // Si el campo está vacío, restablecer el filtro
-            }
-        });
     }
 
     @Override
@@ -108,11 +97,11 @@ public class AppointmentsPanel extends EntityPanel {
         this.sideBarPanel.add(searchBtn);
 
         //Table Panel
-        table.setPreferredScrollableViewportSize(new Dimension(600, 440));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
-        scrollPane.setOpaque(true);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(Color.WHITE);
         tablePanel.add(backBtn);
         tablePanel.add(scrollPane);
 
@@ -131,39 +120,30 @@ public class AppointmentsPanel extends EntityPanel {
         try {
             switch (estado) {
                 case "Todos":
-                    newModel = appoimentController.getAppoimentTable();
-
+                    newModel = appoimentController.getAppointmentTable();
                     break;
                 case "Pendiente":
-                    newModel = appoimentController.getAppoimentByStatusPendingTable();
+                    newModel = appoimentController.getAppointmentByStatusPendingTable();
                     break;
                 case "Cancelada":
-                    newModel = appoimentController.getAppoimentByStatusCanceledTable();
+                    newModel = appoimentController.getAppointmentByStatusCanceledTable();
                     break;
                 case "Finalizada":
-                    newModel = appoimentController.getAppoimentByStatusCompletedTable();
+                    newModel = appoimentController.getAppointmentByStatusCompletedTable();
                     break;
                 default:
-                    newModel = appoimentController.getAppoimentTable();
+                    newModel = appoimentController.getAppointmentTable();
             }
             table.setModel(newModel);
-            table.repaint();
+            table.addColumnButton();
         }catch (Exception ex){
             ex.printStackTrace();
         }
 
     }
 
-    public void buscarPorId(int id) {
-        DefaultTableModel newModel;
-        try {
-            newModel = appoimentController.getAppoimentByIdTable(id);
-            table.setModel(newModel);
-            table.repaint();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-
-        }
+    public AppointmentInfoPanel getAppointmentInfoPanel() {
+        return appointmentInfoPanel;
     }
 
 
@@ -181,6 +161,13 @@ public class AppointmentsPanel extends EntityPanel {
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
-        g2d.dispose();
+        //table border
+        g2d.setColor(Style.COLOR_BACKGROUND);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
+        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
+        g2d.setStroke(new BasicStroke(1.5f));
+        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
+
     }
 }

@@ -1,7 +1,10 @@
 package views.panels.entityinfopanels;
 
+import controllers.AnimalController;
 import controllers.AppointmentController;
+import interfaces.controller.IAnimalController;
 import interfaces.controller.IAppointmentController;
+import views.dialogs.UpdateEntityDialogs.UpdateAnimalDialog;
 import views.dialogs.UpdateEntityDialogs.UpdateAppointmentDialog;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
@@ -14,23 +17,19 @@ import views.styles.Style;
 import javax.swing.*;
 import java.awt.*;
 
-public class AppointmentInfoPanel extends EntityPanel {
-    private IAppointmentController appoimentController;
-    private UpdateAppointmentDialog updateAppoimentDialog;
-    private JPanel detailPanel;
-    private StatusLabel statusLabel;
+public class AnimalInfoPanel extends EntityPanel {
+    private IAnimalController animalController;
+    private UpdateAnimalDialog updateAnimalDialog;
     private Button updateBtn;
     private Button deleteBtn;
-    private int appointmentId;
+    private int animalId;
 
-    public AppointmentInfoPanel(MainFrame owner) {
+    public AnimalInfoPanel(MainFrame owner) {
         super(owner);
-        appoimentController = new AppointmentController();
-        updateAppoimentDialog = new UpdateAppointmentDialog();
-        //statusLabel = new StatusLabel(appoimentController.readAppoiment(appointmentId).getStatus());
-        this.appointmentId = appointmentId;
-        detailPanel = new JPanel();
-        updateBtn = new Button("Editar asignacion", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        animalController = new AnimalController();
+        updateAnimalDialog = new UpdateAnimalDialog();
+        this.animalId = animalId ;
+        updateBtn = new Button("Editar animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
         addComponents();
 
@@ -41,16 +40,11 @@ public class AppointmentInfoPanel extends EntityPanel {
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAppointmentPanel());
         });
-    }
-
-    private void setAppointmentId(int id ) {
-        this.appointmentId = appointmentId;
 
     }
 
-    @Override
     public void addComponents() {
-        //SideBarPanel
+        //SideBar Panel
         this.sideBarPanel = new SidebarPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -81,7 +75,6 @@ public class AppointmentInfoPanel extends EntityPanel {
         this.mainPanel.add(this.eastPanel);
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
-
     }
 
     @Override
@@ -92,7 +85,7 @@ public class AppointmentInfoPanel extends EntityPanel {
 
         //Ttitle position
         Font tittleFont = FontUtil.loadFont(25, "Inter_Light");
-        String tittleText = "Asignacion Info";
+        String tittleText = "Animal Info";
         FontMetrics metricsTittleText = g2d.getFontMetrics(tittleFont);
         int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);
