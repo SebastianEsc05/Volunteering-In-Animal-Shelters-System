@@ -57,6 +57,25 @@ public class AppointmentInfoPanel extends EntityPanel {
         updateBtn.addActionListener(e -> {
 
         });
+
+        deleteBtn.addActionListener(e -> {
+            Object[] opciones= {"Si", "Cancelar"};
+            int ans = JOptionPane.showOptionDialog(null,
+                    "Desea eliminar esta Asignacion?",
+                    "Eliminar Asignacion",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]);
+            if(ans == JOptionPane.YES_OPTION){
+                JOptionPane.showMessageDialog(null, "Asignacion Eliminada");
+                appoimentController.deleteAppoiment(appointmentId);
+                this.owner.showNewPanel(this.owner.getAppointmentPanel());
+            }
+
+
+        });
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAppointmentPanel());
         });
