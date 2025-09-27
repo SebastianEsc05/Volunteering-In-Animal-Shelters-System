@@ -185,6 +185,32 @@ public class ShelterDAO implements IShelterDAO {
     }
 
     @Override
+    public List<ShelterEntity> getSheltersById(int id) {
+        String sql = "SELECT * FROM refugios WHERE id = ?";
+        List<ShelterEntity> shelters = new ArrayList<>();
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ShelterEntity shelterEntity = new ShelterEntity();
+                    shelterEntity.setIdShelter(rs.getInt("id"));
+                    shelterEntity.setNameShelter(rs.getString("nombre"));
+                    shelterEntity.setResponsible(rs.getString("responsable"));
+                    shelterEntity.setCapacity(rs.getInt("capacidad"));
+                    shelterEntity.setLocation(rs.getString("ubicacion"));
+                    shelters.add(shelterEntity);
+                }
+            }
+        } catch (SQLException exception) {
+            System.out.println("No se ha encontrado el refugio");
+            exception.printStackTrace();
+        }
+        return shelters;
+    }
+
+    @Override
     public boolean isNotEmpty() {
         String sql = "SELECT 1 FROM refugios LIMIT 1";
 

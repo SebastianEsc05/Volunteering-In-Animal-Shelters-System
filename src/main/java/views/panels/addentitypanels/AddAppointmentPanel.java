@@ -151,7 +151,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
                 dateBooked = dateField.getDate().toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDateTime();
-                if(dateBooked.isBefore(todayDate)){
+                if(dateBooked.isAfter(todayDate)){
                     JOptionPane.showMessageDialog(this, "La fecha reservada no puede ser anterior a la fecha actual", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -182,9 +182,6 @@ public class AddAppointmentPanel extends AddEntityPanel {
         this.dateField.setValue(null);
         this.animalCheckBox.setSelected(false);
     }
-
-
-
 
     @Override
     protected void paintComponent(Graphics g) {

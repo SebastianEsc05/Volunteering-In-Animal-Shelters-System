@@ -12,6 +12,7 @@ import views.styles.Style;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class VolunteersPanel extends EntityPanel {
@@ -34,8 +35,42 @@ public class VolunteersPanel extends EntityPanel {
         model = volunteerController.getVolunteerTable();
         table = new CustomTable(model, owner);
 
+
         addComponents();
 
+        //ActionListeners
+        newVolunteerBtn.addActionListener(e -> {
+            owner.showNewPanel(this.addVolunteerPanel);
+        });
+
+        searchBtn.addActionListener(e -> {
+            String idText = searchField.getText().trim();
+            if (!idText.isEmpty()) {
+                try {
+                    int id = Integer.parseInt(idText);
+                    buscarPorId(id);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                model = volunteerController.getVolunteerTable();
+                table.setModel(model);
+                table.repaint();
+            }
+        });
+
+    }
+
+    public void buscarPorId(int id) {
+        DefaultTableModel newModel;
+        try {
+            newModel = volunteerController.getVooluntersByIdTable(id);
+            table.setModel(newModel);
+            table.repaint();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
     }
 
     @Override
@@ -98,14 +133,14 @@ public class VolunteersPanel extends EntityPanel {
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
-        //table border
-        g2d.setColor(Style.COLOR_BACKGROUND);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
-        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-        g2d.setStroke(new BasicStroke(1.5f));
-        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
-
+//        //table border
+//        g2d.setColor(Style.COLOR_BACKGROUND);
+//        g2d.setStroke(new BasicStroke(3));
+//        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
+//        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
+//        g2d.setStroke(new BasicStroke(1.5f));
+//        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
+//
 
     }
 }

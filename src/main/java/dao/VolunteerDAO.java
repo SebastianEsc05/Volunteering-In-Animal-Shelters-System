@@ -5,6 +5,7 @@ import dao.exceptions.PersistenceException;
 import interfaces.dao.IVolunteerDAO;
 import models.VolunteerEntity;
 
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -200,6 +201,35 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
 
         return volunteers;
+    }
+
+    @Override
+    public DefaultTableModel getVooluntersByIdTable(int id) {
+        String[] columns = {"Id", "Nombre", "Teléfono", "Email", "Fecha de Nacimiento", "Especialidad"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<VolunteerEntity> volunteerList = null;
+        try {
+            volunteerList = readAll();
+        } catch (PersistenceException e) {
+            throw new RuntimeException(e);
+        }
+        for (VolunteerEntity v : volunteerList) {
+            if (v.getId_volunteer() == id) {
+                Object[] row = {
+                        v.getId_volunteer(),
+                        v.getName_volunteer(),
+                        v.getPhone_number(),
+                        v.getEmail(),
+                        v.getDate_birth(),
+                        v.getSpecialty()
+                };
+                model.addRow(row);
+            }
+        }
+
+        return model;
     }
 
     @Override

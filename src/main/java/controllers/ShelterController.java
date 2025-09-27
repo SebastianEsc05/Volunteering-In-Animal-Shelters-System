@@ -99,6 +99,29 @@ public class ShelterController implements IShelterController {
     }
 
     @Override
+    public DefaultTableModel getSheltersByIdTable(int id) {
+        String[] columns = {"Id", "Nombre", "Responsable", "Animales", "Cap. Maxima", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<ShelterEntity> shelterList = shelterDAO.getSheltersById(id);
+        for (ShelterEntity s : shelterList) {
+            Object[] row = {
+                    s.getIdShelter(),
+                    s.getNameShelter(),
+                    s.getResponsible(),
+                    s.getAnimalCount(),
+                    s.getCapacity()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+
+    }
+
+
+    @Override
     public void clieanUpTable() {
         this.shelterDAO.cleanUpTable();
     }

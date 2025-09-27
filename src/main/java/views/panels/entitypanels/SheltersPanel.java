@@ -41,6 +41,20 @@ public class SheltersPanel extends EntityPanel {
             owner.showNewPanel(this.addShelterPanel);
         });
 
+        searchBtn.addActionListener(e -> {
+            String searchText = searchField.getText().trim();
+            if (searchText.isEmpty()) {
+                table.setModel(shelterController.getShelterTable());
+            } else {
+                try {
+                    int id = Integer.parseInt(searchText);
+                    table.setModel(shelterController.getSheltersByIdTable(id));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido (número entero).", "ID inválido", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -94,12 +108,12 @@ public class SheltersPanel extends EntityPanel {
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
         //table border
-        g2d.setColor(Style.COLOR_BACKGROUND);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
-        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-        g2d.setStroke(new BasicStroke(1.5f));
-        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-30), scrollPane.getY()+30);
+//        g2d.setColor(Style.COLOR_BACKGROUND);
+//        g2d.setStroke(new BasicStroke(3));
+//        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
+//        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
+//        g2d.setStroke(new BasicStroke(1.5f));
+//        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-30), scrollPane.getY()+30);
 
     }
 }

@@ -1,6 +1,7 @@
 package interfaces.dao;
 
 import dao.exceptions.PersistenceException;
+import models.AppointmentEntity;
 import models.ShelterEntity;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface IShelterDAO {
     List<ShelterEntity> readAll() throws PersistenceException;
 
     void cleanUpTable() throws PersistenceException;
+
+    List<ShelterEntity>  getSheltersById(int id);
 
     boolean isNotEmpty() throws PersistenceException;
 }

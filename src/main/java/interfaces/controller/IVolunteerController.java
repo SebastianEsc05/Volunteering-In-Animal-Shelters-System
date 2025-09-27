@@ -23,4 +23,6 @@ public interface IVolunteerController {
 
     DefaultTableModel getVolunteerTable();
 
+    DefaultTableModel getVooluntersByIdTable(int id);
+
 }
