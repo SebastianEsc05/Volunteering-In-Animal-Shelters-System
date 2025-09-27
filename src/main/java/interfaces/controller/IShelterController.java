@@ -24,6 +24,7 @@ public interface IShelterController {
 
     DefaultTableModel getSheltersByIdTable(int id);
 
+    DefaultTableModel getAnimalsByShelterIdTable(int id);
 
     void clieanUpTable();
 }

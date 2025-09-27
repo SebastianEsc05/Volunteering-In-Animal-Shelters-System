@@ -84,6 +84,7 @@ public class AppointmentsPanel extends EntityPanel {
 
     @Override
     public void addComponents(){
+
         //SideBarPanel
         this.sideBarPanel = new SidebarPanel(){
             @Override
@@ -171,7 +172,6 @@ public class AppointmentsPanel extends EntityPanel {
     public AppointmentInfoPanel getAppointmentInfoPanel() {
         return appointmentInfoPanel;
     }
-
 
     @Override
     protected void paintComponent(Graphics g){

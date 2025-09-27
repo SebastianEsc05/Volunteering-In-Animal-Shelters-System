@@ -1,4 +1,6 @@
 package views.dialogs.UpdateEntityDialogs;
 
-public class UpdateEntityDialog {
+import javax.swing.*;
+
+public class UpdateEntityDialog extends JDialog {
 }

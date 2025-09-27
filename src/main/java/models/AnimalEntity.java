@@ -1,19 +1,19 @@
 package models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class AnimalEntity {
     private int id;
     private String name;
     private int age;
-    private LocalDateTime date_entry;
+    private LocalDate date_entry;
     private String health_situation;
     private String species;
     private int id_shelter;
 
     public AnimalEntity() {}
 
-    public AnimalEntity(int id, String name, int age, LocalDateTime  date_entry, String health_situation,String species, int id_shelter) {
+    public AnimalEntity(int id, String name, int age, LocalDate  date_entry, String health_situation,String species, int id_shelter) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -25,7 +25,7 @@ public class AnimalEntity {
     }
 
 
-    public AnimalEntity(String name, int age, LocalDateTime date_entry, String health_situation,String specie, int id_shelter) {
+    public AnimalEntity(String name, int age, LocalDate date_entry, String health_situation,String specie, int id_shelter) {
         this.name = name;
         this.age = age;
         this.date_entry = date_entry;
@@ -59,11 +59,11 @@ public class AnimalEntity {
         this.age = age;
     }
 
-    public LocalDateTime getDate_entry() {
+    public LocalDate getDate_entry() {
         return date_entry;
     }
 
-    public void setDate_entry(LocalDateTime date_entry) {
+    public void setDate_entry(LocalDate date_entry) {
         this.date_entry = date_entry;
     }
 
