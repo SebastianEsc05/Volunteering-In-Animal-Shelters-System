@@ -2,16 +2,15 @@ package dao;
 
 import config.ConexionDB;
 import dao.exceptions.PersistenceException;
-import interfaces.dao.IAppoimentDAO;
+import interfaces.dao.IAppointmentDAO;
 import models.AppointmentEntity;
 
-import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppointmentDAO implements IAppoimentDAO {
+public class AppointmentDAO implements IAppointmentDAO {
 
     @Override
     public void insertAppoiments() throws PersistenceException {
@@ -262,7 +261,7 @@ public class AppointmentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public List<AppointmentEntity>  getAppoimentsByStatusPending() {
+    public List<AppointmentEntity>  getAppointmentsByStatusPending() throws PersistenceException {
         String sql = "SELECT * FROM asignaciones WHERE estado = 'pendiente'";
         List<AppointmentEntity> appoiments = new ArrayList<>();
         try (
@@ -288,7 +287,7 @@ public class AppointmentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public List<AppointmentEntity> getAppoimentsByStatusCanceled() {
+    public List<AppointmentEntity> getAppointmentsByStatusCanceled() throws PersistenceException {
         String sql = "SELECT * FROM asignaciones WHERE estado = 'cancelado'";
         List<AppointmentEntity> appoiments = new ArrayList<>();
         try (
@@ -314,7 +313,7 @@ public class AppointmentDAO implements IAppoimentDAO {
     }
 
     @Override
-    public List<AppointmentEntity> getAppoimentsByStatusCompleted() {
+    public List<AppointmentEntity> getAppointmentsByStatusCompleted() throws PersistenceException {
         String sql = "SELECT * FROM asignaciones WHERE estado = 'completado'";
         List<AppointmentEntity> appoiments = new ArrayList<>();
         try (

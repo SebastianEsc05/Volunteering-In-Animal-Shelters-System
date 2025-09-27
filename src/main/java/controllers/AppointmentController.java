@@ -4,7 +4,7 @@ import config.ConexionDB;
 import dao.AppointmentDAO;
 import dao.exceptions.PersistenceException;
 import interfaces.controller.IAppointmentController;
-import interfaces.dao.IAppoimentDAO;
+import interfaces.dao.IAppointmentDAO;
 import models.AppointmentEntity;
 
 import javax.swing.table.DefaultTableModel;
@@ -18,15 +18,15 @@ import java.util.List;
 
 public class AppointmentController implements IAppointmentController {
 
-    private IAppoimentDAO appoimentDAO;
+    private IAppointmentDAO appointmentDAO;
 
     public AppointmentController() {
-        this.appoimentDAO = new AppointmentDAO();
+        this.appointmentDAO = new AppointmentDAO();
     }
 
     @Override
     public void insertAppoiments() throws PersistenceException {
-        appoimentDAO.insertAppoiments();
+        appointmentDAO.insertAppoiments();
     }
 
     public boolean addAppoiment(LocalDateTime todayDate, LocalDateTime dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException {
@@ -59,7 +59,7 @@ public class AppointmentController implements IAppointmentController {
             appointmentEntity.setStatus(status);
             appointmentEntity.setAnimalCheck(animalCheck);
 
-            return this.appoimentDAO.create(appointmentEntity);
+            return this.appointmentDAO.create(appointmentEntity);
 
         } catch (PersistenceException ex) {
             throw new ControllerException(ex.getMessage());
@@ -71,7 +71,7 @@ public class AppointmentController implements IAppointmentController {
         if (id < 0) {
             return null;
         }
-        return this.appoimentDAO.readById(id);
+        return this.appointmentDAO.readById(id);
     }
 
     public boolean updateAppoiment(int id, String comments, String status, LocalDateTime date_booked, LocalDateTime date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException {
@@ -96,33 +96,33 @@ public class AppointmentController implements IAppointmentController {
         appointmentEntity.setIdAnimal(id_animal);
         appointmentEntity.setIdVolunteer(id_volunteer);
         appointmentEntity.setActivity(activity);
-        return this.appoimentDAO.update(appointmentEntity);
+        return this.appointmentDAO.update(appointmentEntity);
     }
 
     public boolean deleteAppoiment(int id) throws ControllerException {
         if (id < 0) {
             return false;
         }
-        return this.appoimentDAO.deleteById(id);
+        return this.appointmentDAO.deleteById(id);
     }
 
     public List<AppointmentEntity> readAllAppoiments() throws ControllerException {
-        return this.appoimentDAO.readAll();
+        return this.appointmentDAO.readAll();
     }
 
     public List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException {
-        return this.appoimentDAO.searchByState(id, estado);
+        return this.appointmentDAO.searchByState(id, estado);
     }
 
     @Override
-    public DefaultTableModel getAppoimentTable() {
+    public DefaultTableModel getAppointmentTable() {
         String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        List<AppointmentEntity> appoimentList = appoimentDAO.readAll();
+        List<AppointmentEntity> appoimentList = appointmentDAO.readAll();
         for (AppointmentEntity a : appoimentList) {
             Object[] row = {
                     a.getId(),
@@ -136,14 +136,14 @@ public class AppointmentController implements IAppointmentController {
     }
 
     @Override
-    public DefaultTableModel getAppoimentByStatusPendingTable() {
+    public DefaultTableModel getAppointmentByStatusPendingTable() {
         String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusPending();
+        List<AppointmentEntity> appoimentList = appointmentDAO.getAppointmentsByStatusPending();
         for (AppointmentEntity a : appoimentList) {
             Object[] row = {
                     a.getId(),
@@ -157,14 +157,14 @@ public class AppointmentController implements IAppointmentController {
     }
 
     @Override
-    public DefaultTableModel getAppoimentByStatusCanceledTable() {
+    public DefaultTableModel getAppointmentByStatusCanceledTable() {
         String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusCanceled();
+        List<AppointmentEntity> appoimentList = appointmentDAO.getAppointmentsByStatusCanceled();
         for (AppointmentEntity a : appoimentList) {
             Object[] row = {
                     a.getId(),
@@ -178,14 +178,14 @@ public class AppointmentController implements IAppointmentController {
     }
 
     @Override
-    public DefaultTableModel getAppoimentByStatusCompletedTable() {
+    public DefaultTableModel getAppointmentByStatusCompletedTable() {
         String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        List<AppointmentEntity> appoimentList = appoimentDAO.getAppoimentsByStatusCompleted();
+        List<AppointmentEntity> appoimentList = appointmentDAO.getAppointmentsByStatusCompleted();
         for (AppointmentEntity a : appoimentList) {
             Object[] row = {
                     a.getId(),

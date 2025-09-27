@@ -32,7 +32,7 @@ public class AnimalsPanel extends EntityPanel{
 
         //Table model
         model = animalController.getAnimalTable();
-        table = new CustomTable(model);
+        table = new CustomTable(model, owner);
         addComponents();
 
         //ActionListeners

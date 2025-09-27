@@ -4,7 +4,8 @@ import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
-import views.panels.addentitypanels.AddAppoimentPanel;
+import views.panels.addentitypanels.AddAppointmentPanel;
+import views.panels.entityinfopanels.AppointmentInfoPanel;
 import views.styles.*;
 import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
@@ -13,34 +14,36 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class AppoimentsPanel extends EntityPanel {
+public class AppointmentsPanel extends EntityPanel {
     private IAppointmentController appoimentController;
-    private AddAppoimentPanel addAppoimentPanel;
+    private AddAppointmentPanel addAppointmentPanel;
+    private AppointmentInfoPanel appointmentInfoPanel;
     private Button newAppoimentBtn;
     private JScrollPane scrollPane;
     private ComboBoxCustom statusComboBox;
     private TxtFieldPh searchField;
     private Button searchBtn;
 
-    public AppoimentsPanel(MainFrame owner) {
+    public AppointmentsPanel(MainFrame owner) {
         super(owner);
         this.appoimentController = new AppointmentController();
-        this.addAppoimentPanel = new AddAppoimentPanel(owner);
+        this.addAppointmentPanel = new AddAppointmentPanel(owner);
+//        this.appointmentInfoPanel = new AppointmentInfoPanel();
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
         searchField = new TxtFieldPh("Id", 185, 35, 15, 25);
         searchBtn = new Button("Buscar", 100, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //Table model
-        model = appoimentController.getAppoimentTable();
-        table = new CustomTable(model);
+        model = appoimentController.getAppointmentTable();
+        table = new CustomTable(model, owner);
         table.addColumnButton();
 
         addComponents();
 
         //ActionListeners
         newAppoimentBtn.addActionListener(e -> {
-            owner.showNewPanel(this.addAppoimentPanel);
+            owner.showNewPanel(this.addAppointmentPanel);
         });
 
         statusComboBox.addActionListener(e -> {;
@@ -113,19 +116,19 @@ public class AppoimentsPanel extends EntityPanel {
         try {
             switch (estado) {
                 case "Todos":
-                    newModel = appoimentController.getAppoimentTable();
+                    newModel = appoimentController.getAppointmentTable();
                     break;
                 case "Pendiente":
-                    newModel = appoimentController.getAppoimentByStatusPendingTable();
+                    newModel = appoimentController.getAppointmentByStatusPendingTable();
                     break;
                 case "Cancelada":
-                    newModel = appoimentController.getAppoimentByStatusCanceledTable();
+                    newModel = appoimentController.getAppointmentByStatusCanceledTable();
                     break;
                 case "Finalizada":
-                    newModel = appoimentController.getAppoimentByStatusCompletedTable();
+                    newModel = appoimentController.getAppointmentByStatusCompletedTable();
                     break;
                 default:
-                    newModel = appoimentController.getAppoimentTable();
+                    newModel = appoimentController.getAppointmentTable();
             }
             table.setModel(newModel);
         }catch (Exception ex){
@@ -134,7 +137,9 @@ public class AppoimentsPanel extends EntityPanel {
 
     }
 
-
+    public AppointmentInfoPanel getAppointmentInfoPanel() {
+        return this.appointmentInfoPanel;
+    }
 
     @Override
     protected void paintComponent(Graphics g){

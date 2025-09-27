@@ -14,7 +14,7 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class AddAppoimentPanel extends AddEntityPanel {
+public class AddAppointmentPanel extends AddEntityPanel {
     private JPanel activityPanel;
     private FormattedDateField dateField;
     private TxtFieldPh animalTextField;
@@ -23,7 +23,7 @@ public class AddAppoimentPanel extends AddEntityPanel {
     private TextAreaCustom commentsTextArea;
     private JCheckBox animalCheckBox;
 
-    public AddAppoimentPanel(MainFrame owner) {
+    public AddAppointmentPanel(MainFrame owner) {
         super(owner);
         this.activityPanel = new JPanel();
         this.activityPanel.setOpaque(false);
