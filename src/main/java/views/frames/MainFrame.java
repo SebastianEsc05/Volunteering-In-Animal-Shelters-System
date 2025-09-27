@@ -10,13 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private JPanel mainPanel;
-    private MainMenuPanel mainMenuPanel;
-    private AppointmentsPanel appoimentPanel;
-    private SheltersPanel sheltersPanel;
-    private VolunteersPanel volunteersPanel;
-    private AnimalsPanel animalsPanel;
 
+    private final JPanel mainPanel;
+    private final MainMenuPanel mainMenuPanel;
+    private final AppointmentsPanel appoimentPanel;
+    private final SheltersPanel sheltersPanel;
+    private final VolunteersPanel volunteersPanel;
+    private final AnimalsPanel animalsPanel;
+  
     public MainFrame() {
         setTitle("Sistema de Refugios");
         setSize(1000, 630);

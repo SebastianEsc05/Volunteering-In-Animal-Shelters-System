@@ -5,7 +5,9 @@ import interfaces.controller.IAppointmentController;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAppointmentPanel;
+
 import views.panels.entityinfopanels.AppointmentInfoPanel;
+
 import views.styles.*;
 import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
@@ -17,7 +19,9 @@ import java.awt.*;
 public class AppointmentsPanel extends EntityPanel {
     private IAppointmentController appoimentController;
     private AddAppointmentPanel addAppointmentPanel;
+
     private AppointmentInfoPanel appointmentInfoPanel;
+
     private Button newAppoimentBtn;
     private JScrollPane scrollPane;
     private ComboBoxCustom statusComboBox;
@@ -28,15 +32,17 @@ public class AppointmentsPanel extends EntityPanel {
         super(owner);
         this.appoimentController = new AppointmentController();
         this.addAppointmentPanel = new AddAppointmentPanel(owner);
-//        this.appointmentInfoPanel = new AppointmentInfoPanel();
+
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
         searchField = new TxtFieldPh("Id", 185, 35, 15, 25);
         searchBtn = new Button("Buscar", 100, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //Table model
+
         model = appoimentController.getAppointmentTable();
         table = new CustomTable(model, owner);
+
         table.addColumnButton();
 
         addComponents();
@@ -48,6 +54,20 @@ public class AppointmentsPanel extends EntityPanel {
 
         statusComboBox.addActionListener(e -> {;
             actualizarFiltro();
+        });
+
+        searchBtn.addActionListener(e -> {
+            String idText = searchField.getText().trim();
+            if (!idText.isEmpty()) {
+                try {
+                    int id = Integer.parseInt(idText);
+                    buscarPorId(id);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                actualizarFiltro(); // Si el campo está vacío, restablecer el filtro
+            }
         });
 
     }
@@ -95,9 +115,10 @@ public class AppointmentsPanel extends EntityPanel {
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 410));
         scrollPane = new JScrollPane(table);
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
+
+        scrollPane.setOpaque(true);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(Color.WHITE);
         tablePanel.add(backBtn);
         tablePanel.add(scrollPane);
 
@@ -131,15 +152,32 @@ public class AppointmentsPanel extends EntityPanel {
                     newModel = appoimentController.getAppointmentTable();
             }
             table.setModel(newModel);
+            table.repaint();
         }catch (Exception ex){
             ex.printStackTrace();
         }
 
     }
 
+
     public AppointmentInfoPanel getAppointmentInfoPanel() {
         return this.appointmentInfoPanel;
     }
+
+
+    public void buscarPorId(int id) {
+        DefaultTableModel newModel;
+        try {
+            newModel = appoimentController.getAppoimentByIdTable(id);
+            table.setModel(newModel);
+            table.repaint();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+    }
+
+
 
     @Override
     protected void paintComponent(Graphics g){
@@ -156,12 +194,5 @@ public class AppointmentsPanel extends EntityPanel {
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
         //table border
-        g2d.setColor(Style.COLOR_BACKGROUND);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
-        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-        g2d.setStroke(new BasicStroke(1.5f));
-        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
-
     }
 }

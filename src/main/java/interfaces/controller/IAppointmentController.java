@@ -31,4 +31,9 @@ public interface IAppointmentController {
     DefaultTableModel getAppointmentByStatusCanceledTable();
 
     DefaultTableModel getAppointmentByStatusCompletedTable();
+
+    DefaultTableModel getAppoimentByStatusCompletedTable();
+
+    DefaultTableModel getAppoimentByIdTable(int id);
+
 }

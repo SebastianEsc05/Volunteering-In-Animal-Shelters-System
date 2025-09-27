@@ -9,11 +9,13 @@ public interface IAppointmentDAO {
 
     void insertAppoiments() throws PersistenceException;
 
+
     boolean create(AppointmentEntity appoimentEntity) throws PersistenceException;
 
     AppointmentEntity readById(int id) throws PersistenceException;
 
     boolean update(AppointmentEntity appoimentEntity) throws PersistenceException;
+
 
     boolean deleteById(int id) throws PersistenceException;
 
@@ -21,11 +23,15 @@ public interface IAppointmentDAO {
 
     List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException;
 
-    List<AppointmentEntity>  getAppointmentsByStatusPending() throws PersistenceException;
 
-    List<AppointmentEntity> getAppointmentsByStatusCanceled() throws PersistenceException;
+    boolean isNotEmpty();
 
-    List<AppointmentEntity> getAppointmentsByStatusCompleted() throws PersistenceException;
+    List<AppointmentEntity>  getAppoimentsByStatusPending();
 
-    boolean isNotEmpty() throws PersistenceException;
+    List<AppointmentEntity>  getAppoimentsByStatusCanceled();
+
+    List<AppointmentEntity>  getAppoimentsByStatusCompleted();
+
+    List<AppointmentEntity>  getAppoimentsById(int id);
+
 }

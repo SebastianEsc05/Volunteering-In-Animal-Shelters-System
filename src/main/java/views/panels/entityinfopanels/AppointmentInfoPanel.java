@@ -2,6 +2,7 @@ package views.panels.entityinfopanels;
 
 import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
+
 import views.dialogs.UpdateEntityDialogs.UpdateAppoimentDialog;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
@@ -16,7 +17,9 @@ import java.awt.*;
 
 public class AppointmentInfoPanel extends EntityPanel {
     private IAppointmentController appoimentController;
-    private UpdateAppoimentDialog updateAppoimentDialog;
+
+    private UpdateAppointmentDialog updateAppointmentDialog;
+
     private JPanel detailPanel;
     private StatusLabel statusLabel;
     private Button updateBtn;
@@ -27,7 +30,8 @@ public class AppointmentInfoPanel extends EntityPanel {
     public AppointmentInfoPanel(MainFrame owner, int appointmentId) {
         super(owner);
         appoimentController = new AppointmentController();
-        updateAppoimentDialog = new UpdateAppoimentDialog();
+
+        updateAppointmentDialog = new UpdateAppointmentDialog();
         statusLabel = new StatusLabel(appoimentController.readAppoiment(appointmentId).getStatus());
         this.appointmentId = appointmentId;
         detailPanel = new JPanel();
@@ -92,6 +96,9 @@ public class AppointmentInfoPanel extends EntityPanel {
         int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
+
+
+        super.addComponents();
 
     }
 }
