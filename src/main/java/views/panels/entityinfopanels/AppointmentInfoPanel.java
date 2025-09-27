@@ -23,12 +23,12 @@ public class AppointmentInfoPanel extends EntityPanel {
     private Button deleteBtn;
     private int appointmentId;
 
-    public AppointmentInfoPanel(MainFrame owner) {
+    public AppointmentInfoPanel(MainFrame owner, int id) {
         super(owner);
         appoimentController = new AppointmentController();
         updateAppoimentDialog = new UpdateAppointmentDialog();
-        //statusLabel = new StatusLabel(appoimentController.readAppoiment(appointmentId).getStatus());
-        this.appointmentId = appointmentId;
+        appointmentId = id;
+        statusLabel = new StatusLabel(appoimentController.readAppoiment(appointmentId).getStatus());
         detailPanel = new JPanel();
         updateBtn = new Button("Editar asignacion", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
@@ -72,7 +72,11 @@ public class AppointmentInfoPanel extends EntityPanel {
                 g2d.dispose();
             }
         };
+        sideBarPanel.add(detailPanel);
+        sideBarPanel.add(updateBtn);
+
         tablePanel.add(backBtn);
+        tablePanel.add(statusLabel);
 
         //East Panel
         this.eastPanel.add(this.sideBarPanel);
@@ -92,7 +96,7 @@ public class AppointmentInfoPanel extends EntityPanel {
 
         //Ttitle position
         Font tittleFont = FontUtil.loadFont(25, "Inter_Light");
-        String tittleText = "Asignacion Info";
+        String tittleText = "Asignacion";
         FontMetrics metricsTittleText = g2d.getFontMetrics(tittleFont);
         int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);
