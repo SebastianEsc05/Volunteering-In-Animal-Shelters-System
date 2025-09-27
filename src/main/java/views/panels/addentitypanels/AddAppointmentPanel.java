@@ -138,10 +138,10 @@ public class AddAppointmentPanel extends AddEntityPanel {
             String activity = activityTextField.getText();
             boolean animalCheck = animalCheckBox.isSelected();
             String comments = commentsTextArea.getText();
-
-
-
-
+            if (activity.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El campo de actividad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             //Actual date from today
             LocalDateTime todayDate = LocalDateTime.now();
 
@@ -151,6 +151,10 @@ public class AddAppointmentPanel extends AddEntityPanel {
                 dateBooked = dateField.getDate().toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDateTime();
+                if(dateBooked.isBefore(todayDate)){
+                    JOptionPane.showMessageDialog(this, "La fecha reservada no puede ser anterior a la fecha actual", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
 
             AppointmentController appoimentController = new AppointmentController();
@@ -158,6 +162,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
             if (success){
                 JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
+
 
             }else{
                 JOptionPane.showMessageDialog(this,  "Ocurrio un error al guardar la asignacion",  "Error",  JOptionPane.ERROR_MESSAGE);

@@ -25,7 +25,7 @@ public class CustomTable extends JTable {
     private void configStyle() {
 
         //Background, foreground, font, row height
-        setOpaque(false);
+        setOpaque(true);
         this.setForeground(Color.BLACK);
         this.setFont(FontUtil.loadFont(14, "Inter_Light"));
         this.setRowHeight(60);
@@ -38,6 +38,7 @@ public class CustomTable extends JTable {
 
         //Selection colors
         this.setSelectionBackground(Color.white);
+        this.setFillsViewportHeight(true);
 
         //Header
         JTableHeader header = this.getTableHeader();
