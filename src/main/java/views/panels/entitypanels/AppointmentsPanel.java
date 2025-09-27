@@ -47,6 +47,11 @@ public class AppointmentsPanel extends EntityPanel {
             actualizarFiltro();
         });
 
+        backBtn.addActionListener(e -> {
+            owner.revalidate();
+            owner.repaint();
+        });
+
         searchBtn.addActionListener(e -> {
             String idText = searchField.getText().trim();
             if (!idText.isEmpty()) {

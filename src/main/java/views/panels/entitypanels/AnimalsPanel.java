@@ -38,6 +38,7 @@ public class AnimalsPanel extends EntityPanel{
         //ActionListeners
         newAnimalBtn.addActionListener(e -> {
             owner.showNewPanel(this.addAnimalPanel);
+
         });
 
     }
