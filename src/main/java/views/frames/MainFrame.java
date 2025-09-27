@@ -10,20 +10,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private final JPanel mainPanel;
-    private final MainMenuPanel mainMenuPanel;
-    private final AppointmentsPanel appoimentPanel;
-    private final SheltersPanel sheltersPanel;
-    private final VolunteersPanel volunteersPanel;
-    private final AnimalsPanel animalsPanel;
+    private JPanel mainPanel;
+    private MainMenuPanel mainMenuPanel;
+    private AppointmentsPanel appoimentPanel;
+    private SheltersPanel sheltersPanel;
+    private VolunteersPanel volunteersPanel;
+    private AnimalsPanel animalsPanel;
 
     public MainFrame() {
         setTitle("Sistema de Refugios");
-        setSize(1200, 830);
+        setSize(1000, 630);
         getContentPane().setBackground(Color.white);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
         this.mainPanel = new JPanel();
         mainPanel.setOpaque(false);
         this.mainMenuPanel = new MainMenuPanel(this);
@@ -49,7 +48,7 @@ public class MainFrame extends JFrame {
         return this.mainMenuPanel;
     }
 
-    public AppointmentsPanel getAppoimentPanel() {
+    public AppointmentsPanel getAppointmentPanel() {
         return this.appoimentPanel;
     }
 

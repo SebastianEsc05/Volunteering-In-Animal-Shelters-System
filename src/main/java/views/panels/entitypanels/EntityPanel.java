@@ -39,9 +39,7 @@ public class EntityPanel extends JPanel {
         this.backBtn = new Button("←", 50, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //ActionListeners
-        backBtn.addActionListener(e -> {
-            this.owner.showNewPanel(this.owner.getMainMenuPanel());
-        });
+
 
     }
 

@@ -24,13 +24,11 @@ public interface IAppointmentController {
 
     List<AppointmentEntity> searchByState(Integer id, String estado) throws PersistenceException;
 
-    DefaultTableModel getAppoimentTable();
+    DefaultTableModel getAppointmentTable();
 
-    DefaultTableModel getAppoimentByStatusPendingTable();
+    DefaultTableModel getAppointmentByStatusPendingTable();
 
-    DefaultTableModel getAppoimentByStatusCanceledTable();
+    DefaultTableModel getAppointmentByStatusCanceledTable();
 
-    DefaultTableModel getAppoimentByStatusCompletedTable();
-
-    DefaultTableModel getAppoimentByIdTable(int id);
+    DefaultTableModel getAppointmentByStatusCompletedTable();
 }
