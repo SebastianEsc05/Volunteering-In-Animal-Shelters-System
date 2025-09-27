@@ -3,13 +3,14 @@ package interfaces.dao;
 import dao.exceptions.PersistenceException;
 import models.AppointmentEntity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IAppointmentDAO {
 
     void insertAppointments() throws PersistenceException;
 
-    boolean create(AppointmentEntity appoimentEntity) throws PersistenceException;
+    boolean create(AppointmentEntity appoimentEntity) throws PersistenceException, SQLException;
 
     AppointmentEntity readById(int id) throws PersistenceException;
 

@@ -57,11 +57,21 @@ public class ShelterDAO implements IShelterDAO {
 
     @Override
     public boolean create(ShelterEntity shelterEntity) throws PersistenceException {
+        String checkSql = "SELECT COUNT(*) FROM refugios WHERE nombre = ?";
         String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?,?,?,?);";
 
         try (Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, shelterEntity.getNameShelter());;
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            try (PreparedStatement checkPs = con.prepareStatement(checkSql)) {
+                checkPs.setString(1, shelterEntity.getNameShelter());
+                try (ResultSet rs = checkPs.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println("El refugio con nombre '" + shelterEntity.getNameShelter() + "' ya existe.");
+                        throw new PersistenceException("El refugio con nombre '" + shelterEntity.getNameShelter() + "' ya existe.");
+                    }
+                }
+            }
+            ps.setString(1, shelterEntity.getNameShelter());
             ps.setString(2, shelterEntity.getResponsible());
             ps.setInt(3, shelterEntity.getCapacity());
             ps.setString(4, shelterEntity.getLocation());
@@ -72,6 +82,8 @@ public class ShelterDAO implements IShelterDAO {
             System.out.println("No se ha podido agregar el refugio");
             exception.printStackTrace();
             return false;
+        }catch(PersistenceException ex){
+            throw new PersistenceException(ex.getMessage());
         }
 
     }

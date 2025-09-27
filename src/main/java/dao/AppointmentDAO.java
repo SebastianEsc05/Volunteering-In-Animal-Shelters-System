@@ -69,41 +69,61 @@ public class AppointmentDAO implements IAppointmentDAO {
     }
 
     @Override
-    public boolean create(AppointmentEntity appointmentEntity) throws PersistenceException {
+    public boolean create(AppointmentEntity appointmentEntity) throws PersistenceException, SQLException {
+        String checkAnimalId = "SELECT COUNT(*) FROM animales WHERE id = ?";
+        String checkVolunteerId = "SELECT COUNT(*) FROM voluntarios WHERE id = ?";
         String sql = "INSERT INTO asignaciones (observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad, requiere_animal) VALUES (?,?,?,?,?,?,?,?)";
-
         try (
                 Connection con = ConexionDB.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql);
-        ) {
-            ps.setString(1, appointmentEntity.getComments());
-            ps.setObject(2, appointmentEntity.getStatus());
-            ps.setObject(3, appointmentEntity.getDateBooked());
-            if (appointmentEntity.getDateEvent() != null) {
-                ps.setObject(4, appointmentEntity.getDateEvent());
-            } else {
-                ps.setNull(4, java.sql.Types.DATE);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            try (PreparedStatement checkAnimalPs = con.prepareStatement(checkAnimalId)) {
+                checkAnimalPs.setInt(1, appointmentEntity.getIdAnimal());
+                try (ResultSet rs = checkAnimalPs.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        System.out.println("El animal con id '" + appointmentEntity.getIdAnimal() + "' no existe.");
+                        throw new PersistenceException("El animal con id '" + appointmentEntity.getIdAnimal() + "' no existe.");
+                    }
+                }
             }
+            try (PreparedStatement checkVolunteerPs = con.prepareStatement(checkVolunteerId)) {
+                checkVolunteerPs.setInt(1, appointmentEntity.getIdVolunteer());
+                try (ResultSet rs = checkVolunteerPs.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        System.out.println("El voluntario con id '" + appointmentEntity.getIdVolunteer() + "' no existe.");
+                        throw new PersistenceException("El voluntario con id '" + appointmentEntity.getIdVolunteer() + "' no existe.");
+                    }
+                    ps.setString(1, appointmentEntity.getComments());
+                    ps.setObject(2, appointmentEntity.getStatus());
+                    ps.setObject(3, appointmentEntity.getDateBooked());
+                    if (appointmentEntity.getDateEvent() != null) {
+                        ps.setObject(4, appointmentEntity.getDateEvent());
+                    } else {
+                        ps.setNull(4, java.sql.Types.DATE);
+                    }
 
-            if (appointmentEntity.getIdAnimal() != null) {
-                ps.setInt(5, appointmentEntity.getIdAnimal());
-            } else {
-                ps.setNull(5, java.sql.Types.INTEGER);
+                    if (appointmentEntity.getIdAnimal() != null) {
+                        ps.setInt(5, appointmentEntity.getIdAnimal());
+                    } else {
+                        ps.setNull(5, java.sql.Types.INTEGER);
 
+                    }
+                    ps.setInt(6, appointmentEntity.getIdVolunteer());
+                    ps.setString(7, appointmentEntity.getActivity());
+                    if (appointmentEntity.isAnimalCheck()) {
+                        ps.setBoolean(8, appointmentEntity.isAnimalCheck());
+                    }
+
+                    System.out.println("La asignación se ha agregado exitosamente");
+                    return ps.executeUpdate() > 0;
+
+                } catch (SQLException exception) {
+                    System.out.println("No se ha podido agregar la asignación");
+                    exception.printStackTrace();
+                    return false;
+                }catch(PersistenceException exception){
+                    throw new PersistenceException(exception.getMessage());
+                }
             }
-            ps.setInt(6, appointmentEntity.getIdVolunteer());
-            ps.setString(7, appointmentEntity.getActivity());
-            if(appointmentEntity.isAnimalCheck()){
-                ps.setBoolean(8,appointmentEntity.isAnimalCheck());
-            }
-
-            System.out.println("La asignación se ha agregado exitosamente");
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException exception) {
-            System.out.println("No se ha podido agregar la asignación");
-            exception.printStackTrace();
-            return false;
         }
     }
 

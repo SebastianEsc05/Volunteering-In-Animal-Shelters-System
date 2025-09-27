@@ -2,6 +2,7 @@ package views.panels.addentitypanels;
 
 import controllers.ControllerException;
 import controllers.ShelterController;
+import dao.exceptions.PersistenceException;
 import models.AppointmentEntity;
 import views.frames.MainFrame;
 import views.panels.entitypanels.SheltersPanel;
@@ -90,8 +91,8 @@ public class AddShelterPanel extends AddEntityPanel{
 
     }
 
-    public void addShelter(){
-        try{
+    public void addShelter() {
+        try {
             String name = this.nameTextField.getText().trim();
             String location = this.locationTextField.getText().trim();
             String capacityStr = this.capacityTextField.getText().trim();
@@ -102,43 +103,52 @@ public class AddShelterPanel extends AddEntityPanel{
                 return;
             }
 
+            if (name.length() > 50 || location.length() > 50 || manager.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Los campos de texto no pueden tener más de 50 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (!name.matches("[a-zA-ZÀ-ÿ\\s]+") || !location.matches("[a-zA-ZÀ-ÿ\\s]+") || !manager.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                JOptionPane.showMessageDialog(this, "Los campos de texto solo pueden contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             int capacity;
             try {
                 capacity = Integer.parseInt(capacityStr);
-                if (capacity <= 0) {
-                    throw new NumberFormatException();
-                }
-                if(capacity > 5000){
-                    JOptionPane.showMessageDialog(this, "La capacidad no puede ser mayor a 5mil.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (capacity <= 0) throw new NumberFormatException();
+                if (capacity > 5000) {
+                    JOptionPane.showMessageDialog(this, "La capacidad no puede ser mayor a 5 mil.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "La capacidad debe ser un número entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            ShelterController shelterController = new ShelterController();
 
+            ShelterController shelterController = new ShelterController();
             boolean success = shelterController.addShelter(name, location, capacity, manager);
 
             if (success) {
                 JOptionPane.showMessageDialog(this, "Refugio agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
+
                 SheltersPanel sheltersPanel = this.owner.getSheltersPanel();
                 sheltersPanel.refreshTable();
                 this.owner.showNewPanel(sheltersPanel);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al agregar el refugio. Inténtelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-        }catch (ControllerException e){
+        } catch (ControllerException | PersistenceException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            resetName();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }
 
-
+    public void resetName(){
+        this.nameTextField.setText("");
+    }
     public void resetFields(){
         this.nameTextField.setText("");
         this.locationTextField.setText("");
