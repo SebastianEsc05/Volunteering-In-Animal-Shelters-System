@@ -54,6 +54,25 @@ public class AppointmentsPanel extends EntityPanel {
             actualizarFiltro();
         });
 
+        searchBtn.addActionListener(e -> {
+            String searchText = searchField.getText().trim();
+            if (!searchText.isEmpty()) {
+                try {
+                    int id = Integer.parseInt(searchText);
+                    DefaultTableModel newModel = appoimentController.getAppointmentsByIdTable(id);
+                    table.setModel(newModel);
+                    table.addColumnButton();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                // Si el campo de búsqueda está vacío, restablecer la tabla completa
+                DefaultTableModel newModel = appoimentController.getAppointmentTable();
+                table.setModel(newModel);
+                table.addColumnButton();
+            }
+        });
+
     }
 
     public void refreshTable(){

@@ -201,6 +201,27 @@ public class AppointmentController implements IAppointmentController {
         return model;
     }
 
+    @Override
+    public DefaultTableModel getAppointmentsByIdTable(int id) throws ControllerException {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        List<AppointmentEntity> appoimentList = appointmentDAO.getAppointmentsById(id);
+        for (AppointmentEntity a : appoimentList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked().format(formatter),
+                    a.getStatus()
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
 
     public boolean animalExists(int id) throws ControllerException {
         String sql = "SELECT COUNT(*) FROM animales WHERE id = ?";

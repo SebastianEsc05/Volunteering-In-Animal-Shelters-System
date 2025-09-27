@@ -40,7 +40,7 @@ public class AppointmentInfoPanel extends EntityPanel {
         buttonPanel.setPreferredSize(new Dimension(500, 60));
         buttonPanel.setOpaque(false);
         appointmentId = id;
-        LocalDate date = appointmentController.readAppoiment(appointmentId).getDateBooked().toLocalDate();
+        LocalDate date = appointmentController.readAppoiment(appointmentId).getDateBooked();
         String formatDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         headerLabel = new JLabel(String.valueOf(id)+" "+ formatDate);
         headerLabel.setFont(FontUtil.loadFont( 20, "Inter_18pt-ExtraLight"));

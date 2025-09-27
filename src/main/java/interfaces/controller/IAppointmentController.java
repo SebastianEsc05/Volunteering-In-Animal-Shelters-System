@@ -32,4 +32,5 @@ public interface IAppointmentController {
     DefaultTableModel getAppointmentByStatusCanceledTable();
 
     DefaultTableModel getAppointmentByStatusCompletedTable();
+    DefaultTableModel getAppointmentsByIdTable(int id)throws ControllerException;
 }
