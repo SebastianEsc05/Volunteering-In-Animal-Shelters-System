@@ -172,7 +172,7 @@ public class VolunteerController implements IVolunteerController{
 
     @Override
     public DefaultTableModel getVooluntersByIdTable(int id) {
-        String[] columns = {"Id", "Nombre", "Teléfono", "Email", "Fecha de Nacimiento", "Especialidad"};
+        String[] columns = {"Id", "Nombre", "Edad", "Telefono", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 

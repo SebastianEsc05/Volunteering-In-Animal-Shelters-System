@@ -1,6 +1,12 @@
 package views.styles;
 
+import interfaces.controller.IAppointmentController;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
+import views.panels.entityinfopanels.AnimalInfoPanel;
+import views.panels.entityinfopanels.AppointmentInfoPanel;
+import views.panels.entityinfopanels.ShelterInfoPanel;
+import views.panels.entityinfopanels.VolunteerInfoPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +15,15 @@ public class ButtonEditor extends DefaultCellEditor{
     private MainFrame owner;
     private JButton button;
     private CustomTable table;
+    private PanelCategory category;
     private boolean isPushed;
     private int currentRow;
+//    private IAppointmentController appointmentController;
 
-    public ButtonEditor(JCheckBox checkBox, MainFrame owner) {
+    public ButtonEditor(JCheckBox checkBox, MainFrame owner, PanelCategory category) {
         super(checkBox);
         this.owner = owner;
+        this.category = category;
         button = new JButton("≡");
         button.setFont(new Font("SansSerif", Font.PLAIN, 24));
         button.setBackground(new Color(60, 63, 83));
@@ -25,11 +34,27 @@ public class ButtonEditor extends DefaultCellEditor{
 
         button.addActionListener(e -> {
             if (isPushed) {
-                Long id = (Long) table.getModel().getValueAt(currentRow, 0);
-
+                switch (category) {
+                    case APPOINTMENTS -> owner.showNewPanel(new AppointmentInfoPanel(owner));
+                    case SHELTERS   -> owner.showNewPanel(new ShelterInfoPanel(owner));
+                    case ANIMALS    -> owner.showNewPanel(new AnimalInfoPanel(owner));
+                    case VOLUNTEERS -> owner.showNewPanel(new VolunteerInfoPanel(owner));
+                }
 
             }
         });
+    }
 
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        this.currentRow = row;
+        this.isPushed = true;
+        return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        isPushed = false;
+        return null;
     }
 }

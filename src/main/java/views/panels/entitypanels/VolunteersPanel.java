@@ -2,6 +2,7 @@ package views.panels.entitypanels;
 
 import controllers.VolunteerController;
 import interfaces.controller.IVolunteerController;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddVolunteerPanel;
@@ -33,14 +34,17 @@ public class VolunteersPanel extends EntityPanel {
 
         //Table model
         model = volunteerController.getVolunteerTable();
-        table = new CustomTable(model, owner);
-
-
+        table = new CustomTable(model, owner, PanelCategory.VOLUNTEERS);
+        table.addColumnButton();
         addComponents();
 
         //ActionListeners
         newVolunteerBtn.addActionListener(e -> {
             owner.showNewPanel(this.addVolunteerPanel);
+        });
+
+        backBtn.addActionListener(e -> {
+            this.owner.showNewPanel(this.owner.getMainMenuPanel());
         });
 
         searchBtn.addActionListener(e -> {

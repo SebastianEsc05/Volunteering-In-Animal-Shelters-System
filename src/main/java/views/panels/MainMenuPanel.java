@@ -40,7 +40,7 @@ public class MainMenuPanel extends JPanel {
 
         //ActionListeners
         appoimentsBtn.addActionListener(e -> {
-            owner.showNewPanel(owner.getAppoimentPanel());
+            owner.showNewPanel(owner.getAppointmentPanel());
         });
 
         sheltersBtn.addActionListener(e -> {

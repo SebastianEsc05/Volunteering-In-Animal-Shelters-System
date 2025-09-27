@@ -2,6 +2,7 @@ package views.panels.entitypanels;
 
 import controllers.ShelterController;
 import interfaces.controller.IShelterController;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddShelterPanel;
@@ -32,13 +33,17 @@ public class SheltersPanel extends EntityPanel {
 
         //Table model
         model = shelterController.getShelterTable();
-        table = new CustomTable(model, owner);
-
+        table = new CustomTable(model, owner, PanelCategory.SHELTERS);
+        table.addColumnButton();
         addComponents();
 
         //ActionListeners
         newShelterBtn.addActionListener(e -> {
             owner.showNewPanel(this.addShelterPanel);
+        });
+
+        backBtn.addActionListener(e -> {
+            this.owner.showNewPanel(this.owner.getMainMenuPanel());
         });
 
         searchBtn.addActionListener(e -> {

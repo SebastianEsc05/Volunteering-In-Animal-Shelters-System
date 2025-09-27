@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IAppointmentDAO {
 
-    void insertAppoiments() throws PersistenceException;
+    void insertAppointments() throws PersistenceException;
 
     boolean create(AppointmentEntity appoimentEntity) throws PersistenceException;
 
@@ -26,6 +26,8 @@ public interface IAppointmentDAO {
     List<AppointmentEntity> getAppointmentsByStatusCanceled() throws PersistenceException;
 
     List<AppointmentEntity> getAppointmentsByStatusCompleted() throws PersistenceException;
+
+    List<AppointmentEntity> getAppointmentsById(int id);
 
     boolean isNotEmpty() throws PersistenceException;
 }

@@ -26,7 +26,7 @@ public class AppointmentController implements IAppointmentController {
 
     @Override
     public void insertAppoiments() throws PersistenceException {
-        appointmentDAO.insertAppoiments();
+        appointmentDAO.insertAppointments();
     }
 
     public boolean addAppoiment(LocalDateTime todayDate, LocalDateTime dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException {

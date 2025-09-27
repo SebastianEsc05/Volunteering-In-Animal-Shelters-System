@@ -48,7 +48,7 @@ public class MainFrame extends JFrame {
         return this.mainMenuPanel;
     }
 
-    public AppointmentsPanel getAppoimentPanel() {
+    public AppointmentsPanel getAppointmentPanel() {
         return this.appoimentPanel;
     }
 

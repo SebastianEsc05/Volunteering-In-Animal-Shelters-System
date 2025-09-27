@@ -13,7 +13,7 @@ import java.util.List;
 public class AppointmentDAO implements IAppointmentDAO {
 
     @Override
-    public void insertAppoiments() throws PersistenceException {
+    public void insertAppointments() throws PersistenceException {
         if (isNotEmpty()) {
             System.out.println("Error: La tabla 'asignaciones' ya tiene datos. No se insertarán datos de ejemplo.\n");
             return;
@@ -339,7 +339,7 @@ public class AppointmentDAO implements IAppointmentDAO {
     }
 
     @Override
-    public List<AppointmentEntity> getAppoimentsById(int id) {
+    public List<AppointmentEntity> getAppointmentsById(int id) {
         String sql = "SELECT * FROM asignaciones WHERE id = ?";
         List<AppointmentEntity> appoiments = new ArrayList<>();
         try (
@@ -366,7 +366,6 @@ public class AppointmentDAO implements IAppointmentDAO {
         return appoiments;
 
     }
-
 
     @Override
     public boolean isNotEmpty() {

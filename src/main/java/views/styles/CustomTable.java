@@ -1,5 +1,6 @@
 package views.styles;
 
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 
 import javax.swing.*;
@@ -9,11 +10,13 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class CustomTable extends JTable {
-    MainFrame owner;
+    private MainFrame owner;
+    private PanelCategory category;
 
-    public CustomTable(TableModel model, MainFrame owner) {
+    public CustomTable(TableModel model , MainFrame owner, PanelCategory category) {
         super(model);
         this.owner = owner;
+        this.category = category;
         configStyle();
 
     }
@@ -73,7 +76,7 @@ public class CustomTable extends JTable {
 
     public void addColumnButton() {
         getColumn("Ver").setCellRenderer(new ButtonRenderer());
-        getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner));
+        getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner, category));
 
     }
 

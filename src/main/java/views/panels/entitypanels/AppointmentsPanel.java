@@ -2,6 +2,7 @@ package views.panels.entitypanels;
 
 import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.addentitypanels.AddAppointmentPanel;
@@ -28,7 +29,7 @@ public class AppointmentsPanel extends EntityPanel {
         super(owner);
         this.appoimentController = new AppointmentController();
         this.addAppointmentPanel = new AddAppointmentPanel(owner);
-//        this.appointmentInfoPanel = new AppointmentInfoPanel();
+//        this.appointmentInfoPanel = new AppointmentInfoPanel(owner);
         this.newAppoimentBtn = new Button("Nueva asignación", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.statusComboBox = new ComboBoxCustom("stateSearch");
         searchField = new TxtFieldPh("Id", 185, 35, 15, 25);
@@ -36,9 +37,8 @@ public class AppointmentsPanel extends EntityPanel {
 
         //Table model
         model = appoimentController.getAppointmentTable();
-        table = new CustomTable(model, owner);
+        table = new CustomTable(model, owner, PanelCategory.APPOINTMENTS);
         table.addColumnButton();
-
         addComponents();
 
         //ActionListeners
@@ -46,7 +46,11 @@ public class AppointmentsPanel extends EntityPanel {
             owner.showNewPanel(this.addAppointmentPanel);
         });
 
-        statusComboBox.addActionListener(e -> {;
+        backBtn.addActionListener(e -> {
+            this.owner.showNewPanel(this.owner.getMainMenuPanel());
+        });
+
+        statusComboBox.addActionListener(e -> {
             actualizarFiltro();
         });
 
@@ -93,7 +97,7 @@ public class AppointmentsPanel extends EntityPanel {
         this.sideBarPanel.add(searchBtn);
 
         //Table Panel
-        table.setPreferredScrollableViewportSize(new Dimension(600, 410));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -131,6 +135,7 @@ public class AppointmentsPanel extends EntityPanel {
                     newModel = appoimentController.getAppointmentTable();
             }
             table.setModel(newModel);
+            table.addColumnButton();
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -138,8 +143,9 @@ public class AppointmentsPanel extends EntityPanel {
     }
 
     public AppointmentInfoPanel getAppointmentInfoPanel() {
-        return this.appointmentInfoPanel;
+        return appointmentInfoPanel;
     }
+
 
     @Override
     protected void paintComponent(Graphics g){

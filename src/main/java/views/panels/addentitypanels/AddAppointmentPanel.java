@@ -82,7 +82,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
 
         //ActionListeners
         backBtn.addActionListener(e -> {
-            this.owner.showNewPanel(this.owner.getAppoimentPanel());
+            this.owner.showNewPanel(this.owner.getAppointmentPanel());
         });
 
         addBtn.addActionListener(e -> addApooiment());
