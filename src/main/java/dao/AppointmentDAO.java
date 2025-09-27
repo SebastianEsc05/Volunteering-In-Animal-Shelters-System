@@ -339,6 +339,36 @@ public class AppointmentDAO implements IAppointmentDAO {
     }
 
     @Override
+    public List<AppointmentEntity> getAppoimentsById(int id) {
+        String sql = "SELECT * FROM asignaciones WHERE id = ?";
+        List<AppointmentEntity> appoiments = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    AppointmentEntity appointmentEntity = new AppointmentEntity();
+                    appointmentEntity.setId(rs.getInt("id"));
+                    appointmentEntity.setComments(rs.getString("observaciones"));
+                    appointmentEntity.setStatus(rs.getString("estado"));
+                    appointmentEntity.setDateBooked(rs.getObject("fecha_de_agenda", LocalDateTime.class));
+                    appointmentEntity.setDateEvent(rs.getObject("fecha_realizacion", LocalDateTime.class));
+                    appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                    appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                    appointmentEntity.setActivity(rs.getString("actividad"));
+                    appoiments.add(appointmentEntity);
+                }
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return appoiments;
+
+    }
+
+
+    @Override
     public boolean isNotEmpty() {
         String sql = "SELECT 1 FROM asignaciones LIMIT 1";
 

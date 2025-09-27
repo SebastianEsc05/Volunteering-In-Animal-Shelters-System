@@ -29,4 +29,6 @@ public interface IAppointmentDAO {
 
     List<AppointmentEntity>  getAppoimentsByStatusCompleted();
 
+    List<AppointmentEntity>  getAppoimentsById(int id);
+
 }

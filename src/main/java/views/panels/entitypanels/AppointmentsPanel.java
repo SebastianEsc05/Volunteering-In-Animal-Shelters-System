@@ -47,6 +47,19 @@ public class AppointmentsPanel extends EntityPanel {
             actualizarFiltro();
         });
 
+        searchBtn.addActionListener(e -> {
+            String idText = searchField.getText().trim();
+            if (!idText.isEmpty()) {
+                try {
+                    int id = Integer.parseInt(idText);
+                    buscarPorId(id);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                actualizarFiltro(); // Si el campo está vacío, restablecer el filtro
+            }
+        });
     }
 
     @Override
@@ -136,6 +149,17 @@ public class AppointmentsPanel extends EntityPanel {
 
     }
 
+    public void buscarPorId(int id) {
+        DefaultTableModel newModel;
+        try {
+            newModel = appoimentController.getAppoimentByIdTable(id);
+            table.setModel(newModel);
+            table.repaint();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+    }
 
 
     @Override
