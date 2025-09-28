@@ -5,6 +5,7 @@ import interfaces.controller.IAppointmentController;
 import views.dialogs.UpdateEntityDialogs.UpdateAppointmentDialog;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
+import views.panels.entitypanels.AppointmentsPanel;
 import views.panels.entitypanels.EntityPanel;
 import views.styles.Button;
 import views.styles.FontUtil;
@@ -70,10 +71,12 @@ public class AppointmentInfoPanel extends EntityPanel {
                     opciones[0]);
             if(ans == JOptionPane.YES_OPTION){
                 JOptionPane.showMessageDialog(null, "Asignacion Eliminada");
-                appoimentController.deleteAppoiment(appointmentId);
+                appointmentController.deleteAppoiment(appointmentId);
                 this.owner.showNewPanel(this.owner.getAppointmentPanel());
             }
-
+            AppointmentsPanel appointmentsPanel = this.owner.getAppointmentPanel();
+            appointmentsPanel.refreshTable();
+            this.owner.showNewPanel(appointmentsPanel);
 
         });
         backBtn.addActionListener(e -> {

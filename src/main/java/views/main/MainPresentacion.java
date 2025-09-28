@@ -8,7 +8,6 @@ import interfaces.controller.IAnimalController;
 import interfaces.controller.IAppointmentController;
 import interfaces.controller.IShelterController;
 import interfaces.controller.IVolunteerController;
-import views.frames.LogInFrame;
 import views.frames.MainFrame;
 import structure.DatabaseInitializer;
 import java.sql.SQLException;
