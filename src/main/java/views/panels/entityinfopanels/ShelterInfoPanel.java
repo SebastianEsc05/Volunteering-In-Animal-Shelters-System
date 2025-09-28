@@ -46,6 +46,33 @@ public class ShelterInfoPanel extends EntityPanel {
         addComponents();
 
         //ActionListeners
+        updateBtn.addActionListener(e -> {
+
+        });
+        deleteBtn.addActionListener(e -> {
+            Object[] opciones = {"Si","Cancelar"};
+
+            int ans = JOptionPane.showOptionDialog(
+                    null,
+                    "Desea eliminar este refugio?",
+                    "Eliminar Refugio",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]
+            );
+
+            if(ans == 0){
+                if(model.getRowCount()>0){
+                    JOptionPane.showMessageDialog(null,"Su refugio no puede ser Eliminado");
+                }else{
+                    JOptionPane.showMessageDialog(null,"Refugio Eliminado");
+                    shelterController.deleteShelter(id);
+                    this.owner.showNewPanel(this.owner.getSheltersPanel());
+                }
+            }
+        });
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getSheltersPanel());
         });
@@ -70,6 +97,9 @@ public class ShelterInfoPanel extends EntityPanel {
             }
         };
 
+        sideBarPanel.add(updateBtn);
+        sideBarPanel.add(deleteBtn);
+        buttonsPanel.add(backBtn);
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
