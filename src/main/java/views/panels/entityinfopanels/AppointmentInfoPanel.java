@@ -69,7 +69,7 @@ public class AppointmentInfoPanel extends EntityPanel {
                     null,
                     opciones,
                     opciones[0]);
-            if(ans == JOptionPane.YES_OPTION){
+            if(ans == 0){
                 JOptionPane.showMessageDialog(null, "Asignacion Eliminada");
                 appointmentController.deleteAppoiment(appointmentId);
                 this.owner.showNewPanel(this.owner.getAppointmentPanel());
