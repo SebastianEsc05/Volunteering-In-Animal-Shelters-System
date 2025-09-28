@@ -51,10 +51,12 @@ public class SheltersPanel extends EntityPanel {
             String searchText = searchField.getText().trim();
             if (searchText.isEmpty()) {
                 table.setModel(shelterController.getShelterTable());
+                table.addColumnButton();
             } else {
                 try {
                     int id = Integer.parseInt(searchText);
                     table.setModel(shelterController.getSheltersByIdTable(id));
+                    table.addColumnButton();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido (número entero).", "ID inválido", JOptionPane.ERROR_MESSAGE);
                 }
