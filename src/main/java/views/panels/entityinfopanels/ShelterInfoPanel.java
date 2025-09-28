@@ -1,9 +1,8 @@
 package views.panels.entityinfopanels;
 
 import controllers.ShelterController;
-import interfaces.controller.IAppointmentController;
 import interfaces.controller.IShelterController;
-import views.dialogs.UpdateEntityDialogs.UpdateShelterDialog;
+import views.dialogs.UpdateEntityDialogs.UpdateShelterPanel;
 import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
@@ -18,7 +17,7 @@ import java.awt.*;
 
 public class ShelterInfoPanel extends EntityPanel {
     private IShelterController shelterController;
-    private UpdateShelterDialog updateShelterDialog;
+    private UpdateShelterPanel updateShelterDialog;
     private JPanel buttonsPanel;
     private JScrollPane scrollPane;
     private Button updateBtn;
@@ -29,7 +28,7 @@ public class ShelterInfoPanel extends EntityPanel {
     public ShelterInfoPanel(MainFrame owner, int id) {
         super(owner);
         this.shelterController = new ShelterController();
-        this.updateShelterDialog = new UpdateShelterDialog();
+        this.updateShelterDialog = new UpdateShelterPanel(owner);
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonsPanel.setPreferredSize(new Dimension(500, 60));

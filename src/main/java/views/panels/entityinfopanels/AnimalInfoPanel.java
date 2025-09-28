@@ -1,17 +1,13 @@
 package views.panels.entityinfopanels;
 
 import controllers.AnimalController;
-import controllers.AppointmentController;
 import interfaces.controller.IAnimalController;
-import interfaces.controller.IAppointmentController;
-import views.dialogs.UpdateEntityDialogs.UpdateAnimalDialog;
-import views.dialogs.UpdateEntityDialogs.UpdateAppointmentDialog;
+import views.dialogs.UpdateEntityDialogs.UpdateAnimalPanel;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.entitypanels.EntityPanel;
 import views.styles.Button;
 import views.styles.FontUtil;
-import views.styles.StatusLabel;
 import views.styles.Style;
 
 import javax.swing.*;
@@ -19,7 +15,7 @@ import java.awt.*;
 
 public class AnimalInfoPanel extends EntityPanel {
     private IAnimalController animalController;
-    private UpdateAnimalDialog updateAnimalDialog;
+    private UpdateAnimalPanel updateAnimalDialog;
     private Button updateBtn;
     private Button deleteBtn;
     private int animalId;
@@ -27,7 +23,7 @@ public class AnimalInfoPanel extends EntityPanel {
     public AnimalInfoPanel(MainFrame owner, int animalId) {
         super(owner);
         animalController = new AnimalController();
-        updateAnimalDialog = new UpdateAnimalDialog();
+        updateAnimalDialog = new UpdateAnimalPanel(owner);
         this.animalId = animalId ;
         updateBtn = new Button("Editar animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
