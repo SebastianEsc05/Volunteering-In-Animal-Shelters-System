@@ -2,6 +2,7 @@ package views.panels.entityinfopanels;
 
 import controllers.ShelterController;
 import interfaces.controller.IShelterController;
+import models.ShelterEntity;
 import views.dialogs.UpdateEntityDialogs.UpdateShelterPanel;
 import views.enums.PanelCategory;
 import views.frames.MainFrame;
@@ -17,8 +18,14 @@ import java.awt.*;
 
 public class ShelterInfoPanel extends EntityPanel {
     private IShelterController shelterController;
+    private ShelterEntity shelterEntity;
     private UpdateShelterPanel updateShelterDialog;
     private JPanel buttonsPanel;
+    private JPanel labelsPanel;
+    private JLabel shelterIdLabel;
+    private JLabel capacityLabel;
+    private JLabel responsibleLabel;
+    private JLabel adressLabel;
     private JScrollPane scrollPane;
     private Button updateBtn;
     private Button deleteBtn;
@@ -28,6 +35,7 @@ public class ShelterInfoPanel extends EntityPanel {
     public ShelterInfoPanel(MainFrame owner, int id) {
         super(owner);
         this.shelterController = new ShelterController();
+        shelterEntity = shelterController.readShelter(id);
         this.updateShelterDialog = new UpdateShelterPanel(owner);
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -95,9 +103,14 @@ public class ShelterInfoPanel extends EntityPanel {
                 g2d.dispose();
             }
         };
+        //Labels Panel
+        setLabels();
+        labelsPanel = new JPanel();
+        labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
+        labelsPanel.setOpaque(false);
+        labelsPanel.add(shelterIdLabel);
+        sideBarPanel.add(labelsPanel);
 
-        sideBarPanel.add(updateBtn);
-        sideBarPanel.add(deleteBtn);
         buttonsPanel.add(backBtn);
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 340));
@@ -109,12 +122,29 @@ public class ShelterInfoPanel extends EntityPanel {
         tablePanel.add(scrollPane);
 
         //East Panel
-        this.eastPanel.add(this.sideBarPanel);
+        eastPanel.add(this.sideBarPanel);
+        eastPanel.add(updateBtn);
+        eastPanel.add(deleteBtn);
         eastPanel.add(Box.createHorizontalGlue());
 
         this.mainPanel.add(this.eastPanel);
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
+    }
+
+    public void setLabels(){
+        //Create labels
+        shelterIdLabel = new JLabel(String.valueOf(shelterEntity.getIdShelter()));
+        capacityLabel = new JLabel(String.valueOf(shelterEntity.getCapacity()));
+        responsibleLabel = new JLabel(shelterEntity.getResponsible());
+        adressLabel = new JLabel(shelterEntity.getLocation());
+
+        //Set Font
+        shelterIdLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        capacityLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        responsibleLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        adressLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+
     }
 
     @Override

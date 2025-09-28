@@ -14,55 +14,6 @@ import java.util.List;
 public class AnimalDAO implements IAnimalDAO {
 
     @Override
-    public void insertAnimals() throws PersistenceException {
-        if (isNotEmpty()) {
-            System.out.println("Error: La tabla 'animales' ya tiene datos. No se insertarán datos de ejemplo.\n");
-            return;
-
-        }
-        int contInserts = 0;
-        String sql = "INSERT INTO animales " +
-                "(nombre, edad, fecha_ingreso, estado_salud, especie, id_refugio) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, "pipi");
-            pstmt.setInt(2, 3);
-            pstmt.setDate(3, java.sql.Date.valueOf("2025-09-01"));
-            pstmt.setString(4, "Saludable");
-            pstmt.setString(5, "Perro");
-            pstmt.setInt(6, 1);
-            pstmt.executeUpdate();
-            contInserts++;
-
-            pstmt.setString(1, "sebastian");
-            pstmt.setInt(2, 2);
-            pstmt.setDate(3, java.sql.Date.valueOf("2025-08-20"));
-            pstmt.setString(4, "Enfermo");
-            pstmt.setString(5, "Gata");
-            pstmt.setInt(6, 2);
-            pstmt.executeUpdate();
-            contInserts++;
-
-            pstmt.setString(1, "manuel");
-            pstmt.setInt(2, 4);
-            pstmt.setDate(3, java.sql.Date.valueOf("2025-07-15"));
-            pstmt.setString(4, "Saludable");
-            pstmt.setString(5, "Perra");
-            pstmt.setInt(6, 1);
-            pstmt.executeUpdate();
-            contInserts++;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        System.out.printf("Se insertaron %d animales.%n", contInserts);
-    }
-
-    @Override
     public AnimalEntity readByHealthSituation(String healthSituation) throws PersistenceException {
         return null;
     }
@@ -109,7 +60,6 @@ public class AnimalDAO implements IAnimalDAO {
                     animalEntity.setId_shelter(rs.getInt("id_refugio"));
                     ;
 
-                    System.out.println("Animal encotrado: " + animalEntity.toString());
                     return animalEntity;
                 }
             }

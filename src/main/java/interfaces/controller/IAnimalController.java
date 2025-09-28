@@ -5,12 +5,10 @@ import models.AnimalEntity;
 
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IAnimalController {
 
-    void insertAnimals() throws PersistenceException;
 
     boolean addAnimal(String name, int age, LocalDate date_entry, String health_situation, String specie, int id_shelter);
 
@@ -22,7 +20,9 @@ public interface IAnimalController {
 
     List<AnimalEntity> readAllAnimals() throws PersistenceException;
 
-    DefaultTableModel getAnimalTable();
+    DefaultTableModel getAnimalsShelterTable();
+
+    DefaultTableModel getAnimalsTable();
 
     DefaultTableModel getAnimalsByIdTable(int id);
 

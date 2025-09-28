@@ -54,7 +54,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         this.componentsPanel.add(this.activityPanel);
         componentsPanel.add(Box.createRigidArea(new Dimension(280, 30)));
         this.componentsPanel.add(textAreascroll);
-        addBtn.setText("Actualizar");
+
         this.buttonsPanel.add(this.addBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(this.componentsPanel);
@@ -88,6 +88,11 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
                         return;
                     }
                 }
+            }else{
+                if (!animalIdText.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "La asignacion no puede involucrar un animal.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
 
             int volunteerId = 0;
@@ -100,8 +105,6 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
             }
 
             String activity = activityTextField.getText();
-
-            boolean animalCheck = animalCheckBox.isSelected();
 
             String comments = commentsTextArea.getText();
             if (activity.isEmpty()) {
@@ -126,13 +129,12 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
                             cal.get(Calendar.DAY_OF_MONTH)
                     );
 
-                    if (!dateBooked.equals(appointmententity.getDateBooked())) {
-                        if (dateBooked.isBefore(todayDate)) {
-                            JOptionPane.showMessageDialog(this,
-                                    "La nueva fecha no puede ser anterior a la fecha actual",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
+                    if (dateBooked.isBefore(todayDate)) {
+                        JOptionPane.showMessageDialog(this,
+                                "La fecha reservada no puede ser anterior a la fecha actual",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        System.out.println(dateBooked + " esta antes de " + todayDate);
+                        return;
                     }
 
                 } catch (Exception e) {
@@ -142,8 +144,8 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
                     return;
                 }
             }
-            LocalDate finalDate = (dateBooked != null) ? dateBooked : appointmententity.getDateBooked();
-            boolean success = appointmentController.updateAppoiment(appointmententity.getId(), comments, statusCombo.getSelectedValue(), appointmententity.getDateBooked(), finalDate, animalId, volunteerId, activity, animalCheck);
+
+            boolean success = appointmentController.updateAppoiment(appointmententity.getId(), comments, statusCombo.getSelectedValue(), appointmententity.getDateBooked(), dateBooked, animalId, volunteerId, activity);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Se ha modificado la asignación.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
@@ -154,6 +156,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         } catch (ControllerException | PersistenceException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
             JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 

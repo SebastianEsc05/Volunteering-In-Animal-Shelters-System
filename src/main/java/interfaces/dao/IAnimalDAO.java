@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IAnimalDAO {
 
-    void insertAnimals() throws PersistenceException;
-
     boolean create(AnimalEntity animalEntity) throws PersistenceException;
 
     AnimalEntity readById(int id) throws PersistenceException;

@@ -18,11 +18,6 @@ public class ShelterController implements IShelterController {
         this.shelterDAO = new ShelterDAO();
     }
 
-    @Override
-    public void insertShelters(){
-        this.shelterDAO.insertShelters();
-    }
-
     public boolean addShelter(String name, String responsible, int capacity, String location) throws ControllerException {
         try{
             if(name == null ){
@@ -148,7 +143,6 @@ public class ShelterController implements IShelterController {
         return model;
 
     }
-
 
     @Override
     public void clieanUpTable() {

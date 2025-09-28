@@ -94,6 +94,10 @@ public class AnimalInfoPanel extends EntityPanel {
         add(this.mainPanel);
     }
 
+    public void setLabels(){
+
+    }
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

@@ -14,50 +14,6 @@ import java.util.List;
 public class ShelterDAO implements IShelterDAO {
 
     @Override
-    public void insertShelters() throws PersistenceException {
-        if (isNotEmpty()) {
-            System.out.println("Error: La tabla 'refugios' ya tiene datos. No se insertarán datos de ejemplo.\n");
-            return;
-
-        }
-        int contInserts = 0;
-        String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            System.out.println("Insertando refugio 1...");
-            pstmt.setString(1, "Refugio California");
-            pstmt.setString(2, "Lucia Gómez");
-            pstmt.setInt(3, 25);
-            pstmt.setString(4, "Los Angeles, CA");
-            pstmt.executeUpdate();
-            contInserts++;
-
-            System.out.println("Insertando refugio 2...");
-            pstmt.setString(1, "Casa Ramirez");
-            pstmt.setString(2, "Gustavo Cerati");
-            pstmt.setInt(3, 28);
-            pstmt.setString(4, "Buenos Aires, Argentina");
-            pstmt.executeUpdate();
-            contInserts++;
-
-            System.out.println("Insertando refugio 3...");
-            pstmt.setString(1, "Refugio La Paz");
-            pstmt.setString(2, "Rocio Guadalupe Diaz");
-            pstmt.setInt(3, 30);
-            pstmt.setString(4, "Madrid, España");
-            pstmt.executeUpdate();
-            contInserts++;
-
-        } catch (SQLException e) {
-            System.out.println("Error al insertar refugios: " + e.getMessage());
-        }
-
-        System.out.printf("Se insertaron %d refugios.%n\n", contInserts);
-    }
-
-    @Override
     public boolean create(ShelterEntity shelterEntity) throws PersistenceException {
         String checkSql = "SELECT COUNT(*) FROM refugios WHERE nombre = ?";
         String sql = "INSERT INTO refugios (nombre, responsable, capacidad, ubicacion) VALUES (?,?,?,?);";

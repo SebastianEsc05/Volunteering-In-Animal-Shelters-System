@@ -26,12 +26,8 @@ public class AnimalController implements IAnimalController {
         this.animalDAO = new AnimalDAO();
     }
 
-    @Override
-    public void insertAnimals() throws PersistenceException {
-        animalDAO.insertAnimals();
-    }
-
     public boolean addAnimal(String name, int age, LocalDate date_entry, String health_situation, String specie, int id_shelter){
+
         if(!checkStatus(health_situation)){
             System.out.println("estado de salud no valido");
             return false;
@@ -53,7 +49,13 @@ public class AnimalController implements IAnimalController {
             System.out.println("no se ha encontrado el refugio");
             return false;
         }
-        AnimalEntity animalEntity = new AnimalEntity(name, age, date_entry, health_situation, specie, id_shelter);
+        AnimalEntity animalEntity = new AnimalEntity();
+        animalEntity.setName(name);
+        animalEntity.setAge(age);
+        animalEntity.setDate_entry(date_entry);
+        animalEntity.setHealth_situation(health_situation);
+        animalEntity.setSpecie(specie);
+        animalEntity.setId_shelter(id_shelter);
         return this.animalDAO.create(animalEntity);
     }
 
@@ -89,8 +91,28 @@ public class AnimalController implements IAnimalController {
     }
 
     @Override
-    public DefaultTableModel getAnimalTable() {
+    public DefaultTableModel getAnimalsShelterTable() {
         String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AnimalEntity> animalList = animalDAO.readAll();
+        for (AnimalEntity a : animalList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getName(),
+                    a.getSpecie(),
+                    a.getHealth_situation(),
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAnimalsTable() {
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -189,7 +211,7 @@ public class AnimalController implements IAnimalController {
     }
 
     boolean checkStatus(String value){
-        Pattern p = Pattern.compile("^(?:saludable|grave|critico)$", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("^(?:Saludable|Enfermo|Recuperacion)$", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(value);
         return m.matches();
     }

@@ -36,6 +36,5 @@ public class AddAnimalPanel extends AddEntityPanel{
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
             }
         };
-
     }
 }

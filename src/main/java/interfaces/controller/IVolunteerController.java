@@ -5,17 +5,16 @@ import models.VolunteerEntity;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IVolunteerController {
 
-    void insertVolunteers() throws PersistenceException;
-
-    boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty);
+    boolean addVolunteer(String name, String phone_number, String email, LocalDate date_birth, String specialty);
 
     VolunteerEntity readVolunteer(int idVolunteer);
 
-    boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty);
+    boolean updateVolunteer(int id, String name, String phone_number, String email, LocalDate date_birth, String specialty);
 
     boolean deleteVolunteer(int idVolunteer);
 

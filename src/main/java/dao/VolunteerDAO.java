@@ -7,61 +7,13 @@ import models.VolunteerEntity;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class VolunteerDAO implements IVolunteerDAO {
-
-    @Override
-    public void insertVolunteers() throws PersistenceException {
-        if (isNotEmpty()) {
-            System.out.println("Error: La tabla 'voluntarios' ya tiene datos. No se insertarán datos de ejemplo.\n");
-            return;
-        }
-
-        int contInserts = 0;
-        String sql = "INSERT INTO voluntarios (nombre, telefono, email, fecha_nacimiento, especialidad) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            System.out.println("Insertando voluntario 1...");
-            pstmt.setString(1, "Ana Gómez");
-            pstmt.setString(2, "5512345678");
-            pstmt.setString(3, "ana.gomez@example.com");
-            pstmt.setDate(4, java.sql.Date.valueOf("1990-05-14"));
-            pstmt.setString(5, "Adiestramiento");
-            pstmt.executeUpdate();
-            contInserts++;
-
-            System.out.println("Insertando voluntario 2...");
-            pstmt.setString(1, "Carlos Pérez");
-            pstmt.setString(2, "5523456789");
-            pstmt.setString(3, "carlos.perez@example.com");
-            pstmt.setDate(4, java.sql.Date.valueOf("1985-09-21"));
-            pstmt.setString(5, "Logística");
-            pstmt.executeUpdate();
-            contInserts++;
-
-            System.out.println("Insertando voluntario 3...");
-            pstmt.setString(1, "María López");
-            pstmt.setString(2, "5534567890");
-            pstmt.setString(3, "maria.lopez@example.com");
-            pstmt.setDate(4, java.sql.Date.valueOf("1992-12-03"));
-            pstmt.setString(5, "Veterinaria");
-            pstmt.executeUpdate();
-            contInserts++;
-
-
-        } catch (SQLException e) {
-            System.out.println("Error al insertar voluntarios: " + e.getMessage());
-        }
-
-        System.out.printf("Se insertaron %d voluntarios.%n", contInserts);
-
-
-    }
 
     @Override
     /**
@@ -78,7 +30,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                 ps.setString(1,volunteerEntity.getName_volunteer());
                 ps.setString(2,volunteerEntity.getPhone_number());
                 ps.setString(3,volunteerEntity.getEmail());
-                ps.setDate(4, volunteerEntity.getDate_birth());
+                ps.setObject(4, volunteerEntity.getDate_birth());
                 ps.setString(5, volunteerEntity.getSpecialty());
                 System.out.println("El voluntario se ha agregado exitosamente");
                 return ps.executeUpdate() > 0;
@@ -110,7 +62,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                         volunteerEntity.setName_volunteer(rs.getString("nombre"));
                         volunteerEntity.setPhone_number(rs.getString("telefono"));
                         volunteerEntity.setEmail(rs.getString("email"));
-                        volunteerEntity.setDate_birth(rs.getDate("fecha_nacimiento"));
+                        volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", LocalDate.class));
                         volunteerEntity.setSpecialty(rs.getString("especialidad"));
                         System.out.println("Voluntario encontrado: " + volunteerEntity.toString());
                         return volunteerEntity;
@@ -136,7 +88,7 @@ public class VolunteerDAO implements IVolunteerDAO {
             ps.setString(1, volunteerEntity.getName_volunteer());
             ps.setString(2, volunteerEntity.getPhone_number());
             ps.setString(3, volunteerEntity.getEmail());
-            ps.setDate(4, volunteerEntity.getDate_birth());
+            ps.setObject(4, volunteerEntity.getDate_birth());
             ps.setString(5, volunteerEntity.getSpecialty());
             ps.setInt(6, volunteerEntity.getId_volunteer());
             System.out.println("Voluntario actualizado con exito");
@@ -192,7 +144,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                 volunteerEntity.setName_volunteer(rs.getString("nombre"));
                 volunteerEntity.setPhone_number(rs.getString("telefono"));
                 volunteerEntity.setEmail(rs.getString("email"));
-                volunteerEntity.setDate_birth(rs.getDate("fecha_nacimiento"));
+                volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", LocalDate.class));
                 volunteerEntity.setSpecialty(rs.getString("especialidad"));
                 volunteers.add(volunteerEntity);
             }
