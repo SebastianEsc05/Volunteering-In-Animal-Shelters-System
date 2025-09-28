@@ -13,41 +13,40 @@ import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AddAppointmentPanel extends AddEntityPanel {
-    private JPanel activityPanel;
-    private FormattedDateField dateField;
-    private TxtFieldPh animalTextField;
-    private TxtFieldPh volunteerTextField;
-    private TxtFieldPh activityTextField;
-    private TextAreaCustom commentsTextArea;
-    private JCheckBox animalCheckBox;
+    protected AppointmentController appointmentController;
+    protected JPanel activityPanel;
+    protected FormattedDateField dateField;
+    protected TxtFieldPh animalTextField;
+    protected TxtFieldPh volunteerTextField;
+    protected TxtFieldPh activityTextField;
+    protected TextAreaCustom commentsTextArea;
+    protected JScrollPane textAreascroll;
+    protected JCheckBox animalCheckBox;
 
     public AddAppointmentPanel(MainFrame owner) {
         super(owner);
-        this.activityPanel = new JPanel();
-        this.activityPanel.setOpaque(false);
-        this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
-        this.activityPanel.setPreferredSize(new Dimension(300, 70));
-        this.dateField = new FormattedDateField();
-
-        this.animalTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
-        this.volunteerTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
-        this.activityTextField = new TxtFieldPh(" ", 200, 30, 15, 15);
-        this.commentsTextArea = new TextAreaCustom(4, 20);
+        appointmentController = new AppointmentController();
+        activityPanel = new JPanel();
+        activityPanel.setOpaque(false);
+        activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        activityPanel.setPreferredSize(new Dimension(300, 70));
+        dateField = new FormattedDateField();
+        animalTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
+        volunteerTextField = new TxtFieldPh("id", 5, 100, 30, 15, 15);
+        activityTextField = new TxtFieldPh(" ", 200, 30, 15, 15);
+        commentsTextArea = new TextAreaCustom(4, 20);
         animalCheckBox = new JCheckBox("Involucra animal");
         animalCheckBox.setFont(FontUtil.loadFont(12, "Inter_Light"));
 
         //Panels
-        this.componentsPanel = new JPanel() {
+        componentsPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -85,7 +84,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
         this.buttonsPanel.setOpaque(false);
         this.buttonsPanel.setPreferredSize(new Dimension(400, 100));
 
-        JScrollPane textAreascroll = new JScrollPane(this.commentsTextArea);
+        textAreascroll = new JScrollPane(this.commentsTextArea);
         textAreascroll.setBorder(null);
         textAreascroll.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -96,8 +95,10 @@ public class AddAppointmentPanel extends AddEntityPanel {
         });
 
         addBtn.addActionListener(e -> addAppointment());
+        addComponents();
+    }
 
-        //Add components
+    public void addComponents(){
         this.componentsPanel.add(this.dateField);
         this.componentsPanel.add(this.animalTextField);
         this.componentsPanel.add(this.volunteerTextField);
@@ -188,8 +189,8 @@ public class AddAppointmentPanel extends AddEntityPanel {
                     return;
                 }
             }
-            AppointmentController appoimentController = new AppointmentController();
-            boolean success = appoimentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments, "pendiente", animalCheck);
+
+            boolean success = appointmentController.addAppoiment(todayDate, dateBooked, animalId, volunteerId, activity, comments, "pendiente", animalCheck);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Asignacion creada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();

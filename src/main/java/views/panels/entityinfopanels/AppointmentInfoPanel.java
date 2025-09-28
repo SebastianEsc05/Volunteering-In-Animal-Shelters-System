@@ -2,7 +2,9 @@ package views.panels.entityinfopanels;
 
 import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
-import views.dialogs.UpdateEntityDialogs.UpdateAppointmentDialog;
+import views.dialogs.UpdateEntityDialogs.UpdateAppointmentPanel;
+import views.dialogs.UpdateEntityDialogs.UpdateEntityDialog;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.entitypanels.AppointmentsPanel;
@@ -19,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 
 public class AppointmentInfoPanel extends EntityPanel {
     private IAppointmentController appointmentController;
-    private UpdateAppointmentDialog updateAppoimentDialog;
+    private UpdateEntityDialog updateEntityDialog;
     private JPanel buttonsPanel;
     private JPanel infoPanel;
     private JLabel headerLabel;
@@ -33,13 +35,11 @@ public class AppointmentInfoPanel extends EntityPanel {
     public AppointmentInfoPanel(MainFrame owner, int id) {
         super(owner);
         appointmentController = new AppointmentController();
-        updateAppoimentDialog = new UpdateAppointmentDialog();
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonsPanel.setPreferredSize(new Dimension(500, 60));
         buttonsPanel.setOpaque(false);
         appointmentId = id;
-
         //Id Header
         headerLabel = new JLabel(String.valueOf(id));
         headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
@@ -56,6 +56,8 @@ public class AppointmentInfoPanel extends EntityPanel {
 
         //ActionListeners
         updateBtn.addActionListener(e -> {
+            updateEntityDialog = new UpdateEntityDialog(owner, PanelCategory.APPOINTMENTS, id);
+
 
         });
 
