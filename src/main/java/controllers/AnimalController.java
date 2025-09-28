@@ -128,6 +128,66 @@ public class AnimalController implements IAnimalController {
         return model;
     }
 
+    @Override
+    public DefaultTableModel getAnimalsByStatusHealthyTable() {
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AnimalEntity> animalList = animalDAO.getAnimalsByStatusHealthyTable();
+        for (AnimalEntity a : animalList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getName(),
+                    a.getSpecie(),
+                    a.getHealth_situation(),
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAnimalsByStatusSickTable() {
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AnimalEntity> animalList = animalDAO.getAnimalsByStatusSickTable();
+        for (AnimalEntity a : animalList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getName(),
+                    a.getSpecie(),
+                    a.getHealth_situation(),
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAnimalsByStatusRecoveringTable() {
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AnimalEntity> animalList = animalDAO.getAnimalsByStatusRecoveringTable();
+        for (AnimalEntity a : animalList) {
+            Object[] row = {
+                    a.getId(),
+                    a.getName(),
+                    a.getSpecie(),
+                    a.getHealth_situation(),
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
     boolean checkStatus(String value){
         Pattern p = Pattern.compile("^(?:saludable|grave|critico)$", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(value);

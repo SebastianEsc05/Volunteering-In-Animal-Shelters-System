@@ -44,6 +44,10 @@ public class AnimalsPanel extends EntityPanel{
 
         });
 
+        healthStatusCombo.addActionListener(e -> {
+            updateFilter();
+        });
+
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
         });
@@ -100,6 +104,32 @@ public class AnimalsPanel extends EntityPanel{
         add(this.mainPanel);
     }
 
+    public void updateFilter(){
+        String selectedHealthStatus = healthStatusCombo.getSelectedValue();
+        DefaultTableModel newModel;
+        try {
+            switch (selectedHealthStatus){
+                case "Todos":
+                newModel = animalController.getAnimalTable();
+                break;
+                case "Saludable":
+                    newModel = animalController.getAnimalsByStatusHealthyTable();
+                    break;
+                case "Enfermo":
+                    newModel = animalController.getAnimalsByStatusSickTable();
+                    break;
+                case "Recuperación":
+                    newModel = animalController.getAnimalsByStatusRecoveringTable();
+                    break;
+                default:
+                    newModel = animalController.getAnimalTable();
+            }
+            table.setModel(newModel);
+            table.addColumnButton();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     protected void paintComponent(Graphics g){

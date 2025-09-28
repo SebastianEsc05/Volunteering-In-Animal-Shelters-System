@@ -23,5 +23,11 @@ public interface IAnimalDAO {
 
     List<AnimalEntity> getAnimalsByIdTable(int id);
 
+    List<AnimalEntity> getAnimalsByStatusHealthyTable();
+
+    List<AnimalEntity> getAnimalsByStatusSickTable();
+
+    List<AnimalEntity> getAnimalsByStatusRecoveringTable();
+
     boolean isNotEmpty();
 }

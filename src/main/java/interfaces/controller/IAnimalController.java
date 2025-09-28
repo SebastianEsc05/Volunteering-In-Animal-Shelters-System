@@ -26,4 +26,11 @@ public interface IAnimalController {
 
     DefaultTableModel getAnimalsByIdTable(int id);
 
+    DefaultTableModel getAnimalsByStatusHealthyTable();
+
+    DefaultTableModel getAnimalsByStatusSickTable();
+
+    DefaultTableModel getAnimalsByStatusRecoveringTable();
+
+
 }

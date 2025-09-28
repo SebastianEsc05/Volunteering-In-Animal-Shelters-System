@@ -50,7 +50,7 @@ public class AppointmentsPanel extends EntityPanel {
         });
 
         statusComboBox.addActionListener(e -> {
-            actualizarFiltro();
+            updateFilter();
         });
 
         searchBtn.addActionListener(e -> {
@@ -140,11 +140,11 @@ public class AppointmentsPanel extends EntityPanel {
         add(this.mainPanel);
     }
 
-    public void actualizarFiltro() {
-        String estado = statusComboBox.getSelectedValue();
+    public void updateFilter() {
+        String status = statusComboBox.getSelectedValue();
         DefaultTableModel newModel;
         try {
-            switch (estado) {
+            switch (status) {
                 case "Todos":
                     newModel = appoimentController.getAppointmentTable();
                     break;
