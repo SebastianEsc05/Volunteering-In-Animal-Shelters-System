@@ -66,7 +66,6 @@ public class AppointmentInfoPanel extends EntityPanel {
         //ActionListeners
         updateBtn.addActionListener(e -> {
             updateEntityDialog = new UpdateEntityDialog(owner, PanelCategory.APPOINTMENTS, id);
-
         });
 
         deleteBtn.addActionListener(e -> {
@@ -98,13 +97,13 @@ public class AppointmentInfoPanel extends EntityPanel {
         //Create labels
         LocalDate date = appointmentEntity.getDateBooked();
         String formatDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        bookedDateLabel = new JLabel("Programada para el: "+formatDate);
-        activityLabel = new JLabel("Actividad: "+appointmentEntity.getActivity());
-        volunteerNameLabel = new JLabel("Voluntario: "+appointmentEntity.getIdVolunteer());
-        animalIdLabel = new JLabel("Id del ainmal: "+appointmentEntity.getIdAnimal());
-        detailsLabel = new JLabel("Detalles: "+appointmentEntity.getComments());
+        bookedDateLabel = new JLabel("Programada para el:          "+formatDate);
+        activityLabel = new JLabel("Actividad:                             "+appointmentEntity.getActivity());
+        volunteerNameLabel = new JLabel("Voluntario:                           "+appointmentEntity.getIdVolunteer());
+        animalIdLabel = new JLabel("Id del ainmal:                       "+appointmentEntity.getIdAnimal());
+        detailsLabel = new JLabel("Detalles:                               "+appointmentEntity.getComments());
 
-        //SetFont
+        //Set Font
         bookedDateLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         activityLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         volunteerNameLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
@@ -211,10 +210,6 @@ public class AppointmentInfoPanel extends EntityPanel {
         int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
-
-//        Font textFont = FontUtil.loadFont(14, "Inter_Light");
-//        g2d.setFont(textFont);
-//        g2d.drawString("Fecha programada para el:", infoPanel.getX(), labelsPanel.getY());
 
     }
 }
