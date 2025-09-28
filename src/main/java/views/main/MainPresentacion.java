@@ -8,7 +8,6 @@ import interfaces.controller.IVolunteerController;
 import views.frames.LogInFrame;
 import views.frames.MainFrame;
 import structure.DatabaseInitializer;
-
 import javax.naming.ldap.Control;
 import java.sql.SQLException;
 import java.time.LocalDate;

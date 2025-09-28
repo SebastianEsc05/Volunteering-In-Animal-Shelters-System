@@ -3,6 +3,7 @@ package views.panels.entityinfopanels;
 import controllers.ShelterController;
 import interfaces.controller.IShelterController;
 import models.ShelterEntity;
+import views.dialogs.UpdateEntityDialogs.UpdateEntityDialog;
 import views.dialogs.UpdateEntityDialogs.UpdateShelterPanel;
 import views.enums.PanelCategory;
 import views.frames.MainFrame;
@@ -19,10 +20,11 @@ import java.awt.*;
 public class ShelterInfoPanel extends EntityPanel {
     private IShelterController shelterController;
     private ShelterEntity shelterEntity;
-    private UpdateShelterPanel updateShelterDialog;
+    private UpdateEntityDialog updateEntityDialog;
     private JPanel buttonsPanel;
     private JPanel labelsPanel;
     private JLabel shelterIdLabel;
+    private JLabel headerLabel;
     private JLabel capacityLabel;
     private JLabel responsibleLabel;
     private JLabel adressLabel;
@@ -36,14 +38,17 @@ public class ShelterInfoPanel extends EntityPanel {
         super(owner);
         this.shelterController = new ShelterController();
         shelterEntity = shelterController.readShelter(id);
-        this.updateShelterDialog = new UpdateShelterPanel(owner);
+        //Buttons Panel
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonsPanel.setPreferredSize(new Dimension(500, 60));
         buttonsPanel.setOpaque(false);
         shelterId = id;
+        //Id Header
+        headerLabel = new JLabel(String.valueOf(id));
+        headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
 
-        updateBtn = new Button("Editar información", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        updateBtn = new Button("Editar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
 
         //Table model
@@ -54,8 +59,9 @@ public class ShelterInfoPanel extends EntityPanel {
 
         //ActionListeners
         updateBtn.addActionListener(e -> {
-
+            updateEntityDialog = new UpdateEntityDialog(owner, PanelCategory.SHELTERS, id);
         });
+
         deleteBtn.addActionListener(e -> {
             Object[] opciones = {"Si","Cancelar"};
 

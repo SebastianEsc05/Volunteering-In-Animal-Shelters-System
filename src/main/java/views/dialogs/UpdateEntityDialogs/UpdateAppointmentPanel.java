@@ -54,7 +54,6 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         this.componentsPanel.add(this.activityPanel);
         componentsPanel.add(Box.createRigidArea(new Dimension(280, 30)));
         this.componentsPanel.add(textAreascroll);
-
         this.buttonsPanel.add(this.addBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(this.componentsPanel);

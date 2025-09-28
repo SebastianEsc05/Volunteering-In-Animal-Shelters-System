@@ -3,6 +3,7 @@ package views.panels.addentitypanels;
 import controllers.ControllerException;
 import controllers.ShelterController;
 import dao.exceptions.PersistenceException;
+import interfaces.controller.IShelterController;
 import models.AppointmentEntity;
 import views.frames.MainFrame;
 import views.panels.entitypanels.SheltersPanel;
@@ -14,15 +15,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AddShelterPanel extends AddEntityPanel{
-
-    private JPanel activityPanel;
-    private TxtFieldPh nameTextField;
-    private TxtFieldPh locationTextField;
-    private TxtFieldPh capacityTextField;
-    private TxtFieldPh managerTextField;
+    protected IShelterController shelterController;
+    protected JPanel activityPanel;
+    protected TxtFieldPh nameTextField;
+    protected TxtFieldPh locationTextField;
+    protected TxtFieldPh capacityTextField;
+    protected TxtFieldPh managerTextField;
 
     public AddShelterPanel(MainFrame owner) {
         super(owner);
+        this.shelterController = new ShelterController();
         this.activityPanel = new JPanel();
         this.activityPanel.setOpaque(false);
         this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
@@ -90,6 +92,18 @@ public class AddShelterPanel extends AddEntityPanel{
 
 
     }
+    public void addComponents(){
+        this.componentsPanel.add(this.nameTextField);
+        this.componentsPanel.add(this.locationTextField);
+        this.componentsPanel.add(this.capacityTextField);
+        this.componentsPanel.add(this.managerTextField);
+        this.buttonsPanel.add(this.addBtn);
+        this.mainPanel.add(Box.createVerticalStrut(110));
+        this.mainPanel.add(this.componentsPanel);
+        this.mainPanel.add(Box.createVerticalStrut(20));
+        this.mainPanel.add(this.buttonsPanel);
+    }
+
 
     public void addShelter() {
         try {

@@ -49,6 +49,7 @@ public class AppointmentInfoPanel extends EntityPanel {
         buttonsPanel.setPreferredSize(new Dimension(500, 60));
         buttonsPanel.setOpaque(false);
         appointmentId = id;
+
         //Id Header
         headerLabel = new JLabel(String.valueOf(id));
         headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
