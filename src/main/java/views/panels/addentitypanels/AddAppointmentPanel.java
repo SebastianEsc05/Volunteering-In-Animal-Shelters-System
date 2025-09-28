@@ -134,6 +134,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
                     return;
                 }
                 animalId = Integer.parseInt(animalIdText);
+
                 if (!animalCheckBox.isSelected()) {
                     JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;

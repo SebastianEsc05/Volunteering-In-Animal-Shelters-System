@@ -27,7 +27,7 @@ public class MainPresentacion {
         shelterController.insertShelters();
         animalController.insertAnimals();
         volunteerController.insertVolunteers();
-        appoimentController.insertAppoiments();
+       // appoimentController.insertAppoiments();
         MainFrame mainFrame = new MainFrame();
     }
 }

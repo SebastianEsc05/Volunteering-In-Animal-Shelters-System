@@ -1,6 +1,8 @@
 package views.panels.addentitypanels;
 
+import controllers.VolunteerController;
 import views.frames.MainFrame;
+import views.panels.entitypanels.VolunteersPanel;
 import views.styles.FontUtil;
 import views.styles.Style;
 import views.styles.textfields.FormattedDateField;
@@ -9,8 +11,13 @@ import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class AddVolunteerPanel extends AddEntityPanel{
+    private VolunteerController volunteerController;
     private JPanel activityPanel;
     private FormattedDateField birthdayField;
     private TxtFieldPh nameTxtField;
@@ -21,15 +28,16 @@ public class AddVolunteerPanel extends AddEntityPanel{
 
     public AddVolunteerPanel(MainFrame owner) {
         super(owner);
+        volunteerController = new VolunteerController();
         this.activityPanel = new JPanel();
         this.activityPanel.setOpaque(false);
         this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
         this.activityPanel.setPreferredSize(new Dimension(300, 70));
         this.birthdayField = new FormattedDateField();
 
-        this.nameTxtField = new TxtFieldPh("Nombre", 5, 100, 30, 15, 15);
-        this.phoneTxtField = new TxtFieldPh("Teléfono", 5, 100, 30, 15, 15);
-        this.emailTxtField = new TxtFieldPh("Email", 5, 100, 30, 15, 15);
+        this.nameTxtField = new TxtFieldPh("Nombre", 50, 100, 30, 15, 15);
+        this.phoneTxtField = new TxtFieldPh("Teléfono", 10, 100, 30, 15, 15);
+        this.emailTxtField = new TxtFieldPh("Email", 50, 100, 30, 15, 15);
         this.specialtyTxtField = new TxtFieldPh("Especialidad", 50, 100, 30, 15, 15);
         specialtyCheckBox = new JCheckBox("¿Tiene especialidad?");
         specialtyCheckBox.setFont(FontUtil.loadFont(12, "Inter_Light"));
@@ -63,17 +71,18 @@ public class AddVolunteerPanel extends AddEntityPanel{
 
         this.birthdayField.setBounds(200, 30, 200, 30);
         this.nameTxtField.setBounds(200, 90, 200, 30);
-        this.phoneTxtField.setBounds(200, 150, 200, 30);
-        this.emailTxtField.setBounds(200, 220, 200, 30);
-        this.specialtyCheckBox.setBounds(200, 280, 200, 30);
+        this.phoneTxtField.setBounds(200, 140, 200, 30);
+        this.emailTxtField.setBounds(200, 200, 200, 30);
+        this.specialtyTxtField.setBounds(200, 260, 200, 30);
+        this.specialtyCheckBox.setBounds(410, 260, 200, 30);
 
         //add components
         this.componentsPanel.add(birthdayField);
         this.componentsPanel.add(nameTxtField);
         this.componentsPanel.add(phoneTxtField);
         this.componentsPanel.add(emailTxtField);
-        this.componentsPanel.add(specialtyCheckBox);
         this.componentsPanel.add(specialtyTxtField);
+        this.componentsPanel.add(specialtyCheckBox);
         this.componentsPanel.add(activityPanel);
         this.buttonsPanel.add(this.backBtn);
         this.buttonsPanel.add(this.addBtn);
@@ -89,8 +98,60 @@ public class AddVolunteerPanel extends AddEntityPanel{
              resetFields();
         });
 
+        addBtn.addActionListener(e -> addVolunteer());
 
 
+
+    }
+    public void addVolunteer(){
+        Date birthday = null;
+        String name = this.nameTxtField.getText().trim();
+        String phone = this.phoneTxtField.getText().trim();
+        String email = this.emailTxtField.getText().trim();
+        String specialty = this.specialtyTxtField.getText().trim();
+
+        if (name.isEmpty() || phone.isEmpty() || email.isEmpty() || specialty.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!phone.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El número de teléfono debe contener solo dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!email.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z]{2,})+$")) {
+            JOptionPane.showMessageDialog(this, "El formato del email es incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        if (birthdayField.getText() != null && !birthdayField.getText().isEmpty()) {
+            try {
+                birthday = Date.valueOf(LocalDate.parse(birthdayField.getText().trim(), DATE_FORMATTER));
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "El formato de la fecha es incorrecto. Use AAAA-MM-DD.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+        }
+
+        boolean success = volunteerController.addVolunteer(name, phone, email, birthday, specialty);
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Voluntario agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            resetFields();
+            VolunteersPanel volunteersPanel = this.owner.getVolunteersPanel();
+            volunteersPanel.refreshTable();
+            this.owner.showNewPanel(volunteersPanel);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al agregar el voluntario. Intente nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     public void resetFields(){
         this.birthdayField.setText("");
@@ -100,6 +161,7 @@ public class AddVolunteerPanel extends AddEntityPanel{
         this.specialtyTxtField.setText("");
         this.specialtyCheckBox.setSelected(false);
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {

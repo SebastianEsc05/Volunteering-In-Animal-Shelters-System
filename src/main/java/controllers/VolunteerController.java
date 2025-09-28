@@ -19,14 +19,9 @@ import java.util.regex.Pattern;
 
 public class VolunteerController implements IVolunteerController{
 
-    /**
-     * The Data Access Object used for all volunteers operations
-     */
+
     private IVolunteerDAO volunteerDAO;
 
-    /**
-     * constructs a new VolunteerController
-     */
     public VolunteerController(){
         this.volunteerDAO = new VolunteerDAO();
     }
@@ -35,17 +30,7 @@ public class VolunteerController implements IVolunteerController{
     public void insertVolunteers() throws PersistenceException {
         this.volunteerDAO.insertVolunteers();
     }
-    
-    /**
-     * creates a new volunteer on database 
-     * @param name
-     * @param phone_number
-     * @param email
-     * @param date_birth
-     * @param specialty
-     * @return
-     * @throws SQLException
-     */
+
     public boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty) {
         if(phone_number == null || !validate_phone_number(phone_number)){
             System.out.println("Voluntario no agregado Telefono invalido");
@@ -80,12 +65,7 @@ public class VolunteerController implements IVolunteerController{
         }
 
     }
-    /**
-     * Read a volunteer by the id on database
-     * @param id
-     * @return
-     * @throws SQLException
-     */
+
     public VolunteerEntity readVolunteer(int id) {
         if(id <= 0){
             return null;
@@ -93,11 +73,7 @@ public class VolunteerController implements IVolunteerController{
         return this.volunteerDAO.readById(id);
 
     }
-    /**
-     * Deletes a volunteer by the id on database
-     * @param id
-     * @return
-     */
+
     public boolean deleteVolunteer(int id) {
         if(id <= 0 ){
             return false;
@@ -105,16 +81,7 @@ public class VolunteerController implements IVolunteerController{
         return this.volunteerDAO.deleteById(id);
     }
 
-    /**
-     * Update a volunteer on database
-     * @param id
-     * @param name
-     * @param phone_number
-     * @param email
-     * @param date_birth
-     * @param specialty
-     * @return
-     */
+
     public boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty){
         if(name == null){
             return false;

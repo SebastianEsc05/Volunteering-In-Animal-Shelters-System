@@ -54,7 +54,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         this.componentsPanel.add(this.activityPanel);
         componentsPanel.add(Box.createRigidArea(new Dimension(280, 30)));
         this.componentsPanel.add(textAreascroll);
-
+        addBtn.setText("Actualizar");
         this.buttonsPanel.add(this.addBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(this.componentsPanel);
@@ -87,11 +87,6 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
                         JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                }
-            }else{
-                if (!animalIdText.isEmpty()){
-                    JOptionPane.showMessageDialog(this, "La asignacion no puede involucrar un animal.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
                 }
             }
 
@@ -131,12 +126,13 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
                             cal.get(Calendar.DAY_OF_MONTH)
                     );
 
-                    if (dateBooked.isBefore(todayDate)) {
-                        JOptionPane.showMessageDialog(this,
-                                "La fecha reservada no puede ser anterior a la fecha actual",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        System.out.println(dateBooked + " esta antes de " + todayDate);
-                        return;
+                    if (!dateBooked.equals(appointmententity.getDateBooked())) {
+                        if (dateBooked.isBefore(todayDate)) {
+                            JOptionPane.showMessageDialog(this,
+                                    "La nueva fecha no puede ser anterior a la fecha actual",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     }
 
                 } catch (Exception e) {
@@ -146,8 +142,8 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
                     return;
                 }
             }
-
-            boolean success = appointmentController.updateAppoiment(appointmententity.getId(), comments, statusCombo.getSelectedValue(), appointmententity.getDateBooked(), dateBooked, animalId, volunteerId, activity);
+            LocalDate finalDate = (dateBooked != null) ? dateBooked : appointmententity.getDateBooked();
+            boolean success = appointmentController.updateAppoiment(appointmententity.getId(), comments, statusCombo.getSelectedValue(), appointmententity.getDateBooked(), finalDate, animalId, volunteerId, activity, animalCheck);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Se ha modificado la asignación.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
