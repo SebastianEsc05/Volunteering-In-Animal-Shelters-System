@@ -38,7 +38,7 @@ public class AppointmentController implements IAppointmentController {
                 }
             }
             if (volunteerId < 0) {
-               return false;
+                return false;
             }
             if (activity == null) {
                 System.out.println("asegurese de proporcionar una actividad");
@@ -64,7 +64,7 @@ public class AppointmentController implements IAppointmentController {
             throw new PersistenceException(ex.getMessage());
         } catch (ControllerException e) {
             throw new RuntimeException(e.getMessage());
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             throw new ControllerException(ex.getMessage());
         }
 
