@@ -24,7 +24,7 @@ public class AnimalInfoPanel extends EntityPanel {
     private Button deleteBtn;
     private int animalId;
 
-    public AnimalInfoPanel(MainFrame owner, int id) {
+    public AnimalInfoPanel(MainFrame owner, int animalId) {
         super(owner);
         animalController = new AnimalController();
         updateAnimalDialog = new UpdateAnimalDialog();
@@ -36,6 +36,25 @@ public class AnimalInfoPanel extends EntityPanel {
         //ActionListeners
         updateBtn.addActionListener(e -> {
 
+        });
+        deleteBtn.addActionListener(e->{
+            Object[] opciones={"Si","Cancelar"};
+            int ans = JOptionPane.showOptionDialog(
+                    null,
+                    "Desea Eliminar al Animal?",
+                    "Eliminar Animal",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]
+            );
+
+            if(ans==0){
+                JOptionPane.showMessageDialog(null,"El animal a sido Eliminado");
+                animalController.deleteAnimal(animalId);
+                this.owner.showNewPanel(this.owner.getAnimalsPanel());
+            }
         });
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAnimalsPanel());
@@ -66,6 +85,8 @@ public class AnimalInfoPanel extends EntityPanel {
                 g2d.dispose();
             }
         };
+        sideBarPanel.add(updateBtn);
+        sideBarPanel.add(deleteBtn);
         tablePanel.add(backBtn);
 
         //East Panel
