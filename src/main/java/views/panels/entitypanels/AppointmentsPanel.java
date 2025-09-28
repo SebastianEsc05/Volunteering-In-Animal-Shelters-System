@@ -63,7 +63,7 @@ public class AppointmentsPanel extends EntityPanel {
                     table.setModel(newModel);
                     table.addColumnButton();
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un Id válido.", "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 // Si el campo de búsqueda está vacío, restablecer la tabla completa
