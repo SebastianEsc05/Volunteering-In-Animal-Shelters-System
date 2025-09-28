@@ -44,6 +44,7 @@ public class SheltersPanel extends EntityPanel {
 
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
+            resetSearchField();
         });
 
         searchBtn.addActionListener(e -> {
@@ -103,6 +104,9 @@ public class SheltersPanel extends EntityPanel {
         table.addColumnButton();
         revalidate();
         repaint();
+    }
+    public void resetSearchField(){
+        searchField.setText("");
     }
 
     @Override

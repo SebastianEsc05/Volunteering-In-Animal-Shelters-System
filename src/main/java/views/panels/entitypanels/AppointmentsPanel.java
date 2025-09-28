@@ -47,6 +47,7 @@ public class AppointmentsPanel extends EntityPanel {
 
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
+            resetSearchField();
         });
 
         statusComboBox.addActionListener(e -> {
@@ -73,7 +74,9 @@ public class AppointmentsPanel extends EntityPanel {
         });
 
     }
-
+    public void resetSearchField(){
+        searchField.setText("");
+    }
     public void refreshTable(){
         table.setModel(appoimentController.getAppointmentTable());
         table.addColumnButton();

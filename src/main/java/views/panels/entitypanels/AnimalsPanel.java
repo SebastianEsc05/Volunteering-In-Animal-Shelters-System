@@ -50,6 +50,7 @@ public class AnimalsPanel extends EntityPanel{
 
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
+            resetSearchField();
         });
 
         searchBtn.addActionListener(e -> {
@@ -131,6 +132,9 @@ public class AnimalsPanel extends EntityPanel{
         }
     }
 
+    public void resetSearchField(){
+        searchField.setText("");
+    }
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

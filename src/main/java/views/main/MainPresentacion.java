@@ -8,13 +8,14 @@ import interfaces.controller.IAnimalController;
 import interfaces.controller.IAppointmentController;
 import interfaces.controller.IShelterController;
 import interfaces.controller.IVolunteerController;
+import views.frames.LogInFrame;
 import views.frames.MainFrame;
 import structure.DatabaseInitializer;
 import java.sql.SQLException;
 
 public class MainPresentacion {
     public static void main(String[] args) throws SQLException {
-  //     LogInFrame logInFrame = new LogInFrame();
+        //LogInFrame logInFrame = new LogInFrame();
         System.out.println("\nCreando la base de datos y tablas correspondientes...");
         DatabaseInitializer databaseInitializer = new DatabaseInitializer();
         IShelterController shelterController = new ShelterController();

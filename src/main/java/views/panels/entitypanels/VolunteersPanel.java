@@ -45,6 +45,7 @@ public class VolunteersPanel extends EntityPanel {
 
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
+            resetSearchField();
         });
 
         searchBtn.addActionListener(e -> {
@@ -122,6 +123,10 @@ public class VolunteersPanel extends EntityPanel {
         this.mainPanel.add(this.tablePanel);
         add(this.mainPanel);
     }
+    public void resetSearchField(){
+        searchField.setText("");
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
