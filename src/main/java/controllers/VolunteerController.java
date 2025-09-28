@@ -26,12 +26,7 @@ public class VolunteerController implements IVolunteerController{
         this.volunteerDAO = new VolunteerDAO();
     }
 
-    @Override
-    public void insertVolunteers() throws PersistenceException {
-        this.volunteerDAO.insertVolunteers();
-    }
-
-    public boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty) {
+    public boolean addVolunteer(String name, String phone_number, String email, LocalDate date_birth, String specialty) {
         if(phone_number == null || !validate_phone_number(phone_number)){
             System.out.println("Voluntario no agregado Telefono invalido");
             return false;
@@ -82,7 +77,7 @@ public class VolunteerController implements IVolunteerController{
     }
 
 
-    public boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty){
+    public boolean updateVolunteer(int id, String name, String phone_number, String email, LocalDate date_birth, String specialty){
         if(name == null){
             return false;
         }
@@ -107,10 +102,6 @@ public class VolunteerController implements IVolunteerController{
      * @return returns a list from selecting all the rows from Volunteers Table on database
      */
     public List<VolunteerEntity> readAllVolunteers(){
-        System.out.println("----------------------------------------------------------------------------------------------------------------------");
-        String formato = "| %-5s | %-15s | %-15s | %-30s | %-19s | %-15s |";
-        System.out.println(String.format(formato, "ID", "NOMBRE", "TELEFONO", "EMAIL", "FECHA DE NACIMIENTO", "ESPECIALIDAD"));
-        System.out.println("----------------------------------------------------------------------------------------------------------------------");
         return this.volunteerDAO.readAll();
 
     }
@@ -123,7 +114,7 @@ public class VolunteerController implements IVolunteerController{
 
         List<VolunteerEntity> volineerList = volunteerDAO.readAll();
         for (VolunteerEntity v : volineerList) {
-            LocalDate birthDate = v.getDate_birth().toLocalDate();
+            LocalDate birthDate = v.getDate_birth();
             LocalDate todayDate = LocalDate.now();
             Object[] row = {
                     v.getId_volunteer(),

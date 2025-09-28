@@ -141,7 +141,7 @@ public class AddVolunteerPanel extends AddEntityPanel{
             }
         }
 
-        boolean success = volunteerController.addVolunteer(name, phone, email, birthday, specialty);
+        boolean success = volunteerController.addVolunteer(name, phone, email, birthday.toLocalDate(), specialty);
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Voluntario agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);

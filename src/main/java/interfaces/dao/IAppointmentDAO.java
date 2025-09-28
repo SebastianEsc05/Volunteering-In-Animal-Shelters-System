@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface IAppointmentDAO {
 
-  //  void insertAppointments() throws PersistenceException;
-
     boolean create(AppointmentEntity appoimentEntity) throws PersistenceException, SQLException;
 
     AppointmentEntity readById(int id) throws PersistenceException;

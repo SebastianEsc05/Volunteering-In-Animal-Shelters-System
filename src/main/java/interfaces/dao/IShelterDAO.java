@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface IShelterDAO {
 
-    void insertShelters() throws PersistenceException;
-
     boolean create(ShelterEntity shelterEntity) throws PersistenceException;
 
     ShelterEntity readById(int id) throws PersistenceException;

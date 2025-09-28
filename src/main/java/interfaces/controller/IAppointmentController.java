@@ -11,13 +11,11 @@ import java.util.List;
 
 public interface IAppointmentController {
 
-    //void insertAppoiments() throws PersistenceException;
-
     boolean addAppoiment(LocalDate todayDate, LocalDate dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException;
 
     AppointmentEntity readAppoiment(int id) throws ControllerException;
 
-    boolean updateAppoiment(int id, String comments, String status, LocalDate date_booked, LocalDate  date_event, Integer id_animal, int id_volunteer, String activity, boolean animalCheck) throws ControllerException;
+    boolean updateAppoiment(int id, String comments, String status, LocalDate date_booked, LocalDate  date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException;
 
     boolean deleteAppoiment(int id) throws ControllerException;
 

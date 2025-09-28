@@ -33,9 +33,8 @@ public class AnimalsPanel extends EntityPanel{
         searchBtn = new Button("Buscar", 100, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //Table model
-        model = animalController.getAnimalTable();
+        model = animalController.getAnimalsTable();
         table = new CustomTable(model, owner, PanelCategory.ANIMALS);
-        table.addColumnButton();
         addComponents();
 
         //ActionListeners
@@ -56,7 +55,7 @@ public class AnimalsPanel extends EntityPanel{
         searchBtn.addActionListener(e -> {
             String searchText = searchField.getText().trim();
             if (searchText.isEmpty()) {
-                table.setModel(animalController.getAnimalTable());
+                table.setModel(animalController.getAnimalsShelterTable());
             } else {
                 try {
                     int id = Integer.parseInt(searchText);
@@ -111,7 +110,7 @@ public class AnimalsPanel extends EntityPanel{
         try {
             switch (selectedHealthStatus){
                 case "Todos":
-                newModel = animalController.getAnimalTable();
+                newModel = animalController.getAnimalsShelterTable();
                 break;
                 case "Saludable":
                     newModel = animalController.getAnimalsByStatusHealthyTable();
@@ -123,10 +122,9 @@ public class AnimalsPanel extends EntityPanel{
                     newModel = animalController.getAnimalsByStatusRecoveringTable();
                     break;
                 default:
-                    newModel = animalController.getAnimalTable();
+                    newModel = animalController.getAnimalsShelterTable();
             }
             table.setModel(newModel);
-            table.addColumnButton();
         }catch (Exception ex){
             ex.printStackTrace();
         }

@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface IShelterController {
 
-    void insertShelters() throws PersistenceException;
-
     boolean addShelter(String name, String responsible, int capacity, String location);
 
     ShelterEntity readShelter(int id);
