@@ -78,6 +78,13 @@ public class VolunteersPanel extends EntityPanel {
         }
     }
 
+    public void refreshTable(){
+        table.setModel(volunteerController.getVolunteerTable());
+        table.addColumnButton();
+        revalidate();
+        repaint();
+    }
+
     @Override
     public void addComponents() {
         //SideBarPanel

@@ -71,7 +71,7 @@ public class DatabaseInitializer {
                     "id_animal INT, " +
                     "id_voluntario INT, " +
                     "actividad VARCHAR(100) NOT NULL, " +
-                    "requiere_animal BOOLEAN NOT NULL, " +
+                    "requiere_animal BOOLEAN, " +
                     "FOREIGN KEY (id_animal) REFERENCES animales(id), " +
                     "FOREIGN KEY (id_voluntario) REFERENCES voluntarios(id))";
             stmt.executeUpdate(sqlAppoimentsTable);
