@@ -21,5 +21,7 @@ public interface IAnimalDAO {
 
     List<AnimalEntity> readAll() throws PersistenceException;
 
+    List<AnimalEntity> getAnimalsByIdTable(int id);
+
     boolean isNotEmpty();
 }

@@ -81,7 +81,7 @@ public class SheltersPanel extends EntityPanel {
         sideBarPanel.add(searchBtn);
 
         //TablePanel
-        table.setPreferredScrollableViewportSize(new Dimension(600, 410));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -126,6 +126,8 @@ public class SheltersPanel extends EntityPanel {
         g2d.setColor(Style.COLOR_BACKGROUND_DARK);
         g2d.setStroke(new BasicStroke(1.5f));
         g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-30), scrollPane.getY()+30);
+
+
 
     }
 }

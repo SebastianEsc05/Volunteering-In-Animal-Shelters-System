@@ -106,7 +106,7 @@ public class VolunteersPanel extends EntityPanel {
         sideBarPanel.add(searchBtn);
 
         //Table Panel
-        table.setPreferredScrollableViewportSize(new Dimension(600, 410));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -137,14 +137,14 @@ public class VolunteersPanel extends EntityPanel {
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
-//        //table border
-//        g2d.setColor(Style.COLOR_BACKGROUND);
-//        g2d.setStroke(new BasicStroke(3));
-//        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
-//        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-//        g2d.setStroke(new BasicStroke(1.5f));
-//        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
-//
+        //table border
+        g2d.setColor(Style.COLOR_BACKGROUND);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
+        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
+        g2d.setStroke(new BasicStroke(1.5f));
+        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-35), scrollPane.getY()+30);
+
 
     }
 }

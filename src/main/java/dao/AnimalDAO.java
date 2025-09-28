@@ -194,6 +194,35 @@ public class AnimalDAO implements IAnimalDAO {
     }
 
     @Override
+    public List<AnimalEntity> getAnimalsByIdTable(int id) {
+        String sql = "SELECT * FROM animales WHERE id = ?";
+        List<AnimalEntity> animals = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    AnimalEntity animalEntity = new AnimalEntity();
+                    animalEntity.setId(rs.getInt("id"));
+                    animalEntity.setName(rs.getString("nombre"));
+                    animalEntity.setAge(rs.getInt("edad"));
+                    animalEntity.setDate_entry(rs.getObject("fecha_ingreso", LocalDate.class));
+                    animalEntity.setHealth_situation(rs.getString("estado_salud"));
+                    animalEntity.setSpecie(rs.getString("especie"));
+                    animalEntity.setId_shelter(rs.getInt("id_refugio"));
+
+                    animals.add(animalEntity);
+                }
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return animals;
+    }
+
+    @Override
     public boolean isNotEmpty() {
         String sql = "SELECT 1 FROM animales LIMIT 1";
 

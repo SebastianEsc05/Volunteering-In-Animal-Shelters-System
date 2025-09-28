@@ -11,6 +11,7 @@ import views.styles.Button;
 import views.styles.textfields.TxtFieldPh;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AnimalsPanel extends EntityPanel{
@@ -29,7 +30,7 @@ public class AnimalsPanel extends EntityPanel{
         this.newAnimalBtn = new Button("Nuevo Animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.healthStatusCombo = new ComboBoxCustom("healthSearch");
         searchField = new TxtFieldPh("Id", 185, 35, 15, 25);
-        searchBtn = new Button("Id", 100, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
+        searchBtn = new Button("Buscar", 100, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_BACK, Style.COLOR_BTN_BACK_HOVER);
 
         //Table model
         model = animalController.getAnimalTable();
@@ -47,6 +48,19 @@ public class AnimalsPanel extends EntityPanel{
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
         });
 
+        searchBtn.addActionListener(e -> {
+            String searchText = searchField.getText().trim();
+            if (searchText.isEmpty()) {
+                table.setModel(animalController.getAnimalTable());
+            } else {
+                try {
+                    int id = Integer.parseInt(searchText);
+                    table.setModel(animalController.getAnimalsByIdTable(id));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido (número entero).", "ID inválido", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 
     @Override
@@ -69,7 +83,7 @@ public class AnimalsPanel extends EntityPanel{
         this.sideBarPanel.add(searchBtn);
 
         //Table Panel
-        table.setPreferredScrollableViewportSize(new Dimension(600, 410));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -86,6 +100,7 @@ public class AnimalsPanel extends EntityPanel{
         add(this.mainPanel);
     }
 
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -100,13 +115,13 @@ public class AnimalsPanel extends EntityPanel{
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
 
-//        //table border
-//        g2d.setColor(Style.COLOR_BACKGROUND);
-//        g2d.setStroke(new BasicStroke(3));
-//        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
-//        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
-//        g2d.setStroke(new BasicStroke(1.5f));
-//        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-30), scrollPane.getY()+30);
+        //table border
+        g2d.setColor(Style.COLOR_BACKGROUND);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(tablePanel.getX()+20, scrollPane.getY()-10, scrollPane.getWidth()+20, sideBarPanel.getHeight()+30, 20, 20);
+        g2d.setColor(Style.COLOR_BACKGROUND_DARK);
+        g2d.setStroke(new BasicStroke(1.5f));
+        g2d.drawLine(tablePanel.getX()+40, scrollPane.getY()+30, tablePanel.getX()+(tablePanel.getWidth()-30), scrollPane.getY()+30);
 
     }
 }

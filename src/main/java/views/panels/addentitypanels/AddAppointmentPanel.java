@@ -213,6 +213,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
         this.animalCheckBox.setSelected(false);
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();

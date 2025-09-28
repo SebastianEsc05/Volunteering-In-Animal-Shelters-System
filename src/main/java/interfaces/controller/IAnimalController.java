@@ -24,4 +24,6 @@ public interface IAnimalController {
 
     DefaultTableModel getAnimalTable();
 
+    DefaultTableModel getAnimalsByIdTable(int id);
+
 }
