@@ -21,15 +21,17 @@ public class AppointmentDAO implements IAppointmentDAO {
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
-            try (PreparedStatement checkAnimalPs = con.prepareStatement(checkAnimalId)) {
-                checkAnimalPs.setInt(1, appointmentEntity.getIdAnimal());
-                try (ResultSet rs = checkAnimalPs.executeQuery()) {
-                    if (rs.next() && rs.getInt(1) == 0) {
-                        System.out.println("El animal con id '" + appointmentEntity.getIdAnimal() + "' no existe.");
-                        throw new PersistenceException("El animal con id '" + appointmentEntity.getIdAnimal() + "' no existe.");
+            if (appointmentEntity.getIdAnimal() != null) {
+                try (PreparedStatement checkAnimalPs = con.prepareStatement(checkAnimalId)) {
+                    checkAnimalPs.setInt(1, appointmentEntity.getIdAnimal());
+                    try (ResultSet rs = checkAnimalPs.executeQuery()) {
+                        if (rs.next() && rs.getInt(1) == 0) {
+                            throw new PersistenceException("El animal con id '" + appointmentEntity.getIdAnimal() + "' no existe.");
+                        }
                     }
                 }
             }
+
             try (PreparedStatement checkVolunteerPs = con.prepareStatement(checkVolunteerId)) {
                 checkVolunteerPs.setInt(1, appointmentEntity.getIdVolunteer());
                 try (ResultSet rs = checkVolunteerPs.executeQuery()) {
@@ -54,9 +56,7 @@ public class AppointmentDAO implements IAppointmentDAO {
                     }
                     ps.setInt(6, appointmentEntity.getIdVolunteer());
                     ps.setString(7, appointmentEntity.getActivity());
-                    if (appointmentEntity.isAnimalCheck()) {
-                        ps.setBoolean(8, appointmentEntity.isAnimalCheck());
-                    }
+                    ps.setBoolean(8, appointmentEntity.isAnimalCheck());
 
                     System.out.println("La asignación se ha agregado exitosamente");
                     return ps.executeUpdate() > 0;

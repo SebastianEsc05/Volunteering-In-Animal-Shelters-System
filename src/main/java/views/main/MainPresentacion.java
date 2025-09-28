@@ -48,7 +48,7 @@ public class MainPresentacion {
         }
         if (animalController.readAllAnimals().isEmpty()) {
             try {
-                animalController.addAnimal("Dash", 5, animalEntryDate, "saludable", "perro", 1);
+                animalController.addAnimal("Dash", 5, animalEntryDate, "Saludable", "perro", 1);
                 System.out.println("Animal insertado\n");
             } catch (ControllerException e) {
                 System.out.printf("Error: " + e.getMessage());

@@ -106,8 +106,6 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
 
             String activity = activityTextField.getText();
 
-            boolean animalCheck = animalCheckBox.isSelected();
-
             String comments = commentsTextArea.getText();
             if (activity.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El campo de actividad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
@@ -158,6 +156,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         } catch (ControllerException | PersistenceException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
             JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 

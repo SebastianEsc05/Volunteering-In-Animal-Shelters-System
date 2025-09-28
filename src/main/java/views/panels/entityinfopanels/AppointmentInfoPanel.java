@@ -2,6 +2,7 @@ package views.panels.entityinfopanels;
 
 import controllers.AppointmentController;
 import interfaces.controller.IAppointmentController;
+import models.AppointmentEntity;
 import views.dialogs.UpdateEntityDialogs.UpdateAppointmentPanel;
 import views.dialogs.UpdateEntityDialogs.UpdateEntityDialog;
 import views.enums.PanelCategory;
@@ -21,12 +22,18 @@ import java.time.format.DateTimeFormatter;
 
 public class AppointmentInfoPanel extends EntityPanel {
     private IAppointmentController appointmentController;
+    private AppointmentEntity appointmentEntity;
     private UpdateEntityDialog updateEntityDialog;
     private JPanel buttonsPanel;
     private JPanel infoPanel;
+    private JPanel labelsPanel;
     private JLabel headerLabel;
     private JLabel dateLabel;
-    private JLabel dateHeader;
+    private JLabel bookedDateLabel;
+    private JLabel activityLabel;
+    private JLabel volunteerNameLabel;
+    private JLabel animalIdLabel;
+    private JLabel detailsLabel;
     private StatusLabel statusLabel;
     private Button updateBtn;
     private Button deleteBtn;
@@ -35,6 +42,8 @@ public class AppointmentInfoPanel extends EntityPanel {
     public AppointmentInfoPanel(MainFrame owner, int id) {
         super(owner);
         appointmentController = new AppointmentController();
+        appointmentEntity = appointmentController.readAppoiment(id);
+        //Buttons Panel
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonsPanel.setPreferredSize(new Dimension(500, 60));
@@ -44,7 +53,7 @@ public class AppointmentInfoPanel extends EntityPanel {
         headerLabel = new JLabel(String.valueOf(id));
         headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
         //Date booked header
-        LocalDate date = appointmentController.readAppoiment(appointmentId).getDateBooked();
+        LocalDate date = appointmentController.readAppoiment(appointmentId).getDateEvent();
         String formatDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         dateLabel = new JLabel(formatDate);
         dateLabel.setFont(FontUtil.loadFont( 16, "Inter_18pt-ExtraLight"));
@@ -57,7 +66,6 @@ public class AppointmentInfoPanel extends EntityPanel {
         //ActionListeners
         updateBtn.addActionListener(e -> {
             updateEntityDialog = new UpdateEntityDialog(owner, PanelCategory.APPOINTMENTS, id);
-
 
         });
 
@@ -84,6 +92,25 @@ public class AppointmentInfoPanel extends EntityPanel {
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAppointmentPanel());
         });
+    }
+
+    public void setLabels(){
+        //Create labels
+        LocalDate date = appointmentEntity.getDateBooked();
+        String formatDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        bookedDateLabel = new JLabel("Programada para el: "+formatDate);
+        activityLabel = new JLabel("Actividad: "+appointmentEntity.getActivity());
+        volunteerNameLabel = new JLabel("Voluntario: "+appointmentEntity.getIdVolunteer());
+        animalIdLabel = new JLabel("Id del ainmal: "+appointmentEntity.getIdAnimal());
+        detailsLabel = new JLabel("Detalles: "+appointmentEntity.getComments());
+
+        //SetFont
+        bookedDateLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        activityLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        volunteerNameLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        animalIdLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        detailsLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+
     }
 
     @Override
@@ -139,6 +166,24 @@ public class AppointmentInfoPanel extends EntityPanel {
         infoPanel.add(dateLabel);
         infoPanel.add(Box.createRigidArea(new Dimension(180, 10)));
         infoPanel.add(statusLabel);
+        infoPanel.add(Box.createRigidArea(new Dimension(500, 30)));
+//        infoPanel.add(Box.createRigidArea(new Dimension(180, 200)));
+
+        //Labels Panel
+        setLabels();
+        labelsPanel = new JPanel();
+        labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
+        labelsPanel.setOpaque(false);
+        labelsPanel.add(bookedDateLabel);
+        labelsPanel.add(Box.createVerticalStrut(10));
+        labelsPanel.add(activityLabel);
+        labelsPanel.add(Box.createVerticalStrut(10));
+        labelsPanel.add(volunteerNameLabel);
+        labelsPanel.add(Box.createVerticalStrut(10));
+        labelsPanel.add(animalIdLabel);
+        labelsPanel.add(Box.createVerticalStrut(10));
+        labelsPanel.add(detailsLabel);
+        infoPanel.add(labelsPanel);
 
         tablePanel.add(buttonsPanel);
         tablePanel.add(infoPanel);
@@ -166,6 +211,10 @@ public class AppointmentInfoPanel extends EntityPanel {
         int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);
         g2d.drawString(tittleText, xTittleText, sideBarPanel.getY()+57);
+
+//        Font textFont = FontUtil.loadFont(14, "Inter_Light");
+//        g2d.setFont(textFont);
+//        g2d.drawString("Fecha programada para el:", infoPanel.getX(), labelsPanel.getY());
 
     }
 }
