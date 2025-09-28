@@ -94,7 +94,7 @@ public class AnimalsPanel extends EntityPanel{
 
         //Ttitle position
         Font tittleFont = FontUtil.loadFont(25, "Inter_Light");
-        String tittleText = "Aniamles";
+        String tittleText = "Animales";
         FontMetrics metricsTittleText = g2d.getFontMetrics(tittleFont);
         int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);
