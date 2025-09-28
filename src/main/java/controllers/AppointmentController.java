@@ -25,10 +25,10 @@ public class AppointmentController implements IAppointmentController {
         this.appointmentDAO = new AppointmentDAO();
     }
 
-    @Override
-    public void insertAppoiments() throws PersistenceException {
-        appointmentDAO.insertAppointments();
-    }
+//    @Override
+//    public void insertAppoiments() throws PersistenceException {
+//        appointmentDAO.insertAppointments();
+//    }
 
     public boolean addAppoiment(LocalDate todayDate, LocalDate dateBooked, Integer animalId, int volunteerId, String activity, String comments, String status, boolean animalCheck) throws ControllerException {
         try {
@@ -78,7 +78,7 @@ public class AppointmentController implements IAppointmentController {
     }
 
     @Override
-    public boolean updateAppoiment(int id, String comments, String status, LocalDate date_booked, LocalDate date_event, Integer id_animal, int id_volunteer, String activity) throws ControllerException {
+    public boolean updateAppoiment(int id, String comments, String status, LocalDate date_booked, LocalDate date_event, Integer id_animal, int id_volunteer, String activity, boolean animalCheck) throws ControllerException {
         if (id < 0) {
             return false;
         }
@@ -100,6 +100,7 @@ public class AppointmentController implements IAppointmentController {
         appointmentEntity.setIdAnimal(id_animal);
         appointmentEntity.setIdVolunteer(id_volunteer);
         appointmentEntity.setActivity(activity);
+        appointmentEntity.setAnimalCheck(animalCheck);;
         return this.appointmentDAO.update(appointmentEntity);
     }
 

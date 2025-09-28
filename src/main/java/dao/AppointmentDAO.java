@@ -13,60 +13,60 @@ import java.util.List;
 
 public class AppointmentDAO implements IAppointmentDAO {
 
-    @Override
-    public void insertAppointments() throws PersistenceException {
-        if (isNotEmpty()) {
-            System.out.println("Error: La tabla 'asignaciones' ya tiene datos. No se insertarán datos de ejemplo.\n");
-            return;
-
-        }
-        int contInserts = 0;
-        String sql = "INSERT INTO asignaciones " +
-                "(observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad, requiere_animal) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, "Chequeo general de salud");
-            pstmt.setString(2, "pendiente");
-            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
-            pstmt.setInt(5, 1);
-            pstmt.setInt(6, 2);
-            pstmt.setString(7, "Revisión médica");
-            pstmt.setBoolean(8, true);
-            pstmt.executeUpdate();
-            contInserts++;
-
-            pstmt.setString(1, "Limpieza del área");
-            pstmt.setString(2, "pendiente");
-            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
-            pstmt.setInt(5, 1);
-            pstmt.setInt(6, 2);
-            pstmt.setString(7, "Limpieza y desinfección");
-            pstmt.setBoolean(8, true);
-            pstmt.executeUpdate();
-            contInserts++;
-
-            pstmt.setString(1, "Paseo matutino");
-            pstmt.setString(2, "pendiente");
-            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
-            pstmt.setInt(5, 1);
-            pstmt.setInt(6, 2);
-            pstmt.setString(7, "Paseo al aire libre");
-            pstmt.setBoolean(8, true);
-            pstmt.executeUpdate();
-            contInserts++;
-
-        } catch (SQLException e) {
-            throw new PersistenceException(e.getMessage());
-        }
-
-        System.out.printf("Se insertaron %d asignaciones.%n", contInserts);
-
-    }
+//    @Override
+//    public void insertAppointments() throws PersistenceException {
+//        if (isNotEmpty()) {
+//            System.out.println("Error: La tabla 'asignaciones' ya tiene datos. No se insertarán datos de ejemplo.\n");
+//            return;
+//
+//        }
+//        int contInserts = 0;
+//        String sql = "INSERT INTO asignaciones " +
+//                "(observaciones, estado, fecha_de_agenda, fecha_realizacion, id_animal, id_voluntario, actividad, requiere_animal) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        try (Connection conn = ConexionDB.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setString(1, "Chequeo general de salud");
+//            pstmt.setString(2, "Pendiente");
+//            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+//            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
+//            pstmt.setInt(5, 1);
+//            pstmt.setInt(6, 2);
+//            pstmt.setString(7, "Revisión médica");
+//            pstmt.setBoolean(8, true);
+//            pstmt.executeUpdate();
+//            contInserts++;
+//
+//            pstmt.setString(1, "Limpieza del área");
+//            pstmt.setString(2, "Pendiente");
+//            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+//            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
+//            pstmt.setInt(5, 1);
+//            pstmt.setInt(6, 2);
+//            pstmt.setString(7, "Limpieza y desinfección");
+//            pstmt.setBoolean(8, true);
+//            pstmt.executeUpdate();
+//            contInserts++;
+//
+//            pstmt.setString(1, "Paseo matutino");
+//            pstmt.setString(2, "Pendiente");
+//            pstmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+//            pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.of(2025, 12, 5, 5, 30)));
+//            pstmt.setInt(5, 1);
+//            pstmt.setInt(6, 2);
+//            pstmt.setString(7, "Paseo al aire libre");
+//            pstmt.setBoolean(8, true);
+//            pstmt.executeUpdate();
+//            contInserts++;
+//
+//        } catch (SQLException e) {
+//            throw new PersistenceException(e.getMessage());
+//        }
+//
+//        System.out.printf("Se insertaron %d asignaciones.%n", contInserts);
+//
+//    }
 
     @Override
     public boolean create(AppointmentEntity appointmentEntity) throws PersistenceException, SQLException {
@@ -159,7 +159,7 @@ public class AppointmentDAO implements IAppointmentDAO {
 
     @Override
     public boolean update(AppointmentEntity appointmentEntity) throws PersistenceException {
-        String sql = "UPDATE asignaciones SET observaciones = ?, estado = ?, fecha_de_agenda = ?, fecha_realizacion = ?, id_animal = ?, id_voluntario = ?, actividad = ? where id = ?";
+        String sql = "UPDATE asignaciones SET observaciones = ?, estado = ?, fecha_de_agenda = ?, fecha_realizacion = ?, id_animal = ?, id_voluntario = ?, actividad = ?, requiere_animal = ? where id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -179,7 +179,8 @@ public class AppointmentDAO implements IAppointmentDAO {
             }
             ps.setInt(6, appointmentEntity.getIdVolunteer());
             ps.setString(7, appointmentEntity.getActivity());
-            ps.setInt(8, appointmentEntity.getId());
+            ps.setBoolean(8, appointmentEntity.isAnimalCheck());
+            ps.setInt(9, appointmentEntity.getId());
             System.out.println("Asignacion actualizado con exito");
             return ps.executeUpdate() > 0;
 

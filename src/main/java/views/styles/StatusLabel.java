@@ -8,8 +8,9 @@ public class StatusLabel extends JLabel {
 
     public StatusLabel(String estado) {
         super("", SwingConstants.CENTER);
-        switch (estado) {
-            case "completada" -> this.status = Status.COMPLETADA;
+        String normalized = estado.toLowerCase();
+        switch (normalized) {
+            case "finalizada" -> this.status = Status.COMPLETADA;
             case "pendiente" -> this.status = Status.PENDIENTE;
             case "cancelada" -> this.status = Status.CANCELADA;
             default -> throw new IllegalArgumentException("Estado no válido: " + estado);
@@ -41,9 +42,9 @@ public class StatusLabel extends JLabel {
 
     //ENUM "status" CLASS
     public enum Status {
-        COMPLETADA("Completada", new Color(33, 150, 243)),
-        PENDIENTE("Pendiente", new Color(244, 209, 34)),
-        CANCELADA("Cancelada", new Color(244, 67, 54));
+        COMPLETADA("finalizada", new Color(33, 150, 243)),
+        PENDIENTE("pendiente", new Color(244, 209, 34)),
+        CANCELADA("cancelada", new Color(244, 67, 54));
 
         private final String texto;
         private final Color color;
