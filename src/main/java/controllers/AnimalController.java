@@ -112,7 +112,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsTable() {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud","Ver"};
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
