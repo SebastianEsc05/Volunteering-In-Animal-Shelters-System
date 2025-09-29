@@ -31,37 +31,34 @@ public class VolunteerController implements IVolunteerController{
 
     @Override
     public boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty) {
-        if(phone_number == null || !validate_phone_number(phone_number)){
-            System.out.println("Voluntario no agregado Telefono invalido");
-            return false;
-        }
-        if(email == null || !validateEmail(email)){
-            System.out.println("Voluntario no agregado email invalido");
-            return  false;
-        }
-        if(phoneExists(phone_number)){
-            System.out.println("Voluntario no agregado, El telefono de este voluntario ya se encuentra registrado");
-            return false;
-        }
-        if(emailExists(email)){
-            System.out.println("Voluntario no agregado, El email de este voluntario ya se encuentra registrado");
-            return false;
-        }
-        if(name == null ){
-            System.out.println("Voluntario no agregado, nombre invalido");
-            return false;
-        }
-        if(date_birth == null){
-            return false;
-        }
-        if(specialty == null)specialty = "";
+        try{
+            if(phone_number == null || !validate_phone_number(phone_number)){
+                System.out.println("Voluntario no agregado Telefono invalido");
+                return false;
+            }
+            if(email == null || !validateEmail(email)){
+                System.out.println("Voluntario no agregado email invalido");
+                return  false;
+            }
+            if(name == null ){
+                System.out.println("Voluntario no agregado, nombre invalido");
+                return false;
+            }
+            if(date_birth == null){
+                return false;
+            }
+            if(specialty == null)specialty = "";
 
-        if(validateEmail(email)&&validate_phone_number(phone_number)){
-            VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
-            return this.volunteerDAO.create(volunteerEntity);
-        }else{
-            return false;
+            if(validateEmail(email)&&validate_phone_number(phone_number)){
+                VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
+                return this.volunteerDAO.create(volunteerEntity);
+            }else{
+                return false;
+            }
+        }catch (PersistenceException ex){
+            throw new PersistenceException(ex.getMessage());
         }
+
     }
 
     public VolunteerEntity readVolunteer(int id) {
@@ -171,6 +168,14 @@ public class VolunteerController implements IVolunteerController{
               model.addRow(row);
         }
         return model;
+    }
+
+    @Override
+    public boolean hasAppointments(int id) {
+        if(id <= 0){
+            return false;
+        }
+        return this.volunteerDAO.hasAppointments(id);
     }
 
     /**

@@ -79,13 +79,33 @@ public class VolunteerInfoPanel extends EntityPanel {
                     opciones[0]
             );
 
-            if(ans == 0){
-                if(model.getRowCount()>0){
-                    JOptionPane.showMessageDialog(null,"Su voluntario no puede ser Eliminado");
-                }else{
-                    JOptionPane.showMessageDialog(null,"voluntario Eliminado");
-                    volunteerController.deleteVolunteer(volunteerId);
-                    this.owner.showNewPanel(this.owner.getVolunteersPanel());
+            if (ans == 0) { // usuario presionó "Si"
+                try {
+                    // Verificar si el voluntario tiene citas antes de eliminar
+                    if (volunteerController.hasAppointments(volunteerId)) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "El voluntario no puede ser eliminado porque tiene citas asignadas.",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    } else {
+                        boolean eliminado = volunteerController.deleteVolunteer(volunteerId);
+                        if (eliminado) {
+                            JOptionPane.showMessageDialog(null, "Voluntario eliminado con éxito");
+                            this.owner.showNewPanel(this.owner.getVolunteersPanel());
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se pudo eliminar el voluntario.");
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Ocurrió un error al intentar eliminar el voluntario.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });

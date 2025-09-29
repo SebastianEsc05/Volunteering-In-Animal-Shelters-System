@@ -23,5 +23,7 @@ public interface IVolunteerDAO {
 
     List<AppointmentEntity> getAppointmentsByVolunteerId(int volunteerId) throws PersistenceException;
 
+    boolean hasAppointments(int id);
+
     boolean isNotEmpty();
 }

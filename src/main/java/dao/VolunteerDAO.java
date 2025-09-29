@@ -17,33 +17,50 @@ import java.util.List;
 public class VolunteerDAO implements IVolunteerDAO {
 
     @Override
-    /**
-     * adds a volunteer entity object into the volunteer Table on a database
-     * @param volunteerEntity
-     */
     public boolean create(VolunteerEntity volunteerEntity) throws PersistenceException {
-
         String sql = "INSERT INTO voluntarios (nombre, telefono, email, fecha_nacimiento, especialidad) VALUES (?,?,?,?,?)";
-            try(
-                    Connection con = ConexionDB.getConnection();
-                    PreparedStatement ps = con.prepareStatement(sql);
-            ){
-                ps.setString(1,volunteerEntity.getName_volunteer());
-                ps.setString(2,volunteerEntity.getPhone_number());
-                ps.setString(3,volunteerEntity.getEmail());
-                ps.setObject(4, volunteerEntity.getDate_birth());
-                ps.setString(5, volunteerEntity.getSpecialty());
-                System.out.println("El voluntario se ha agregado exitosamente");
-                return ps.executeUpdate() > 0;
+        String checkPhone = "SELECT COUNT(*) FROM voluntarios WHERE telefono = ?";
+        String checkEmail = "SELECT COUNT(*) FROM voluntarios WHERE email = ?";
 
-            }catch (SQLException exception){
-                System.out.println("No se ha podido insertar el voluntario");
-                exception.printStackTrace();
-                return false;
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement psInsert = con.prepareStatement(sql);
+                PreparedStatement psCheckPhone = con.prepareStatement(checkPhone);
+                PreparedStatement psCheckEmail = con.prepareStatement(checkEmail)
+        ) {
 
+            psCheckPhone.setString(1, volunteerEntity.getPhone_number());
+            try (ResultSet rs = psCheckPhone.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    throw new PersistenceException("El teléfono ya está en uso, no se puede agregar el voluntario");
+                }
             }
-    }
 
+            psCheckEmail.setString(1, volunteerEntity.getEmail());
+            try (ResultSet rs = psCheckEmail.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    throw new PersistenceException("El correo ya está en uso, no se puede agregar el voluntario");
+                }
+            }
+
+            psInsert.setString(1, volunteerEntity.getName_volunteer());
+            psInsert.setString(2, volunteerEntity.getPhone_number());
+            psInsert.setString(3, volunteerEntity.getEmail());
+            psInsert.setObject(4, volunteerEntity.getDate_birth());
+            psInsert.setString(5, volunteerEntity.getSpecialty());
+
+            System.out.println("El voluntario se ha agregado exitosamente");
+            return psInsert.executeUpdate() > 0;
+
+        } catch (SQLException exception) {
+            System.out.println("No se ha podido insertar el voluntario");
+            exception.printStackTrace();
+            return false;
+
+        } catch (PersistenceException ex) {
+            throw new PersistenceException(ex.getMessage());
+        }
+    }
     /**
      * Find and returns a volunteer by the Unique ID
      * @param id
@@ -106,6 +123,10 @@ public class VolunteerDAO implements IVolunteerDAO {
      */
     @Override
     public boolean deleteById(int id) throws PersistenceException {
+        if(hasAppointments(id)){
+            System.out.println("El voluntario tiene citas asignadas, no se puede eliminar");
+            return false;
+        }
         String sql = "DELETE FROM voluntarios WHERE id = ?";
         try (
                 Connection con = ConexionDB.getConnection();
@@ -211,6 +232,22 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
 
         return appointments;
+    }
+
+    public boolean hasAppointments(int volunteerId) throws PersistenceException {
+        String sql = "SELECT COUNT(*) FROM asignaciones WHERE id_voluntario = ?";
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, volunteerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override

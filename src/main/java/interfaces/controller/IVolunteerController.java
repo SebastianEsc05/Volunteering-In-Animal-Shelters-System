@@ -26,4 +26,6 @@ public interface IVolunteerController {
 
     DefaultTableModel getAppointmentsByVolunteerId(int id);
 
+    boolean hasAppointments(int id );
+
 }
