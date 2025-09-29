@@ -75,6 +75,12 @@ public class CustomTable extends JTable {
         }
     }
 
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return getColumnName(column).equals("Ver");
+    }
+
+
     public void addColumnButton() {
         getColumn("Ver").setCellRenderer(new ButtonRenderer());
         getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner, category));
