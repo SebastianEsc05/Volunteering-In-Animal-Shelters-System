@@ -7,6 +7,7 @@ import models.AnimalEntity;
 import models.AppointmentEntity;
 import views.panels.entityinfopanels.AppointmentInfoPanel;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,13 +34,14 @@ public class AnimalDAO implements IAnimalDAO {
             ps.setString(4, animalEntity.getHealth_situation());
             ps.setString(5, animalEntity.getSpecie());
             ps.setInt(6, animalEntity.getId_shelter());
-
             System.out.println("El Animal se ha agregado exitosamente");
             return ps.executeUpdate() > 0;
         } catch (SQLException exception) {
             System.out.println("No se ha podido insertar el animal");
             exception.printStackTrace();
             return false;
+        }catch(PersistenceException ex){
+            throw new PersistenceException(ex.getMessage());
         }
     }
 
@@ -286,6 +288,33 @@ public class AnimalDAO implements IAnimalDAO {
             throw new RuntimeException("Error al verificar registros de la tabla animales", e);
         }
     }
+
+    public boolean checkShelterCapacity(int idShelter) {
+        String sql = "SELECT r.capacidad, COUNT(a.id) AS ocupados " +
+                "FROM refugios r " +
+                "LEFT JOIN animales a ON r.id = a.refugio_id " +
+                "WHERE r.id = ? " +
+                "GROUP BY r.capacidad";
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)
+        ) {
+            ps.setInt(1, idShelter);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int capacidadMaxima = rs.getInt("capacidad");
+                    int ocupados = rs.getInt("ocupados");
+                    return ocupados < capacidadMaxima;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error verificando capacidad del refugio", e);
+        }
+
+    }
+
 
 
 }

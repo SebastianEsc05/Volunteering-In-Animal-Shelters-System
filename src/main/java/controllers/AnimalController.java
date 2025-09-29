@@ -28,36 +28,40 @@ public class AnimalController implements IAnimalController {
     }
 
     public boolean addAnimal(String name, int age, LocalDate date_entry, String health_situation, String specie, int id_shelter){
+        try{
+            if(!checkStatus(health_situation)){
+                System.out.println("estado de salud no valido");
+                return false;
+            }
+            if(name == null ){
+                System.out.println("El nombre no puede ser nulo");
+                return false;
+            }
+            if(date_entry == null) {
+                System.out.println("la fecha no puede estar vacia");
+                return false;
+            }
+            if(specie == null) {
+                System.out.println("la especie no puede estar vacia");
+                return false;
+            }
 
-        if(!checkStatus(health_situation)){
-            System.out.println("estado de salud no valido");
-            return false;
-        }
-        if(name == null ){
-            System.out.println("El nombre no puede ser nulo");
-            return false;
-        }
-        if(date_entry == null) {
-            System.out.println("la fecha no puede estar vacia");
-            return false;
-        }
-        if(specie == null) {
-            System.out.println("la especie no puede estar vacia");
-            return false;
+            if(!shelterExists(id_shelter)) {
+                System.out.println("no se ha encontrado el refugio");
+                return false;
+            }
+            AnimalEntity animalEntity = new AnimalEntity();
+            animalEntity.setName(name);
+            animalEntity.setAge(age);
+            animalEntity.setDate_entry(date_entry);
+            animalEntity.setHealth_situation(health_situation);
+            animalEntity.setSpecie(specie);
+            animalEntity.setId_shelter(id_shelter);
+            return this.animalDAO.create(animalEntity);
+        }catch(PersistenceException ex){
+            throw new PersistenceException(ex.getMessage());
         }
 
-        if(!shelterExists(id_shelter)) {
-            System.out.println("no se ha encontrado el refugio");
-            return false;
-        }
-        AnimalEntity animalEntity = new AnimalEntity();
-        animalEntity.setName(name);
-        animalEntity.setAge(age);
-        animalEntity.setDate_entry(date_entry);
-        animalEntity.setHealth_situation(health_situation);
-        animalEntity.setSpecie(specie);
-        animalEntity.setId_shelter(id_shelter);
-        return this.animalDAO.create(animalEntity);
     }
 
     public AnimalEntity readAnimal(int id ){
