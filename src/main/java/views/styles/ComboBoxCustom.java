@@ -59,7 +59,7 @@ public class ComboBoxCustom extends JComboBox<String> {
                 setItems(List.of("Todos", "Saludable", "Enfermo", "Recuperación"));
                 break;
             default:
-                setItems(List.of()); // vacío si no coincide
+                setItems(List.of());
         }
     }
 

@@ -133,21 +133,26 @@ public class ShelterInfoPanel extends EntityPanel {
         labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
         labelsPanel.setOpaque(false);
         labelsPanel.add(idLabel);
+
         idLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelsPanel.add(Box.createVerticalStrut(30));
+
         labelsPanel.add(nameLabel);
         nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         labelsPanel.add(Box.createVerticalStrut(30));
         labelsPanel.add(capacityLabel);
+
         capacityLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelsPanel.add(Box.createVerticalStrut(30));
         labelsPanel.add(responsibleLabel);
+
         responsibleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelsPanel.add(Box.createVerticalStrut(30));
         labelsPanel.add(adressLabel);
+
         adressLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         sideBarPanel.add(labelsPanel);
-
 
         buttonsPanel.add(backBtn);
         //Table Panel

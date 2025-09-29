@@ -127,6 +127,28 @@ public class VolunteerInfoPanel extends EntityPanel {
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2d.setColor(Color.black);
 
+                //SideBar tittles position
+                Font sideBarTextFont = FontUtil.loadFont(14, "Inter_Regular");
+                String nameTittle = "Nombre";
+                String phoneTittle = "Teléfono";
+                String emailTittle = "Email";
+                String birthDateTittle = "Fecha de Nacimiento";
+                String specialtyTittle = "Especialidad";
+
+                FontMetrics metricsNameTittle = g2d.getFontMetrics(sideBarTextFont);
+                int xNameTittle = (sideBarPanel.getWidth() - metricsNameTittle.stringWidth(nameTittle)) / 2;
+                int xPhoneTittle = (sideBarPanel.getWidth() - metricsNameTittle.stringWidth(phoneTittle)) / 2;
+                int xEmailTittle = (sideBarPanel.getWidth() - metricsNameTittle.stringWidth(emailTittle)) / 2;
+                int xBirthDateTittle = (sideBarPanel.getWidth() - metricsNameTittle.stringWidth(birthDateTittle)) / 2;
+                int xSpecialtyTittle = (sideBarPanel.getWidth() - metricsNameTittle.stringWidth(specialtyTittle)) / 2;
+                g2d.setFont(sideBarTextFont);
+
+                g2d.drawString(nameTittle, xNameTittle, sideBarPanel.getY()+90);
+                g2d.drawString(phoneTittle, xPhoneTittle, sideBarPanel.getY()+140);
+                g2d.drawString(emailTittle, xEmailTittle, sideBarPanel.getY()+190);
+                g2d.drawString(birthDateTittle, xBirthDateTittle, sideBarPanel.getY()+240);
+                g2d.drawString(specialtyTittle, xSpecialtyTittle, sideBarPanel.getY()+290);
+
                 g2d.dispose();
             }
         };
@@ -136,9 +158,35 @@ public class VolunteerInfoPanel extends EntityPanel {
         labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
         labelsPanel.setOpaque(false);
         labelsPanel.add(volunteerIdlabel);
-        sideBarPanel.add(labelsPanel);
 
+        volunteerIdlabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(35));
+
+        labelsPanel.add(nameLabel);
+        labelsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(phoneLabel);
+
+        phoneLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(emailLabel);
+
+        emailLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(birthDateLabel);
+
+        birthDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(specialtyLabel);
+
+        specialtyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(35));
+
+
+        sideBarPanel.add(labelsPanel);
         buttonsPanel.add(backBtn);
+
         //Table Panel
         table.setPreferredScrollableViewportSize(new Dimension(600, 340));
         scrollPane = new JScrollPane(table);
@@ -164,13 +212,14 @@ public class VolunteerInfoPanel extends EntityPanel {
     public void setLabels(){
         //Create labels
         volunteerIdlabel = new JLabel(String.valueOf(volunteerEntity.getId_volunteer()));
-        nameLabel = new JLabel("Nombre: " + volunteerEntity.getName_volunteer());
-        phoneLabel = new JLabel("Teléfono: " + volunteerEntity.getPhone_number());
-        emailLabel = new JLabel("Email: " + volunteerEntity.getEmail());
-        birthDateLabel = new JLabel("Fecha de Nacimiento: " + volunteerEntity.getDate_birth());
-        specialtyLabel = new JLabel("Especialidad: " + volunteerEntity.getSpecialty());
+        nameLabel = new JLabel(volunteerEntity.getName_volunteer());
+        phoneLabel = new JLabel( volunteerEntity.getPhone_number());
+        emailLabel = new JLabel(volunteerEntity.getEmail());
+        birthDateLabel = new JLabel("" + volunteerEntity.getDate_birth());
+        specialtyLabel = new JLabel(volunteerEntity.getSpecialty());
 
         //set Font
+        volunteerIdlabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         nameLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         phoneLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         emailLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
