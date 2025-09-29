@@ -86,6 +86,7 @@ public class AddShelterPanel extends AddEntityPanel{
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getSheltersPanel());
             resetFields();
+            closePanel();
 
         });
         addBtn.addActionListener(e -> addShelter());
@@ -174,7 +175,12 @@ public class AddShelterPanel extends AddEntityPanel{
         this.capacityTextField.setText("");
         this.managerTextField.setText("");
     }
-
+    public void closePanel(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
+    }
 
     @Override
     protected void paintComponent(Graphics g) {

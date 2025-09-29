@@ -143,6 +143,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
             if (success) {
                 JOptionPane.showMessageDialog(this, "Se ha modificado la asignación.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
+                closePanel();
                 AppointmentsPanel appointmentsPanel = this.owner.getAppointmentPanel();
                 appointmentsPanel.refreshTable();
                 this.owner.showNewPanel(appointmentsPanel);
@@ -154,6 +155,12 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
             JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+    public void closePanel(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
     }
 
     @Override

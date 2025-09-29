@@ -92,6 +92,7 @@ public class AddAppointmentPanel extends AddEntityPanel {
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getAppointmentPanel());
             resetFields();
+            closePanel();
         });
 
         addBtn.addActionListener(e -> addAppointment());
@@ -213,6 +214,13 @@ public class AddAppointmentPanel extends AddEntityPanel {
         this.commentsTextArea.setText("");
         this.dateField.setValue(null);
         this.animalCheckBox.setSelected(false);
+    }
+
+    public void closePanel(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
     }
 
 
