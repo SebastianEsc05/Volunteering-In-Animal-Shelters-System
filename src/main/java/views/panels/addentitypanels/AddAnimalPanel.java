@@ -38,7 +38,7 @@ public class AddAnimalPanel extends AddEntityPanel{
         this.activityPanel.setOpaque(false);
         this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
         this.activityPanel.setPreferredSize(new Dimension(300, 70));
-        this.ageTextField = new TxtFieldPh("Edad", 5, 100, 30, 15, 15);
+        this.ageTextField = new TxtFieldPh("Edad", 2, 100, 30, 15, 15);
         this.nameTextField = new TxtFieldPh("Nombre", 50, 100, 30, 15, 15);
         this.speciesTextField = new TxtFieldPh("Especie", 50, 100, 30, 15, 15);
         this.healthStatusComboBox = new ComboBoxCustom("health");
