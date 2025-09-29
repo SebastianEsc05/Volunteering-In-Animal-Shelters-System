@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface IAnimalController {
 
-
     boolean addAnimal(String name, int age, LocalDate date_entry, String health_situation, String specie, int id_shelter);
 
     AnimalEntity readAnimal(int id) throws PersistenceException;
@@ -31,6 +30,8 @@ public interface IAnimalController {
     DefaultTableModel getAnimalsByStatusSickTable();
 
     DefaultTableModel getAnimalsByStatusRecoveringTable();
+
+    DefaultTableModel getAppoimentsByAnimalId(int id);
 
 
 }

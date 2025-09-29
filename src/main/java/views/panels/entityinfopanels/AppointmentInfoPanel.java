@@ -26,6 +26,7 @@ public class AppointmentInfoPanel extends EntityPanel {
     private UpdateEntityDialog updateEntityDialog;
     private JPanel buttonsPanel;
     private JPanel infoPanel;
+    private JPanel previous;
     private JPanel labelsPanel;
     private JLabel headerLabel;
     private JLabel dateLabel;
@@ -39,10 +40,11 @@ public class AppointmentInfoPanel extends EntityPanel {
     private Button deleteBtn;
     private int appointmentId;
 
-    public AppointmentInfoPanel(MainFrame owner, int id) {
+    public AppointmentInfoPanel(MainFrame owner, int id, JPanel previous) {
         super(owner);
         appointmentController = new AppointmentController();
         appointmentEntity = appointmentController.readAppoiment(id);
+        this.previous = previous;
         //Buttons Panel
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -90,7 +92,7 @@ public class AppointmentInfoPanel extends EntityPanel {
 
         });
         backBtn.addActionListener(e -> {
-            this.owner.showNewPanel(this.owner.getAppointmentPanel());
+            this.owner.showNewPanel(previous);
         });
     }
 
@@ -154,7 +156,6 @@ public class AppointmentInfoPanel extends EntityPanel {
                 g2d.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
                 g2d.setStroke(new BasicStroke(1.5f));
                 g2d.drawLine(25, 45, getWidth()-25, 45);
-
                 g2d.dispose();
             }
         };
@@ -167,7 +168,6 @@ public class AppointmentInfoPanel extends EntityPanel {
         infoPanel.add(Box.createRigidArea(new Dimension(180, 10)));
         infoPanel.add(statusLabel);
         infoPanel.add(Box.createRigidArea(new Dimension(500, 30)));
-//        infoPanel.add(Box.createRigidArea(new Dimension(180, 200)));
 
         //Labels Panel
         setLabels();
@@ -184,7 +184,6 @@ public class AppointmentInfoPanel extends EntityPanel {
         labelsPanel.add(Box.createVerticalStrut(10));
         labelsPanel.add(detailsLabel);
         infoPanel.add(labelsPanel);
-
         tablePanel.add(buttonsPanel);
         tablePanel.add(infoPanel);
 
