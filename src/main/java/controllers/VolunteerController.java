@@ -5,6 +5,7 @@ import dao.VolunteerDAO;
 import dao.exceptions.PersistenceException;
 import interfaces.controller.IVolunteerController;
 import interfaces.dao.IVolunteerDAO;
+import models.AppointmentEntity;
 import models.ShelterEntity;
 import models.VolunteerEntity;
 
@@ -150,6 +151,24 @@ public class VolunteerController implements IVolunteerController{
                         v.getPhone_number(),
                 };
                 model.addRow(row);
+        }
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAppointmentsByVolunteerId(int id) {
+        String[] columns = {"Id", "Fecha", "id_Animal", "Actividad"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AppointmentEntity> appointmentEntityList = volunteerDAO.getAppointmentsByVolunteerId(id);
+        for (AppointmentEntity appointmentEntity : appointmentEntityList) {
+           Object [] row = {
+                   appointmentEntity.getId(),
+                   appointmentEntity.getDateEvent(),
+                   appointmentEntity.getIdAnimal(),
+                   appointmentEntity.getActivity()
+           };
+              model.addRow(row);
         }
         return model;
     }

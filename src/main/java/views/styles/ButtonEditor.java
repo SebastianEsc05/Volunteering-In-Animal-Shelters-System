@@ -37,7 +37,7 @@ public class ButtonEditor extends DefaultCellEditor{
                     case APPOINTMENTS -> owner.showNewPanel(new AppointmentInfoPanel(owner, id));
                     case SHELTERS   -> owner.showNewPanel(new ShelterInfoPanel(owner, id));
                     case ANIMALS    -> owner.showNewPanel(new AnimalInfoPanel(owner, id));
-                    case VOLUNTEERS -> owner.showNewPanel(new VolunteerInfoPanel(owner));
+                    case VOLUNTEERS -> owner.showNewPanel(new VolunteerInfoPanel(owner, id));
                 }
 
             }

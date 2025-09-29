@@ -1,6 +1,7 @@
 package interfaces.dao;
 
 import dao.exceptions.PersistenceException;
+import models.AppointmentEntity;
 import models.VolunteerEntity;
 
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,8 @@ public interface IVolunteerDAO {
     List<VolunteerEntity> readAll() throws PersistenceException;
 
     List<VolunteerEntity> getVooluntersByIdTable(int id);
+
+    List<AppointmentEntity> getAppointmentsByVolunteerId(int volunteerId) throws PersistenceException;
 
     boolean isNotEmpty();
 }

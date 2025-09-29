@@ -38,12 +38,14 @@ public class ShelterInfoPanel extends EntityPanel {
         super(owner);
         this.shelterController = new ShelterController();
         shelterEntity = shelterController.readShelter(id);
+
         //Buttons Panel
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonsPanel.setPreferredSize(new Dimension(500, 60));
         buttonsPanel.setOpaque(false);
         shelterId = id;
+
         //Id Header
         headerLabel = new JLabel(String.valueOf(id));
         headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
@@ -94,7 +96,6 @@ public class ShelterInfoPanel extends EntityPanel {
 
     @Override
     public void addComponents() {
-
         //SideBarPanel
         this.sideBarPanel = new SidebarPanel(){
             @Override

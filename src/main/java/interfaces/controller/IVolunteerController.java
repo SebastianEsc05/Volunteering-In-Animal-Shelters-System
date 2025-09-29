@@ -24,4 +24,6 @@ public interface IVolunteerController {
 
     DefaultTableModel getVooluntersByIdTable(int id);
 
+    DefaultTableModel getAppointmentsByVolunteerId(int id);
+
 }

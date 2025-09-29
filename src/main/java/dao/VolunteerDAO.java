@@ -3,6 +3,7 @@ package dao;
 import config.ConexionDB;
 import dao.exceptions.PersistenceException;
 import interfaces.dao.IVolunteerDAO;
+import models.AppointmentEntity;
 import models.VolunteerEntity;
 
 import javax.swing.table.DefaultTableModel;
@@ -180,6 +181,36 @@ public class VolunteerDAO implements IVolunteerDAO {
         }
 
         return volunteers;
+    }
+
+    @Override
+    public List<AppointmentEntity> getAppointmentsByVolunteerId(int volunteerId) throws PersistenceException {
+        String sql = "SELECT * FROM asignaciones WHERE id_voluntario = ?";
+        List<AppointmentEntity> appointments = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, volunteerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    AppointmentEntity appointmentEntity = new AppointmentEntity();
+                    appointmentEntity.setId(rs.getInt("id"));
+                    appointmentEntity.setComments(rs.getString("observaciones"));
+                    appointmentEntity.setStatus(rs.getString("estado"));
+                    appointmentEntity.setDateBooked(rs.getObject("fecha_realizacion", LocalDate.class));
+                    appointmentEntity.setDateEvent(rs.getObject("fecha_de_agenda", LocalDate.class));
+                    appointmentEntity.setIdAnimal(rs.getInt("id_animal"));
+                    appointmentEntity.setIdVolunteer(rs.getInt("id_voluntario"));
+                    appointmentEntity.setActivity(rs.getString("actividad"));
+                    appointmentEntity.setAnimalCheck(rs.getBoolean("requiere_animal"));
+                    appointments.add(appointmentEntity);
+                }
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return appointments;
     }
 
     @Override

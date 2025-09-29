@@ -82,9 +82,12 @@ public class CustomTable extends JTable {
 
 
     public void addColumnButton() {
-        getColumn("Ver").setCellRenderer(new ButtonRenderer());
-        getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner, category));
-
+        try {
+            getColumn("Ver").setCellRenderer(new ButtonRenderer());
+            getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner, category));
+        } catch (IllegalArgumentException e) {
+            System.out.println("La tabla no tiene columna 'Ver', se omite el botón.");
+        }
     }
 
     @Override
