@@ -85,6 +85,7 @@ public class AddAnimalPanel extends AddEntityPanel{
 
         addBtn.addActionListener(e->{
             addAnimal();
+            closePanel();
         });
         backBtn.addActionListener(e->{
             this.owner.showNewPanel(this.owner.getAnimalsPanel());
@@ -181,6 +182,13 @@ public class AddAnimalPanel extends AddEntityPanel{
         this.commentsTextArea.setText("");
         this.healthStatusComboBox.setSelectedIndex(0);
     }
+    public void closePanel(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
+    }
+
 
 
     @Override
