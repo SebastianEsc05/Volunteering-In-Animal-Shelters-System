@@ -6,6 +6,7 @@ import dao.exceptions.PersistenceException;
 import interfaces.controller.IAnimalController;
 import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
+import models.AppointmentEntity;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
@@ -112,7 +113,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsTable() {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud"};
+        String[] columns = {"Id", "Nombre", "Especie", "Estado de salud"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -132,7 +133,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsByIdTable(int id) {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+        String[] columns = {"Id", "Nombre", "Especie", "Estado de salud", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -152,7 +153,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsByStatusHealthyTable() {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+        String[] columns = {"Id", "Nombre", "Especie", "Estado de salud", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -172,7 +173,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsByStatusSickTable() {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+        String[] columns = {"Id", "Nombre", "Especie", "Estado de salud", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -192,7 +193,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsByStatusRecoveringTable() {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud", "Ver"};
+        String[] columns = {"Id", "Nombre", "Especie", "Estado de salud", "Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -203,6 +204,25 @@ public class AnimalController implements IAnimalController {
                     a.getName(),
                     a.getSpecie(),
                     a.getHealth_situation(),
+            };
+            model.addRow(row);
+        }
+
+        return model;
+    }
+
+    @Override
+    public DefaultTableModel getAppoimentsByAnimalId(int id) {
+        String[] columns = {"Id", "Fecha programada", "Estado", "Ver"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        List<AppointmentEntity> appointmets = animalDAO.getAppoimentsByAnimalId(id);
+        for (AppointmentEntity a : appointmets) {
+            Object[] row = {
+                    a.getId(),
+                    a.getDateBooked(),
+                    a.getStatus(),
             };
             model.addRow(row);
         }

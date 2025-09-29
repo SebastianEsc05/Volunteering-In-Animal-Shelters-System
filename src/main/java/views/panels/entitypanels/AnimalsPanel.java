@@ -34,7 +34,7 @@ public class AnimalsPanel extends EntityPanel{
 
         //Table model
         model = animalController.getAnimalsTable();
-        table = new CustomTable(model, owner, PanelCategory.ANIMALS);
+        table = new CustomTable(model, owner, PanelCategory.ANIMALS, this);
         addComponents();
 
         //ActionListeners

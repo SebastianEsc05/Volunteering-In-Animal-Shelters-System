@@ -10,6 +10,7 @@ import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.entitypanels.EntityPanel;
 import views.styles.Button;
+import views.styles.CustomTable;
 import views.styles.FontUtil;
 import views.styles.Style;
 
@@ -20,8 +21,10 @@ public class AnimalInfoPanel extends EntityPanel {
     private IAnimalController animalController;
     private AnimalEntity animalEntity;
     private UpdateEntityDialog updateAnimalDialog;
+    private JLabel headerLabel;
     private Button updateBtn;
     private Button deleteBtn;
+    private JScrollPane scrollPane;
     private int animalId;
 
     public AnimalInfoPanel(MainFrame owner, int animalId) {
@@ -29,8 +32,18 @@ public class AnimalInfoPanel extends EntityPanel {
         animalController = new AnimalController();
         animalEntity = animalController.readAnimal(animalId);
         this.animalId = animalId ;
+
+        //Header
+        headerLabel = new JLabel("Asignaciones del animal");
+        headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
+
         updateBtn = new Button("Editar animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
+
+        model = animalController.getAppoimentsByAnimalId(animalId);
+        table = new CustomTable(model, owner, PanelCategory.APPOINTMENTS, this);
+        table.addColumnButton();
+
         addComponents();
 
         //ActionListeners
@@ -85,9 +98,20 @@ public class AnimalInfoPanel extends EntityPanel {
                 g2d.dispose();
             }
         };
-        sideBarPanel.add(updateBtn);
-        sideBarPanel.add(deleteBtn);
+
+
+
+        table.setPreferredScrollableViewportSize(new Dimension(600, 340));
+        scrollPane = new JScrollPane(table);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         tablePanel.add(backBtn);
+        tablePanel.add(headerLabel);
+        tablePanel.add(scrollPane);
+        tablePanel.add(Box.createRigidArea(new Dimension(200, 0)));
+        tablePanel.add(updateBtn);
+        tablePanel.add(deleteBtn);
 
         //East Panel
         this.eastPanel.add(this.sideBarPanel);

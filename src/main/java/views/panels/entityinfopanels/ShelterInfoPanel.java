@@ -46,7 +46,7 @@ public class ShelterInfoPanel extends EntityPanel {
         buttonsPanel.setOpaque(false);
         shelterId = id;
 
-        //Id Header
+        //Header
         headerLabel = new JLabel("Animales en refugio");
         headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
 
@@ -55,7 +55,7 @@ public class ShelterInfoPanel extends EntityPanel {
 
         //Table model
         model = shelterController.getAnimalsByShelterIdTable(id);
-        table = new CustomTable(model, owner, PanelCategory.ANIMALS);
+        table = new CustomTable(model, owner, PanelCategory.ANIMALS, this);
         table.addColumnButton();
         addComponents();
 

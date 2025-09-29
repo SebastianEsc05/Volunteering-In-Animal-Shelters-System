@@ -2,6 +2,7 @@ package interfaces.dao;
 
 import dao.exceptions.PersistenceException;
 import models.AnimalEntity;
+import models.AppointmentEntity;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public interface IAnimalDAO {
     List<AnimalEntity> getAnimalsByStatusSickTable();
 
     List<AnimalEntity> getAnimalsByStatusRecoveringTable();
+
+    List<AppointmentEntity> getAppoimentsByAnimalId(int id);
 
     boolean isNotEmpty();
 }

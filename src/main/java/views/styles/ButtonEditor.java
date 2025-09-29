@@ -19,7 +19,7 @@ public class ButtonEditor extends DefaultCellEditor{
     private int currentRow;
     private int id;
 
-    public ButtonEditor(JCheckBox checkBox, MainFrame owner, PanelCategory category) {
+    public ButtonEditor(JCheckBox checkBox, MainFrame owner, PanelCategory category, JPanel previous) {
         super(checkBox);
         this.owner = owner;
         this.category = category;
@@ -34,7 +34,7 @@ public class ButtonEditor extends DefaultCellEditor{
         button.addActionListener(e -> {
             if (isPushed) {
                 switch (category) {
-                    case APPOINTMENTS -> owner.showNewPanel(new AppointmentInfoPanel(owner, id));
+                    case APPOINTMENTS -> owner.showNewPanel(new AppointmentInfoPanel(owner, id, previous));
                     case SHELTERS   -> owner.showNewPanel(new ShelterInfoPanel(owner, id));
                     case ANIMALS    -> owner.showNewPanel(new AnimalInfoPanel(owner, id));
                     case VOLUNTEERS -> owner.showNewPanel(new VolunteerInfoPanel(owner, id));

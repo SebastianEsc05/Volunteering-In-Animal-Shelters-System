@@ -33,7 +33,7 @@ public class SheltersPanel extends EntityPanel {
 
         //Table model
         model = shelterController.getShelterTable();
-        table = new CustomTable(model, owner, PanelCategory.SHELTERS);
+        table = new CustomTable(model, owner, PanelCategory.SHELTERS, this);
         table.addColumnButton();
         addComponents();
 

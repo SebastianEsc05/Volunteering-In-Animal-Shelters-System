@@ -12,11 +12,13 @@ import java.awt.*;
 public class CustomTable extends JTable {
     private MainFrame owner;
     private PanelCategory category;
+    private JPanel previous;
 
-    public CustomTable(TableModel model , MainFrame owner, PanelCategory category) {
+    public CustomTable(TableModel model, MainFrame owner, PanelCategory category, JPanel previous) {
         super(model);
         this.owner = owner;
         this.category = category;
+        this.previous = previous;
         configStyle();
 
     }
@@ -84,14 +86,14 @@ public class CustomTable extends JTable {
     public void addColumnButton() {
         try {
             getColumn("Ver").setCellRenderer(new ButtonRenderer());
-            getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner, category));
+            getColumn("Ver").setCellEditor(new ButtonEditor(new JCheckBox(), owner, category, previous));
         } catch (IllegalArgumentException e) {
-            System.out.println("La tabla no tiene columna 'Ver', se omite el botón.");
+            System.out.println("La tabla no tiene columna 'Ver'.");
         }
     }
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
     }

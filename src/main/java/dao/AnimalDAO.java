@@ -4,6 +4,8 @@ import config.ConexionDB;
 import dao.exceptions.PersistenceException;
 import interfaces.dao.IAnimalDAO;
 import models.AnimalEntity;
+import models.AppointmentEntity;
+import views.panels.entityinfopanels.AppointmentInfoPanel;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -245,6 +247,29 @@ public class AnimalDAO implements IAnimalDAO {
             exception.printStackTrace();
         }
         return animals;
+    }
+
+    @Override
+    public List<AppointmentEntity> getAppoimentsByAnimalId(int id) {
+        String sql = "SELECT * FROM asignaciones WHERE id_animal = ?";
+        List<AppointmentEntity> appointments = new ArrayList<>();
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AppointmentEntity appointmentEntity = new AppointmentEntity();
+                appointmentEntity.setId(rs.getInt("id"));
+                appointmentEntity.setDateBooked(rs.getObject("fecha_realizacion", LocalDate.class));
+                appointmentEntity.setStatus(rs.getString("estado"));
+
+                appointments.add(appointmentEntity);
+            }
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return appointments;
     }
 
     @Override

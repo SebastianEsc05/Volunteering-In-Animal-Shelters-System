@@ -56,7 +56,7 @@ public class VolunteerInfoPanel extends EntityPanel {
 
         //Table model
         model = volunteerController.getAppointmentsByVolunteerId(volunteerId);
-        table = new CustomTable(model, owner, PanelCategory.VOLUNTEERS);
+        table = new CustomTable(model, owner, PanelCategory.VOLUNTEERS, this);
         table.addColumnButton();
         addComponents();
 

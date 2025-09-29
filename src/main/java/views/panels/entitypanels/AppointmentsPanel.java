@@ -36,7 +36,7 @@ public class AppointmentsPanel extends EntityPanel {
 
         //Table model
         model = appoimentController.getAppointmentTable();
-        table = new CustomTable(model, owner, PanelCategory.APPOINTMENTS);
+        table = new CustomTable(model, owner, PanelCategory.APPOINTMENTS, this);
         table.addColumnButton();
         addComponents();
 
