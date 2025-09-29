@@ -20,15 +20,15 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class AddAnimalPanel extends AddEntityPanel{
-    private IAnimalController animalController;
-    private JPanel activityPanel;
-    private TxtFieldPh nameTextField;
-    private TxtFieldPh speciesTextField;
-    private TxtFieldPh shelterTextField;
-    private ComboBoxCustom healthStatusComboBox;
-    private TxtFieldPh ageTextField;
-    private TextAreaCustom commentsTextArea;
-    private JScrollPane textAreaScroll;
+    protected IAnimalController animalController;
+    protected JPanel activityPanel;
+    protected TxtFieldPh nameTextField;
+    protected TxtFieldPh speciesTextField;
+    protected TxtFieldPh shelterTextField;
+    protected ComboBoxCustom healthStatusComboBox;
+    protected TxtFieldPh ageTextField;
+    protected TextAreaCustom commentsTextArea;
+    protected JScrollPane textAreaScroll;
 
 
     public AddAnimalPanel(MainFrame owner) {

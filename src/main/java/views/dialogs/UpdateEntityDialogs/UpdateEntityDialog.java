@@ -37,7 +37,7 @@ public class UpdateEntityDialog extends JDialog {
         switch(category){
             case APPOINTMENTS -> showNewPanel(new UpdateAppointmentPanel(owner, entityId));
             case SHELTERS -> showNewPanel(new UpdateShelterPanel(owner, entityId));
-            case ANIMALS -> showNewPanel(new UpdateAnimalPanel(owner));
+            case ANIMALS -> showNewPanel(new UpdateAnimalPanel(owner, entityId));
             case VOLUNTEERS -> showNewPanel(new UpdateVolunteerPanel(owner));
         }
     }

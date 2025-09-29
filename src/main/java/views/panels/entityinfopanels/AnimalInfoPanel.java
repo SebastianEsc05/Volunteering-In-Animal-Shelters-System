@@ -3,6 +3,8 @@ package views.panels.entityinfopanels;
 import controllers.AnimalController;
 import interfaces.controller.IAnimalController;
 import views.dialogs.UpdateEntityDialogs.UpdateAnimalPanel;
+import views.dialogs.UpdateEntityDialogs.UpdateEntityDialog;
+import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
 import views.panels.entitypanels.EntityPanel;
@@ -15,7 +17,7 @@ import java.awt.*;
 
 public class AnimalInfoPanel extends EntityPanel {
     private IAnimalController animalController;
-    private UpdateAnimalPanel updateAnimalDialog;
+    private UpdateEntityDialog updateAnimalDialog;
     private Button updateBtn;
     private Button deleteBtn;
     private int animalId;
@@ -23,7 +25,7 @@ public class AnimalInfoPanel extends EntityPanel {
     public AnimalInfoPanel(MainFrame owner, int animalId) {
         super(owner);
         animalController = new AnimalController();
-        updateAnimalDialog = new UpdateAnimalPanel(owner);
+
         this.animalId = animalId ;
         updateBtn = new Button("Editar animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
@@ -31,7 +33,7 @@ public class AnimalInfoPanel extends EntityPanel {
 
         //ActionListeners
         updateBtn.addActionListener(e -> {
-
+            updateAnimalDialog = new UpdateEntityDialog(this.owner, PanelCategory.ANIMALS,animalId);
         });
         deleteBtn.addActionListener(e->{
             Object[] opciones={"Si","Cancelar"};
