@@ -125,15 +125,16 @@ public class AddVolunteerPanel extends AddEntityPanel{
             return;
         }
 
-        DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (birthdayField.getText() != null && !birthdayField.getText().isEmpty()) {
             try {
                 birthday = Date.valueOf(LocalDate.parse(birthdayField.getText().trim(), DATE_FORMATTER));
             } catch (DateTimeParseException ex) {
+                System.out.println("Error al parsear la fecha: " + ex.getMessage());
                 JOptionPane.showMessageDialog(
                         this,
-                        "El formato de la fecha es incorrecto. Use dd-MM-yyyy.",
+                        "El formato de la fecha es incorrecto. Use dd/MM/yyyy.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE
                 );
