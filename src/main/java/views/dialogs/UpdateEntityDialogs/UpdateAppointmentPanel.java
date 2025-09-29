@@ -69,27 +69,22 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
             Integer animalId = null;
             String animalIdText = animalTextField.getText().trim();
 
-            if (appointmententity.isAnimalCheck()){
-                if (animalIdText.isEmpty()) {
-                    if (animalCheckBox.isSelected()) {
-                        JOptionPane.showMessageDialog(this, "Debe ingresar un ID de animal si la actividad involucra un animal", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
+            if (animalIdText.isEmpty()) {
+                if (animalCheckBox.isSelected()) {
+                    JOptionPane.showMessageDialog(this, "Debe ingresar un ID de animal si la actividad involucra un animal", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
-                if (!animalIdText.isEmpty()) {
-                    if (!animalIdText.matches("\\d+")) {
-                        JOptionPane.showMessageDialog(this, "El ID de animal debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    animalId = Integer.parseInt(animalIdText);
-                    if (!animalCheckBox.isSelected()) {
-                        JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
+            }
+
+            if (!animalIdText.isEmpty()) {
+                if (!animalIdText.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(this, "El ID de animal debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
-            }else{
-                if (!animalIdText.isEmpty()){
-                    JOptionPane.showMessageDialog(this, "La asignacion no puede involucrar un animal.", "Error", JOptionPane.ERROR_MESSAGE);
+                animalId = Integer.parseInt(animalIdText);
+
+                if (!animalCheckBox.isSelected()) {
+                    JOptionPane.showMessageDialog(this, "El ID de animal se ha proporcionado pero la casilla 'Involucra animal' no está seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -104,7 +99,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
             }
 
             String activity = activityTextField.getText();
-
+            boolean animalCheck = animalCheckBox.isSelected();
             String comments = commentsTextArea.getText();
             if (activity.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El campo de actividad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);

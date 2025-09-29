@@ -118,12 +118,17 @@ public class ShelterDAO implements IShelterDAO {
 
     @Override
     public List<ShelterEntity> readAll() throws PersistenceException {
-        String sql = "SELECT * FROM refugios";
+        String sql = "SELECT r.id, r.nombre, r.responsable, r.capacidad, r.ubicacion, COUNT(a.id) AS animales " +
+                "FROM refugios r " +
+                "LEFT JOIN animales a ON r.id = a.id_refugio " +
+                "GROUP BY r.id, r.nombre, r.responsable, r.capacidad, r.ubicacion";
+
         List<ShelterEntity> shelters = new ArrayList<>();
         try (
                 Connection con = ConexionDB.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 ShelterEntity shelterEntity = new ShelterEntity();
                 shelterEntity.setIdShelter(rs.getInt("id"));
@@ -131,8 +136,10 @@ public class ShelterDAO implements IShelterDAO {
                 shelterEntity.setResponsible(rs.getString("responsable"));
                 shelterEntity.setCapacity(rs.getInt("capacidad"));
                 shelterEntity.setLocation(rs.getString("ubicacion"));
+                shelterEntity.setAnimalCount(rs.getInt("animales"));
                 shelters.add(shelterEntity);
             }
+
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
