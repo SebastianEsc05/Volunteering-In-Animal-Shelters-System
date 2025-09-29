@@ -1,8 +1,12 @@
 package views.panels.addentitypanels;
 
 import controllers.AnimalController;
+import controllers.ControllerException;
+import dao.exceptions.PersistenceException;
 import interfaces.controller.IAnimalController;
 import views.frames.MainFrame;
+import views.panels.entitypanels.AnimalsPanel;
+import views.panels.entitypanels.AppointmentsPanel;
 import views.styles.ComboBoxCustom;
 import views.styles.FontUtil;
 import views.styles.Style;
@@ -13,6 +17,7 @@ import views.styles.textfields.TxtFieldPh;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class AddAnimalPanel extends AddEntityPanel{
     private IAnimalController animalController;
@@ -36,7 +41,7 @@ public class AddAnimalPanel extends AddEntityPanel{
         this.ageTextField = new TxtFieldPh("Edad", 5, 100, 30, 15, 15);
         this.nameTextField = new TxtFieldPh("Nombre", 5, 100, 30, 15, 15);
         this.speciesTextField = new TxtFieldPh("Especie", 5, 100, 30, 15, 15);
-        this.healthStatusComboBox = new ComboBoxCustom("healthSearch");
+        this.healthStatusComboBox = new ComboBoxCustom("health");
         this.shelterTextField = new TxtFieldPh("Refugio", 5, 100, 30, 15, 15);
         this.commentsTextArea = new TextAreaCustom(4,20);
 
@@ -83,7 +88,7 @@ public class AddAnimalPanel extends AddEntityPanel{
         });
         backBtn.addActionListener(e->{
             this.owner.showNewPanel(this.owner.getAnimalsPanel());
-
+            resetFields();
         });
         addComponents();
     }
@@ -114,28 +119,70 @@ public class AddAnimalPanel extends AddEntityPanel{
     }
 
     public void addAnimal(){
+        try{
+        String ageText = ageTextField.getText();
+        if(ageText.isEmpty()){
+            JOptionPane.showMessageDialog(this, "El campo de edad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+
+        }
+        if(!ageText.matches("\\d+")){
+            JOptionPane.showMessageDialog(this, "El campo de edad debe ser un número entero", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int age = Integer.parseInt(ageText);
+        if(age < 0){
+            JOptionPane.showMessageDialog(this, "El campo de edad no puede ser negativo", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String name = nameTextField.getText();
         if (name.isEmpty()){
             JOptionPane.showMessageDialog(this, "El campo de nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         String specie = speciesTextField.getText();
         if(specie.isEmpty()){
             JOptionPane.showMessageDialog(this, "El campo de especie no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         String shelterIDText = shelterTextField.getText().trim();
         if(shelterIDText.isEmpty()){
             JOptionPane.showMessageDialog(this, "El campo de Refugio no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        Integer shelterID = shelterIDText.isEmpty() ? null : Integer.parseInt(shelterIDText.trim());
-        String status = healthStatusComboBox.getSelectedItem().toString();
-        String ageText = ageTextField.getText();
-        if(ageText.isEmpty()){
-            JOptionPane.showMessageDialog(this, "El campo de edad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+        if(!shelterIDText.matches("\\d+")){
+            JOptionPane.showMessageDialog(this, "El campo de Refugio debe ser un número entero", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        Integer age = ageText.isEmpty() ? 0 : Integer.parseInt(ageText.trim());
+        int shelterID = Integer.parseInt(shelterIDText.trim());
+        String status = Objects.requireNonNull(healthStatusComboBox.getSelectedItem()).toString();
 
-        animalController.addAnimal(name,age.intValue(),LocalDate.now(),status,specie,shelterID.intValue());
+
+        boolean success = animalController.addAnimal(name, age,LocalDate.now(),status,specie, shelterID);
+        if(success){
+            JOptionPane.showMessageDialog(this, "Animal agregado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            resetFields();
+            AnimalsPanel animalsPanel = this.owner.getAnimalsPanel();
+            animalsPanel.refreshTable();
+            this.owner.showNewPanel(animalsPanel);
+        }
+        } catch (ControllerException | PersistenceException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
+    public void resetFields(){
+        this.nameTextField.setText("");
+        this.speciesTextField.setText("");
+        this.shelterTextField.setText("");
+        this.ageTextField.setText("");
+        this.commentsTextArea.setText("");
+        this.healthStatusComboBox.setSelectedIndex(0);
+    }
+
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();

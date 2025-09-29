@@ -66,7 +66,6 @@ public class AppointmentsPanel extends EntityPanel {
                     JOptionPane.showMessageDialog(this, "Por favor, ingrese un Id válido.", "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                // Si el campo de búsqueda está vacío, restablecer la tabla completa
                 DefaultTableModel newModel = appoimentController.getAppointmentTable();
                 table.setModel(newModel);
                 table.addColumnButton();
@@ -77,6 +76,7 @@ public class AppointmentsPanel extends EntityPanel {
     public void resetSearchField(){
         searchField.setText("");
     }
+
     public void refreshTable(){
         table.setModel(appoimentController.getAppointmentTable());
         table.addColumnButton();

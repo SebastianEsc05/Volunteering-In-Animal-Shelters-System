@@ -35,6 +35,7 @@ public class AnimalsPanel extends EntityPanel{
         //Table model
         model = animalController.getAnimalsTable();
         table = new CustomTable(model, owner, PanelCategory.ANIMALS);
+        table.addColumnButton();
         addComponents();
 
         //ActionListeners
@@ -54,15 +55,19 @@ public class AnimalsPanel extends EntityPanel{
 
         searchBtn.addActionListener(e -> {
             String searchText = searchField.getText().trim();
-            if (searchText.isEmpty()) {
-                table.setModel(animalController.getAnimalsShelterTable());
-            } else {
+            if (!searchText.isEmpty()) {
                 try {
                     int id = Integer.parseInt(searchText);
-                    table.setModel(animalController.getAnimalsByIdTable(id));
+                    DefaultTableModel newModel = animalController.getAnimalsByIdTable(id);
+                    table.setModel(newModel);
+                    table.addColumnButton();
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido (número entero).", "ID inválido", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un Id válido.", "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                DefaultTableModel newModel = animalController.getAnimalsTable();
+                table.setModel(newModel);
+                table.addColumnButton();
             }
         });
     }
@@ -125,9 +130,17 @@ public class AnimalsPanel extends EntityPanel{
                     newModel = animalController.getAnimalsShelterTable();
             }
             table.setModel(newModel);
+            table.addColumnButton();
         }catch (Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    public void refreshTable(){
+        table.setModel(animalController.getAnimalsTable());
+        table.addColumnButton();
+        revalidate();
+        repaint();
     }
 
     public void resetSearchField(){

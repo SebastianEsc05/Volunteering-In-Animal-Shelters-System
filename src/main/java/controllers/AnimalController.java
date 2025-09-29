@@ -112,7 +112,7 @@ public class AnimalController implements IAnimalController {
 
     @Override
     public DefaultTableModel getAnimalsTable() {
-        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud"};
+        String[] columns = {"Id", "Nombre", "Especie", "Esado de salud","Ver"};
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -211,7 +211,7 @@ public class AnimalController implements IAnimalController {
     }
 
     boolean checkStatus(String value){
-        Pattern p = Pattern.compile("^(?:Saludable|Enfermo|Recuperacion)$", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("^(?:Saludable|Enfermo|Recuperación)$", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(value);
         return m.matches();
     }
