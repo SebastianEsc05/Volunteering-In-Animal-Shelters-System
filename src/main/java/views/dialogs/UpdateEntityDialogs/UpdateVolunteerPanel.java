@@ -10,7 +10,7 @@ import views.styles.FontUtil;
 import views.styles.Style;
 
 import javax.swing.*;
-        import java.awt.*;
+import java.awt.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,32 +24,51 @@ public class UpdateVolunteerPanel extends AddVolunteerPanel {
         activityPanel.setPreferredSize(new Dimension(300, 70));
         componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        String nameTextField = volunteerController.readVolunteer(entityId).getName_volunteer();
-        String phoneTextField = volunteerController.readVolunteer(entityId).getPhone_number();
-        String emailTextField = volunteerController.readVolunteer(entityId).getEmail();
-        String birthDateTextField = volunteerController.readVolunteer(entityId).getDate_birth().toString();
-        String specialtyTextField = volunteerController.readVolunteer(entityId).getSpecialty();
 
-        this.nameTxtField.setText(nameTextField);
-        this.phoneTxtField.setText(phoneTextField);
-        this.emailTxtField.setText(emailTextField);
-        this.birthdayField.setText(birthDateTextField);
-        this.specialtyTxtField.setText(specialtyTextField);
-
+        nameTxtField.setText(volunteerEntity.getName_volunteer());
+        phoneTxtField.setText(volunteerEntity.getPhone_number());
+        emailTxtField.setText(volunteerEntity.getEmail());
+        if (volunteerEntity.getDate_birth() != null) {
+            Date birthDate = volunteerEntity.getDate_birth();
+            DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = birthDate.toLocalDate().format(DATE_FORMATTER);
+            birthdayField.setText(formattedDate);
+        }
+        specialtyTxtField.setText(volunteerEntity.getSpecialty());
+        if (volunteerEntity.getSpecialty() != null && !volunteerEntity.getSpecialty().isEmpty()) {
+            specialtyCheckBox.setSelected(true);
+        } else {
+            specialtyCheckBox.setSelected(false);
+        }
+        this.componentsPanel.setOpaque(false);
+        this.componentsPanel.setLayout(null);
+        this.componentsPanel.setPreferredSize(new Dimension(600, 350));
         this.buttonsPanel.setOpaque(false);
         this.buttonsPanel.setPreferredSize(new Dimension(400, 100));
 
-        this.nameTxtField.setBounds(200, 30, 200, 30);
-        this.phoneTxtField.setBounds(200, 90, 200, 30);
-        this.emailTxtField.setBounds(200, 150, 200, 30);
-        this.birthdayField.setBounds(200, 210, 200, 30);
-        this.specialtyTxtField.setBounds(200, 270, 200, 30);
-        this.specialtyCheckBox.setBounds(200, 310, 200, 30);
+        this.birthdayField.setBounds(200, 30, 200, 30);
+        this.nameTxtField.setBounds(200, 90, 200, 30);
+        this.phoneTxtField.setBounds(200, 140, 200, 30);
+        this.emailTxtField.setBounds(200, 200, 200, 30);
+        this.specialtyTxtField.setBounds(200, 260, 200, 30);
+        this.specialtyCheckBox.setBounds(410, 260, 200, 30);
+
+        //add components
+        this.componentsPanel.add(birthdayField);
+        this.componentsPanel.add(nameTxtField);
+        this.componentsPanel.add(phoneTxtField);
+        this.componentsPanel.add(emailTxtField);
+        this.componentsPanel.add(specialtyTxtField);
+        this.componentsPanel.add(specialtyCheckBox);
+        this.componentsPanel.add(activityPanel);
+        this.buttonsPanel.add(this.backBtn);
+        this.buttonsPanel.add(this.addBtn);
 
         this.mainPanel.add(Box.createVerticalStrut(70));
         this.mainPanel.add(this.componentsPanel);
         this.mainPanel.add(Box.createVerticalStrut(10));
         this.mainPanel.add(this.buttonsPanel);
+        add(this.mainPanel);
 
     }
 
@@ -147,7 +166,7 @@ public class UpdateVolunteerPanel extends AddVolunteerPanel {
 
         //title positioning
         Font tittleFont = FontUtil.loadFont(24, "Inter_Light");
-        String tittleText = "Modificar Asignacion";
+        String tittleText = "Modificar Voluntario";
         FontMetrics metricsTittle = g2d.getFontMetrics(tittleFont);
         int xTittle = (getWidth() - metricsTittle.stringWidth(tittleText)) / 2;
         g2d.setFont(tittleFont);

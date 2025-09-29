@@ -64,6 +64,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         this.activityPanel.add(this.activityTextField);
         this.activityPanel.add(this.animalCheckBox);
         this.componentsPanel.add(this.activityPanel);
+        this.componentsPanel.add(this.commentsTextArea);
         this.componentsPanel.add(textAreascroll);
         this.buttonsPanel.add(this.backBtn);
         this.buttonsPanel.add(this.addBtn);
