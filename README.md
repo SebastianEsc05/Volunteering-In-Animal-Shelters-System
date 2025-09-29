@@ -1,4 +1,5 @@
-# MODELO ENTIDAD RELACION DE LA BASE DE DATOS
+# CARACTERÍSTICAS PRINCIPALES
+
 Este proyecto es una aplicación desarrollada en Java que permite gestionar voluntarios y refugios de animales, 
 facilitando el registro, actualización, asignación y seguimiento de voluntarios dentro de distintos refugios. 
 
