@@ -27,6 +27,7 @@ public class UpdateShelterPanel extends AddShelterPanel {
         String locationTextField = shelterController.readShelter(id).getLocation();
         String capacityTextField = String.valueOf(shelterController.readShelter(id).getCapacity());
         String managerTextField = shelterController.readShelter(id).getResponsible();
+
         this.nameTextField.setText(nameTextField);
         this.locationTextField.setText(locationTextField);
         this.capacityTextField.setText(capacityTextField);

@@ -28,7 +28,7 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         appointmententity = appointmentController.readAppoiment(id);
         statusCombo = new ComboBoxCustom("state");
         statusCombo.setSelectedItem(appointmententity.getStatus());
-        activityPanel.setPreferredSize(new Dimension(300, 40));
+        activityPanel.setPreferredSize(new Dimension(300, 70));
         componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         //Set texts
@@ -38,28 +38,41 @@ public class UpdateAppointmentPanel extends AddAppointmentPanel {
         animalTextField.setText(appointmententity.getIdAnimal().toString());
         volunteerTextField.setText(String.valueOf(appointmententity.getIdVolunteer()));
         activityTextField.setText(appointmententity.getActivity());
+        animalCheckBox.setSelected(appointmententity.isAnimalCheck());
         commentsTextArea.setText(appointmententity.getComments());
+
+        this.componentsPanel.setOpaque(false);
+        this.componentsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 60));
+        this.componentsPanel.setPreferredSize(new Dimension(366, 400));
+        this.componentsPanel.setMaximumSize(new Dimension(366, 400));
+        this.buttonsPanel.setOpaque(false);
+        this.buttonsPanel.setPreferredSize(new Dimension(400, 100));
+
+        textAreascroll = new JScrollPane(this.commentsTextArea);
+        textAreascroll.setBorder(null);
+        textAreascroll.setAlignmentX(LEFT_ALIGNMENT);
         this.componentsPanel.add(statusCombo);
+
 
     }
 
     @Override
     public void addComponents() {
-        componentsPanel.add(Box.createRigidArea(new Dimension(280, 40)));
         this.componentsPanel.add(this.dateField);
         this.componentsPanel.add(this.animalTextField);
         this.componentsPanel.add(this.volunteerTextField);
         this.activityPanel.add(this.activityTextField);
-        componentsPanel.add(Box.createRigidArea(new Dimension(280, 30)));
+        this.activityPanel.add(this.animalCheckBox);
         this.componentsPanel.add(this.activityPanel);
-        componentsPanel.add(Box.createRigidArea(new Dimension(280, 30)));
         this.componentsPanel.add(textAreascroll);
+        this.buttonsPanel.add(this.backBtn);
         this.buttonsPanel.add(this.addBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(this.componentsPanel);
         this.mainPanel.add(Box.createVerticalStrut(10));
         this.mainPanel.add(this.buttonsPanel);
         add(this.mainPanel);
+
     }
 
     @Override

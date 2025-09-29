@@ -92,6 +92,7 @@ public class AddShelterPanel extends AddEntityPanel{
         addBtn.addActionListener(e -> addShelter());
 
 
+
     }
     public void addComponents(){
         this.componentsPanel.add(this.nameTextField);

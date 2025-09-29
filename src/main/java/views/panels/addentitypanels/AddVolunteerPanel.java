@@ -18,14 +18,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class AddVolunteerPanel extends AddEntityPanel{
-    private VolunteerController volunteerController;
-    private JPanel activityPanel;
-    private FormattedDateField birthdayField;
-    private TxtFieldPh nameTxtField;
-    private TxtFieldPh phoneTxtField;
-    private TxtFieldPh emailTxtField;
-    private TxtFieldPh specialtyTxtField;
-    private JCheckBox specialtyCheckBox;
+    public VolunteerController volunteerController;
+    public JPanel activityPanel;
+    public FormattedDateField birthdayField;
+    public TxtFieldPh nameTxtField;
+    public TxtFieldPh phoneTxtField;
+    public TxtFieldPh emailTxtField;
+    public TxtFieldPh specialtyTxtField;
+    public JCheckBox specialtyCheckBox;
 
     public AddVolunteerPanel(MainFrame owner) {
         super(owner);
@@ -64,6 +64,7 @@ public class AddVolunteerPanel extends AddEntityPanel{
                 g2d.dispose();
             }
         };
+
         this.componentsPanel.setOpaque(false);
         this.componentsPanel.setLayout(null);
         this.componentsPanel.setPreferredSize(new Dimension(600, 350));
@@ -97,6 +98,7 @@ public class AddVolunteerPanel extends AddEntityPanel{
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getVolunteersPanel());
              resetFields();
+            closePanel();
         });
 
         addBtn.addActionListener(e -> addVolunteer());
@@ -176,6 +178,7 @@ public class AddVolunteerPanel extends AddEntityPanel{
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     public void resetFields(){
         this.birthdayField.setText("");
         this.nameTxtField.setText("");
@@ -183,6 +186,12 @@ public class AddVolunteerPanel extends AddEntityPanel{
         this.emailTxtField.setText("");
         this.specialtyTxtField.setText("");
         this.specialtyCheckBox.setSelected(false);
+    }
+    public void closePanel(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
     }
 
 
