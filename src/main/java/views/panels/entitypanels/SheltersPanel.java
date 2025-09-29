@@ -45,6 +45,7 @@ public class SheltersPanel extends EntityPanel {
         backBtn.addActionListener(e -> {
             this.owner.showNewPanel(this.owner.getMainMenuPanel());
             resetSearchField();
+            refreshTable();
         });
 
         searchBtn.addActionListener(e -> {

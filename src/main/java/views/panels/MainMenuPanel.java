@@ -36,7 +36,7 @@ public class MainMenuPanel extends JPanel {
         this.sheltersBtn = new Button("Refugios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.volunteerBtn = new Button("Voluntarios", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         this.animalsBtn = new Button("Animales", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
-        this.moreBtn = new Button("Más", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
+        //this.moreBtn = new Button("Más", 185, 45, 20, 25, Color.white, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
 
         //ActionListeners
         appoimentsBtn.addActionListener(e -> {
@@ -60,7 +60,7 @@ public class MainMenuPanel extends JPanel {
         this.componentsPanel.add(sheltersBtn);
         this.componentsPanel.add(volunteerBtn);
         this.componentsPanel.add(animalsBtn);
-        this.componentsPanel.add(moreBtn);
+        //this.componentsPanel.add(moreBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(componentsPanel);
         add(this.mainPanel);

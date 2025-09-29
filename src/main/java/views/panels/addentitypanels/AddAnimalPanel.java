@@ -39,10 +39,10 @@ public class AddAnimalPanel extends AddEntityPanel{
         this.activityPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
         this.activityPanel.setPreferredSize(new Dimension(300, 70));
         this.ageTextField = new TxtFieldPh("Edad", 5, 100, 30, 15, 15);
-        this.nameTextField = new TxtFieldPh("Nombre", 5, 100, 30, 15, 15);
-        this.speciesTextField = new TxtFieldPh("Especie", 5, 100, 30, 15, 15);
+        this.nameTextField = new TxtFieldPh("Nombre", 50, 100, 30, 15, 15);
+        this.speciesTextField = new TxtFieldPh("Especie", 50, 100, 30, 15, 15);
         this.healthStatusComboBox = new ComboBoxCustom("health");
-        this.shelterTextField = new TxtFieldPh("Refugio", 5, 100, 30, 15, 15);
+        this.shelterTextField = new TxtFieldPh("Refugio", 50, 100, 30, 15, 15);
         this.commentsTextArea = new TextAreaCustom(4,20);
 
         this.componentsPanel = new JPanel(){
