@@ -147,11 +147,12 @@ public class VolunteerInfoPanel extends EntityPanel {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         tablePanel.add(backBtn);
         tablePanel.add(scrollPane);
+        tablePanel.add(Box.createRigidArea(new Dimension(200, 0)));
+        tablePanel.add(updateBtn);
+        tablePanel.add(deleteBtn);
 
         //East Panel
         eastPanel.add(this.sideBarPanel);
-        eastPanel.add(updateBtn);
-        eastPanel.add(deleteBtn);
         eastPanel.add(Box.createHorizontalGlue());
 
         this.mainPanel.add(this.eastPanel);

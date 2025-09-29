@@ -78,6 +78,22 @@ public class SheltersPanel extends EntityPanel {
                 g2d.setColor(Style.COLOR_BACKGROUND);
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2d.setColor(Color.black);
+
+                //SideBar tittles position
+                Font sideBarTextFont = FontUtil.loadFont(16, "Inter_Regular");
+                String sideBarTittle = "Menu";
+                FontMetrics metricsTittleText = g2d.getFontMetrics(sideBarTextFont);
+                int xTittleText = (sideBarPanel.getWidth() - metricsTittleText.stringWidth(sideBarTittle)) / 2;
+                g2d.setFont(sideBarTextFont);
+                g2d.drawString(sideBarTittle, xTittleText, sideBarPanel.getY()+25);
+
+                //Filter tittles position
+                Font sideBarTextFont2 = FontUtil.loadFont(16, "Inter_18pt-ExtraLight");
+                String sideBarTittle3 = "Buscar Por Id";
+                FontMetrics metricsTittleText2 = g2d.getFontMetrics(sideBarTextFont2);
+                int xTittleText3 = (sideBarPanel.getWidth() - metricsTittleText2.stringWidth(sideBarTittle3)) / 2;
+                g2d.setFont(sideBarTextFont2);
+                g2d.drawString(sideBarTittle3, xTittleText3, sideBarPanel.getY()+95);
             }
         };
         this.sideBarPanel.add(newShelterBtn);
