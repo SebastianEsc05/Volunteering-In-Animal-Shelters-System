@@ -140,14 +140,14 @@ public class VolunteerController implements IVolunteerController{
 
         List<VolunteerEntity> volunteerList = volunteerDAO.getVooluntersByIdTable(id);
         for (VolunteerEntity v : volunteerList) {
+            Date birthDate = v.getDate_birth();
+            LocalDate birthLocal = birthDate.toLocalDate();
+            int age = Period.between(birthLocal, LocalDate.now()).getYears();
                 Object[] row = {
                         v.getId_volunteer(),
                         v.getName_volunteer(),
-                        v.getDate_birth(),
+                        age,
                         v.getPhone_number(),
-                        v.getEmail(),
-
-                        v.getSpecialty()
                 };
                 model.addRow(row);
         }
