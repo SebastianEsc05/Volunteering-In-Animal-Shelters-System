@@ -4,7 +4,6 @@ import controllers.ShelterController;
 import interfaces.controller.IShelterController;
 import models.ShelterEntity;
 import views.dialogs.UpdateEntityDialogs.UpdateEntityDialog;
-import views.dialogs.UpdateEntityDialogs.UpdateShelterPanel;
 import views.enums.PanelCategory;
 import views.frames.MainFrame;
 import views.panels.SidebarPanel;
@@ -23,8 +22,9 @@ public class ShelterInfoPanel extends EntityPanel {
     private UpdateEntityDialog updateEntityDialog;
     private JPanel buttonsPanel;
     private JPanel labelsPanel;
-    private JLabel shelterIdLabel;
     private JLabel headerLabel;
+    private JLabel idLabel;
+    private JLabel nameLabel;
     private JLabel capacityLabel;
     private JLabel responsibleLabel;
     private JLabel adressLabel;
@@ -47,7 +47,7 @@ public class ShelterInfoPanel extends EntityPanel {
         shelterId = id;
 
         //Id Header
-        headerLabel = new JLabel(String.valueOf(id));
+        headerLabel = new JLabel("Animales en refugio");
         headerLabel.setFont(FontUtil.loadFont( 24, "Inter_Light"));
 
         updateBtn = new Button("Editar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
@@ -107,6 +107,23 @@ public class ShelterInfoPanel extends EntityPanel {
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2d.setColor(Color.black);
 
+                //SideBar tittles position
+                Font sideBarTextFont = FontUtil.loadFont(14, "Inter_Regular");
+                String nameTittle = "Nombre";
+                String capacityTittle = "Capacidad";
+                String responsibleTittle = "Responsable";
+                String adressTittle = "Direccion";
+                FontMetrics metricsTittle = g2d.getFontMetrics(sideBarTextFont);
+                int xNameTittle = (sideBarPanel.getWidth() - metricsTittle.stringWidth(nameTittle)) / 2;
+                int xCapacityTittle = (sideBarPanel.getWidth() - metricsTittle.stringWidth(capacityTittle)) / 2;
+                int xResponsibleTittl = (sideBarPanel.getWidth() - metricsTittle.stringWidth(responsibleTittle)) / 2;
+                int xAdressTittle = (sideBarPanel.getWidth() - metricsTittle.stringWidth(adressTittle)) / 2;
+                g2d.setFont(sideBarTextFont);
+                g2d.drawString(nameTittle, xNameTittle, sideBarPanel.getY()+90);
+                g2d.drawString(capacityTittle, xCapacityTittle, sideBarPanel.getY()+140);
+                g2d.drawString(responsibleTittle, xResponsibleTittl, sideBarPanel.getY()+190);
+                g2d.drawString(adressTittle, xAdressTittle, sideBarPanel.getY()+240);
+
                 g2d.dispose();
             }
         };
@@ -115,8 +132,22 @@ public class ShelterInfoPanel extends EntityPanel {
         labelsPanel = new JPanel();
         labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
         labelsPanel.setOpaque(false);
-        labelsPanel.add(shelterIdLabel);
+        labelsPanel.add(idLabel);
+        idLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(30));
+        labelsPanel.add(nameLabel);
+        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(30));
+        labelsPanel.add(capacityLabel);
+        capacityLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(30));
+        labelsPanel.add(responsibleLabel);
+        responsibleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelsPanel.add(Box.createVerticalStrut(30));
+        labelsPanel.add(adressLabel);
+        adressLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         sideBarPanel.add(labelsPanel);
+
 
         buttonsPanel.add(backBtn);
         //Table Panel
@@ -126,12 +157,15 @@ public class ShelterInfoPanel extends EntityPanel {
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         tablePanel.add(backBtn);
+        tablePanel.add(headerLabel);
         tablePanel.add(scrollPane);
+        tablePanel.add(Box.createRigidArea(new Dimension(200, 0)));
+        tablePanel.add(updateBtn);
+        tablePanel.add(deleteBtn);
 
         //East Panel
         eastPanel.add(this.sideBarPanel);
-        eastPanel.add(updateBtn);
-        eastPanel.add(deleteBtn);
+
         eastPanel.add(Box.createHorizontalGlue());
 
         this.mainPanel.add(this.eastPanel);
@@ -141,13 +175,15 @@ public class ShelterInfoPanel extends EntityPanel {
 
     public void setLabels(){
         //Create labels
-        shelterIdLabel = new JLabel(String.valueOf(shelterEntity.getIdShelter()));
+        idLabel = new JLabel(String.valueOf(shelterEntity.getIdShelter()));
+        nameLabel = new JLabel(shelterEntity.getNameShelter());
         capacityLabel = new JLabel(String.valueOf(shelterEntity.getCapacity()));
         responsibleLabel = new JLabel(shelterEntity.getResponsible());
         adressLabel = new JLabel(shelterEntity.getLocation());
 
         //Set Font
-        shelterIdLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
+        idLabel.setFont(FontUtil.loadFont( 25, "Inter_Regular"));
+        nameLabel.setFont(FontUtil.loadFont(16, "Inter_Light"));
         capacityLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         responsibleLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));
         adressLabel.setFont(FontUtil.loadFont( 16, "Inter_Light"));

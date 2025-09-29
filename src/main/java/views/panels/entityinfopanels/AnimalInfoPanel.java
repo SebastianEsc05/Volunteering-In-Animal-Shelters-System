@@ -2,6 +2,7 @@ package views.panels.entityinfopanels;
 
 import controllers.AnimalController;
 import interfaces.controller.IAnimalController;
+import models.AnimalEntity;
 import views.dialogs.UpdateEntityDialogs.UpdateAnimalPanel;
 import views.dialogs.UpdateEntityDialogs.UpdateEntityDialog;
 import views.enums.PanelCategory;
@@ -17,6 +18,7 @@ import java.awt.*;
 
 public class AnimalInfoPanel extends EntityPanel {
     private IAnimalController animalController;
+    private AnimalEntity animalEntity;
     private UpdateEntityDialog updateAnimalDialog;
     private Button updateBtn;
     private Button deleteBtn;
@@ -25,7 +27,7 @@ public class AnimalInfoPanel extends EntityPanel {
     public AnimalInfoPanel(MainFrame owner, int animalId) {
         super(owner);
         animalController = new AnimalController();
-
+        animalEntity = animalController.readAnimal(animalId);
         this.animalId = animalId ;
         updateBtn = new Button("Editar animal", 185, 35, 15, 25, Color.WHITE, Style.COLOR_BTN, Style.COLOR_BTN_HOVER);
         deleteBtn = new Button("Eliminar", 120, 35, 15, 25, Color.WHITE, Style.COLOR_BTN_DELETE, Style.COLOR_BTN_DELETE_HOVER);
@@ -55,7 +57,7 @@ public class AnimalInfoPanel extends EntityPanel {
             }
         });
         backBtn.addActionListener(e -> {
-            this.owner.showNewPanel(this.owner.getAnimalsPanel());
+            this.owner.showNewPanel(new ShelterInfoPanel(owner,  animalEntity.getId_shelter()));
         });
 
     }
