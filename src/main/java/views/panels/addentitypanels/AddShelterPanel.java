@@ -122,10 +122,15 @@ public class AddShelterPanel extends AddEntityPanel{
                 return;
             }
 
-            if (!name.matches("[a-zA-ZÀ-ÿ\\s]+") || !location.matches("[a-zA-ZÀ-ÿ\\s]+") || !manager.matches("[a-zA-ZÀ-ÿ\\s]+")) {
-                JOptionPane.showMessageDialog(this, "Los campos de texto solo pueden contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!name.matches("[a-zA-ZÀ-ÿ0-9\\s]+")
+                    || !location.matches("[a-zA-ZÀ-ÿ0-9\\s,.-]+")
+                    || !manager.matches("[a-zA-ZÀ-ÿ0-9\\s]+")) {
+                JOptionPane.showMessageDialog(this,
+                        "Nombre, ubicación y responsable pueden contener letras, números y espacios..",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
 
             int capacity;
             try {

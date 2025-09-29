@@ -45,11 +45,10 @@ public class UpdateShelterPanel extends AddShelterPanel {
         this.componentsPanel.add(this.locationTextField);
         this.componentsPanel.add(this.capacityTextField);
         this.componentsPanel.add(this.managerTextField);
-        this.buttonsPanel.add(this.addBtn);
         this.mainPanel.add(Box.createVerticalStrut(110));
         this.mainPanel.add(this.componentsPanel);
         this.mainPanel.add(Box.createVerticalStrut(30));
-        this.mainPanel.add(this.buttonsPanel);
+        this.mainPanel.add(this.buttonsPanel); // ya incluye el addBtn del padre
         this.add(mainPanel, BorderLayout.CENTER);
 
     }
@@ -72,10 +71,15 @@ public class UpdateShelterPanel extends AddShelterPanel {
                 return;
             }
 
-            if (!name.matches("[a-zA-ZÀ-ÿ\\s]+") || !location.matches("[a-zA-ZÀ-ÿ\\s]+") || !manager.matches("[a-zA-ZÀ-ÿ\\s]+")) {
-                JOptionPane.showMessageDialog(this, "Los campos de texto solo pueden contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!name.matches("[a-zA-ZÀ-ÿ0-9\\s]+")
+                    || !location.matches("[a-zA-ZÀ-ÿ0-9\\s,.-]+")
+                    || !manager.matches("[a-zA-ZÀ-ÿ0-9\\s]+")) {
+                JOptionPane.showMessageDialog(this,
+                        "Nombre, ubicación y responsable pueden contener letras, números y espacios..",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
 
             int capacity;
             try {
@@ -90,13 +94,13 @@ public class UpdateShelterPanel extends AddShelterPanel {
                 return;
             }
 
-            ShelterController shelterController = new ShelterController();
+
             boolean success = shelterController.updateShelter(shelterEntity.getIdShelter(), name, location, capacity, manager);
 
             if (success) {
-                JOptionPane.showMessageDialog(this, "Refugio agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Refugio actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 resetFields();
-
+                closePanel();
                 SheltersPanel sheltersPanel = this.owner.getSheltersPanel();
                 sheltersPanel.refreshTable();
                 this.owner.showNewPanel(sheltersPanel);
@@ -109,6 +113,21 @@ public class UpdateShelterPanel extends AddShelterPanel {
             JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public void resetFields() {
+        this.nameTextField.setText("");
+        this.locationTextField.setText("");
+        this.capacityTextField.setText("");
+        this.managerTextField.setText("");
+    }
+
+    public void closePanel(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
