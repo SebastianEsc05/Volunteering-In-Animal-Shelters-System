@@ -1,6 +1,7 @@
 # MODELO ENTIDAD RELACION DE LA BASE DE DATOS
 Este proyecto es una aplicación desarrollada en Java que permite gestionar voluntarios y refugios de animales, 
 facilitando el registro, actualización, asignación y seguimiento de voluntarios dentro de distintos refugios. 
+
 La aplicación utiliza JDBC para la conexión con una base de datos MySQL, 
 asegurando persistencia de la información y operaciones confiables.
 
