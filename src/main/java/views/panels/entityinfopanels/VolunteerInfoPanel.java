@@ -160,28 +160,28 @@ public class VolunteerInfoPanel extends EntityPanel {
         labelsPanel.add(volunteerIdlabel);
 
         volunteerIdlabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelsPanel.add(Box.createVerticalStrut(35));
-
+        labelsPanel.add(Box.createVerticalStrut(33));
+        nameLabel.setAlignmentX((Component.CENTER_ALIGNMENT));
         labelsPanel.add(nameLabel);
         labelsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(Box.createVerticalStrut(33));
         labelsPanel.add(phoneLabel);
 
         phoneLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(Box.createVerticalStrut(33));
         labelsPanel.add(emailLabel);
 
         emailLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(Box.createVerticalStrut(33));
         labelsPanel.add(birthDateLabel);
 
         birthDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(Box.createVerticalStrut(33));
         labelsPanel.add(specialtyLabel);
 
         specialtyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelsPanel.add(Box.createVerticalStrut(35));
+        labelsPanel.add(Box.createVerticalStrut(33));
 
 
         sideBarPanel.add(labelsPanel);
