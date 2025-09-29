@@ -85,7 +85,6 @@ public class AddAnimalPanel extends AddEntityPanel{
 
         addBtn.addActionListener(e->{
             addAnimal();
-            closePanel();
         });
         backBtn.addActionListener(e->{
             this.owner.showNewPanel(this.owner.getAnimalsPanel());
