@@ -13,6 +13,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.sql.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +27,9 @@ public class VolunteerController implements IVolunteerController{
         this.volunteerDAO = new VolunteerDAO();
     }
 
-    public boolean addVolunteer(String name, String phone_number, String email, LocalDate date_birth, String specialty) {
+
+    @Override
+    public boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty) {
         if(phone_number == null || !validate_phone_number(phone_number)){
             System.out.println("Voluntario no agregado Telefono invalido");
             return false;
@@ -58,7 +61,6 @@ public class VolunteerController implements IVolunteerController{
         }else{
             return false;
         }
-
     }
 
     public VolunteerEntity readVolunteer(int id) {
@@ -69,15 +71,8 @@ public class VolunteerController implements IVolunteerController{
 
     }
 
-    public boolean deleteVolunteer(int id) {
-        if(id <= 0 ){
-            return false;
-        }
-        return this.volunteerDAO.deleteById(id);
-    }
-
-
-    public boolean updateVolunteer(int id, String name, String phone_number, String email, LocalDate date_birth, String specialty){
+    @Override
+    public boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty) {
         if(name == null){
             return false;
         }
@@ -97,6 +92,15 @@ public class VolunteerController implements IVolunteerController{
         return this.volunteerDAO.update(volunteerEntity);
     }
 
+    public boolean deleteVolunteer(int id) {
+        if(id <= 0 ){
+            return false;
+        }
+        return this.volunteerDAO.deleteById(id);
+    }
+
+
+
     /**
      * returns a list of volunteers
      * @return returns a list from selecting all the rows from Volunteers Table on database
@@ -109,18 +113,19 @@ public class VolunteerController implements IVolunteerController{
     @Override
     public DefaultTableModel getVolunteerTable() {
         String[] columns = {"Id", "Nombre", "Edad", "Telefono", "Ver"};
-
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        List<VolunteerEntity> volineerList = volunteerDAO.readAll();
-        for (VolunteerEntity v : volineerList) {
-            LocalDate birthDate = v.getDate_birth();
-            LocalDate todayDate = LocalDate.now();
+        List<VolunteerEntity> volunteerList = volunteerDAO.readAll();
+        for (VolunteerEntity v : volunteerList) {
+            Date birthDate = v.getDate_birth();
+            LocalDate birthLocal = birthDate.toLocalDate();
+
+            int age = Period.between(birthLocal, LocalDate.now()).getYears();
             Object[] row = {
                     v.getId_volunteer(),
                     v.getName_volunteer(),
-                    Period.between(birthDate, todayDate).getYears(),
-                    v.getPhone_number()
+                    age,
+                    v.getPhone_number(),
             };
             model.addRow(row);
         }
@@ -131,29 +136,21 @@ public class VolunteerController implements IVolunteerController{
     @Override
     public DefaultTableModel getVooluntersByIdTable(int id) {
         String[] columns = {"Id", "Nombre", "Edad", "Telefono", "Ver"};
-
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        List<VolunteerEntity> volunteerList = null;
-        try {
-            volunteerList = readAllVolunteers();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<VolunteerEntity> volunteerList = volunteerDAO.getVooluntersByIdTable(id);
         for (VolunteerEntity v : volunteerList) {
-            if (v.getId_volunteer() == id) {
                 Object[] row = {
                         v.getId_volunteer(),
                         v.getName_volunteer(),
+                        v.getDate_birth(),
                         v.getPhone_number(),
                         v.getEmail(),
-                        v.getDate_birth(),
+
                         v.getSpecialty()
                 };
                 model.addRow(row);
-            }
         }
-
         return model;
     }
 

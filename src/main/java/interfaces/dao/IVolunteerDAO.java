@@ -18,7 +18,7 @@ public interface IVolunteerDAO {
 
     List<VolunteerEntity> readAll() throws PersistenceException;
 
-    DefaultTableModel getVooluntersByIdTable(int id);
+    List<VolunteerEntity> getVooluntersByIdTable(int id);
 
     boolean isNotEmpty();
 }

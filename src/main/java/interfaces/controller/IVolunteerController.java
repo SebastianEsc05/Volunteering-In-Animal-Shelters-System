@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface IVolunteerController {
 
-    boolean addVolunteer(String name, String phone_number, String email, LocalDate date_birth, String specialty);
+    boolean addVolunteer(String name, String phone_number, String email, Date date_birth, String specialty);
 
     VolunteerEntity readVolunteer(int idVolunteer);
 
-    boolean updateVolunteer(int id, String name, String phone_number, String email, LocalDate date_birth, String specialty);
+    boolean updateVolunteer(int id, String name, String phone_number, String email, Date date_birth, String specialty);
 
     boolean deleteVolunteer(int idVolunteer);
 

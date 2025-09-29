@@ -9,6 +9,7 @@ import views.frames.LogInFrame;
 import views.frames.MainFrame;
 import structure.DatabaseInitializer;
 import javax.naming.ldap.Control;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +25,7 @@ public class MainPresentacion {
         IAppointmentController appoimentController = new AppointmentController();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate birthDate = LocalDate.parse("22-12-2001", formatter);
+        Date birthDate = Date.valueOf(LocalDate.parse("22-12-2001", formatter));
         LocalDate animalEntryDate = LocalDate.parse("11-09-2025", formatter);
         LocalDate appointmentBookingDate = LocalDate.parse("15-12-2025", formatter);
 
@@ -62,7 +63,6 @@ public class MainPresentacion {
             }
 
         }
-
 
         MainFrame mainFrame = new MainFrame();
     }

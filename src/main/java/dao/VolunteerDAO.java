@@ -10,7 +10,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class VolunteerDAO implements IVolunteerDAO {
@@ -62,7 +62,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                         volunteerEntity.setName_volunteer(rs.getString("nombre"));
                         volunteerEntity.setPhone_number(rs.getString("telefono"));
                         volunteerEntity.setEmail(rs.getString("email"));
-                        volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", LocalDate.class));
+                        volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", Date.class));
                         volunteerEntity.setSpecialty(rs.getString("especialidad"));
                         System.out.println("Voluntario encontrado: " + volunteerEntity.toString());
                         return volunteerEntity;
@@ -144,7 +144,7 @@ public class VolunteerDAO implements IVolunteerDAO {
                 volunteerEntity.setName_volunteer(rs.getString("nombre"));
                 volunteerEntity.setPhone_number(rs.getString("telefono"));
                 volunteerEntity.setEmail(rs.getString("email"));
-                volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", LocalDate.class));
+                volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", Date.class));
                 volunteerEntity.setSpecialty(rs.getString("especialidad"));
                 volunteers.add(volunteerEntity);
             }
@@ -156,32 +156,30 @@ public class VolunteerDAO implements IVolunteerDAO {
     }
 
     @Override
-    public DefaultTableModel getVooluntersByIdTable(int id) {
-        String[] columns = {"Id", "Nombre", "Teléfono", "Email", "Fecha de Nacimiento", "Especialidad"};
-
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
-
-        List<VolunteerEntity> volunteerList = null;
-        try {
-            volunteerList = readAll();
-        } catch (PersistenceException e) {
-            throw new RuntimeException(e);
-        }
-        for (VolunteerEntity v : volunteerList) {
-            if (v.getId_volunteer() == id) {
-                Object[] row = {
-                        v.getId_volunteer(),
-                        v.getName_volunteer(),
-                        v.getPhone_number(),
-                        v.getEmail(),
-                        v.getDate_birth(),
-                        v.getSpecialty()
-                };
-                model.addRow(row);
+    public List<VolunteerEntity> getVooluntersByIdTable(int id) {
+        String sql = "SELECT * FROM voluntarios WHERE id = ?";
+        List<VolunteerEntity> volunteers = new ArrayList<>();
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    VolunteerEntity volunteerEntity = new VolunteerEntity();
+                    volunteerEntity.setId_volunteer(rs.getInt("id"));
+                    volunteerEntity.setName_volunteer(rs.getString("nombre"));
+                    volunteerEntity.setPhone_number(rs.getString("telefono"));
+                    volunteerEntity.setEmail(rs.getString("email"));
+                    volunteerEntity.setDate_birth(rs.getObject("fecha_nacimiento", Date.class));
+                    volunteerEntity.setSpecialty(rs.getString("especialidad"));
+                    volunteers.add(volunteerEntity);
+                }
             }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
-        return model;
+        return volunteers;
     }
 
     @Override

@@ -133,15 +133,19 @@ public class AddVolunteerPanel extends AddEntityPanel{
             } catch (DateTimeParseException ex) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "El formato de la fecha es incorrecto. Use AAAA-MM-DD.",
+                        "El formato de la fecha es incorrecto. Use dd-MM-yyyy.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
+            if(birthday.toLocalDate().isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser en el futuro.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
 
-        boolean success = volunteerController.addVolunteer(name, phone, email, birthday.toLocalDate(), specialty);
+        boolean success = volunteerController.addVolunteer(name, phone, email, birthday, specialty);
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Voluntario agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);

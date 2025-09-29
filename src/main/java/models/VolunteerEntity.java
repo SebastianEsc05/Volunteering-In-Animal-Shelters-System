@@ -12,7 +12,7 @@ public class VolunteerEntity {
     private String name_volunteer;
     private String phone_number;
     private String email;
-    private LocalDate date_birth;
+    private Date date_birth;
     private String specialty;
 
     /**
@@ -31,7 +31,7 @@ public class VolunteerEntity {
      * @param specialty
      */
    
-    public VolunteerEntity(int id_volunteer, String name_volunteer, String phone_number, String email, LocalDate date_birth, String specialty) {
+    public VolunteerEntity(int id_volunteer, String name_volunteer, String phone_number, String email, Date date_birth, String specialty) {
         this.id_volunteer = id_volunteer;
         this.name_volunteer = name_volunteer;
         this.phone_number = phone_number;
@@ -50,7 +50,7 @@ public class VolunteerEntity {
      * @param specialty
      */
     
-    public VolunteerEntity(String name_volunteer, String phone_number, String email, LocalDate date_birth, String specialty) {
+    public VolunteerEntity(String name_volunteer, String phone_number, String email, Date date_birth, String specialty) {
         this.name_volunteer = name_volunteer;
         this.phone_number = phone_number;
         this.email = email;
@@ -127,11 +127,11 @@ public class VolunteerEntity {
      * @return date_birth
      */
 
-    public LocalDate getDate_birth() {
+    public Date getDate_birth() {
         return date_birth;
     }
 
-    public void setDate_birth(LocalDate date_birth) {
+    public void setDate_birth(Date date_birth) {
         this.date_birth = date_birth;
     }
 

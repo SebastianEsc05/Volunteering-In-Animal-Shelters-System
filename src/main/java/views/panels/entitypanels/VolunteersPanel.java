@@ -49,18 +49,20 @@ public class VolunteersPanel extends EntityPanel {
         });
 
         searchBtn.addActionListener(e -> {
-            String idText = searchField.getText().trim();
-            if (!idText.isEmpty()) {
+            String searchText = searchField.getText().trim();
+            if (!searchText.isEmpty()) {
                 try {
-                    int id = Integer.parseInt(idText);
-                    buscarPorId(id);
+                    int id = Integer.parseInt(searchText);
+                    DefaultTableModel newModel = volunteerController.getVooluntersByIdTable(id);
+                    table.setModel(newModel);
+                    table.addColumnButton();
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un Id válido.", "Error de búsqueda", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                model = volunteerController.getVolunteerTable();
-                table.setModel(model);
-                table.repaint();
+                DefaultTableModel newModel = volunteerController.getVolunteerTable();
+                table.setModel(newModel);
+                table.addColumnButton();
             }
         });
 
