@@ -33,9 +33,9 @@ public class UpdateShelterPanel extends AddShelterPanel {
         this.capacityTextField.setText(capacityTextField);
         this.managerTextField.setText(managerTextField);
         this.nameTextField.setBounds(200, 30, 200, 30);
-        this.locationTextField.setBounds(200, 90, 200, 30);
+        this.locationTextField.setBounds(200, 220, 200, 30); //220
         this.capacityTextField.setBounds(200, 150, 200, 30);
-        this.managerTextField.setBounds(200, 220, 200, 30);
+        this.managerTextField.setBounds(200, 90, 200, 30); //90
 
 
 

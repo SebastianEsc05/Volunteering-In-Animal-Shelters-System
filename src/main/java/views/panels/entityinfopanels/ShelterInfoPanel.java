@@ -121,8 +121,8 @@ public class ShelterInfoPanel extends EntityPanel {
                 g2d.setFont(sideBarTextFont);
                 g2d.drawString(nameTittle, xNameTittle, sideBarPanel.getY()+90);
                 g2d.drawString(capacityTittle, xCapacityTittle, sideBarPanel.getY()+140);
-                g2d.drawString(responsibleTittle, xResponsibleTittl, sideBarPanel.getY()+190);
-                g2d.drawString(adressTittle, xAdressTittle, sideBarPanel.getY()+240);
+                g2d.drawString(responsibleTittle, xResponsibleTittl, sideBarPanel.getY()+240);//240
+                g2d.drawString(adressTittle, xAdressTittle, sideBarPanel.getY()+190);//190
 
                 g2d.dispose();
             }
