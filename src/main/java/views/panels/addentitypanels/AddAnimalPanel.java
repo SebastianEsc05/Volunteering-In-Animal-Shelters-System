@@ -94,7 +94,6 @@ public class AddAnimalPanel extends AddEntityPanel{
     }
 
     public void addComponents(){
-
         this.componentsPanel.add(this.ageTextField);
         this.ageTextField.setBounds(235,20,110,35);
         this.componentsPanel.add(this.speciesTextField);

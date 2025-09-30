@@ -34,11 +34,11 @@ public class VolunteerController implements IVolunteerController{
         try{
             if(phone_number == null || !validate_phone_number(phone_number)){
                 System.out.println("Voluntario no agregado Telefono invalido");
-                return false;
+                throw new PersistenceException("El telefono debe contener exactamente 10 digitos");
             }
             if(email == null || !validateEmail(email)){
                 System.out.println("Voluntario no agregado email invalido");
-                return  false;
+                throw new PersistenceException("El Correo debe cumplir con el formato específico");
             }
             if(name == null ){
                 System.out.println("Voluntario no agregado, nombre invalido");
@@ -53,7 +53,7 @@ public class VolunteerController implements IVolunteerController{
                 VolunteerEntity volunteerEntity = new VolunteerEntity(name,phone_number,email, date_birth, specialty);
                 return this.volunteerDAO.create(volunteerEntity);
             }else{
-                return false;
+                throw new PersistenceException("El telefono debe contener exactamente 10 digitos");
             }
         }catch (PersistenceException ex){
             throw new PersistenceException(ex.getMessage());

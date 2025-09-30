@@ -175,7 +175,7 @@ public class AddVolunteerPanel extends AddEntityPanel{
                 this.owner.showNewPanel(volunteersPanel);
             }
         }catch (PersistenceException ex){
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
